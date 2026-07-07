@@ -1,0 +1,46 @@
+---
+title: Katalon Dokumentation
+description: Dokumentation für Installation, Administration, Integration und Entwicklung von Katalon.
+template: splash
+hero:
+  tagline: Open-Source Metadata Management System für Galerien, Bibliotheken, Archive und Museen.
+  actions:
+    - text: Installation
+      link: /getting-started/installation/
+      icon: right-arrow
+    - text: REST API
+      link: /integration/rest-api/
+      icon: document
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Einstieg
+
+<CardGrid>
+	<Card title="Installation" icon="rocket">
+		Docker-Compose-Setup, erster Login und wichtige Ports.
+	</Card>
+	<Card title="Schema verwalten" icon="setting">
+		Felddefinitionen, Subtypen, Vokabulare und dynamische Metadaten.
+	</Card>
+	<Card title="Daten beziehen" icon="open-book">
+		REST API, Suche, Record-Endpunkte, OAI-PMH und Export-Mappings.
+	</Card>
+	<Card title="Entwicklung" icon="code">
+		Architektur, Datenmodell, Dev-Compose und lokale Wartung.
+	</Card>
+</CardGrid>
+
+## Was ist Katalon?
+
+Katalon ist ein modernes Metadata Management System für den GLAM-Sektor. Es kombiniert dynamische Metadatenschemata mit FastAPI, PostgreSQL/PostGIS, Elasticsearch, React und IIIF.
+
+Die fachlichen Daten liegen in vier Primärtypen: Object, Entity, Place und Occurrence. Vorgänge wie Leihverkehr oder Erwerbung laufen als eigener Procedure-Typ. Frei konfigurierbare Felder werden in `field_definitions` beschrieben und pro Datensatz in `metadata_` gespeichert.
+
+## Wichtige Links
+
+- Hauptrepo: [github.com/karkraeg/Katalon](https://github.com/karkraeg/Katalon)
+- OpenAPI lokal: `http://localhost:8000/api/docs`
+- OAI-PMH lokal: `http://localhost:8000/oai`
