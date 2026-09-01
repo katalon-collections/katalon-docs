@@ -10,7 +10,7 @@ description: Minimaler Weg vom leeren Katalon bis zum ersten öffentlichen Daten
 Öffne die Admin-Oberfläche und melde dich mit dem automatisch erzeugten Admin-Account an.
 
 ```text
-http://localhost:3000
+http://localhost/admin/
 ```
 
 ## 2. Schema anlegen

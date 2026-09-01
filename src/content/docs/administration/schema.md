@@ -1,5 +1,5 @@
 ---
-title: Schema verwalten
+title: "Katalon – Schema-Verwaltung"
 ---
 
 # Katalon – Schema-Verwaltung
@@ -7,6 +7,8 @@ title: Schema verwalten
 ## Übersicht
 
 Das Schema bestimmt, welche Felder ein Datensatz eines bestimmten Primärtyps hat. Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Schemata**. Felder können ohne Datenbankmigrationen angelegt, bearbeitet und gelöscht werden.
+
+Für eine durchgehende Beispielkonfiguration mit Relationsfeldern und einem anschließenden Vorgang siehe [Walkthrough: eine eigene Sammlung einrichten](/katalon-docs/getting-started/eigene-sammlung). Weitere wiederverwendbare Konfigurationen stehen im [Cookbook](/katalon-docs/administration/cookbook).
 
 Nur Benutzer mit der Rolle `admin` oder `superuser` können Felder anlegen, ändern oder löschen.
 
@@ -23,11 +25,13 @@ Nach dem Speichern ist das Feld sofort in allen Erfassungsformularen sichtbar. B
 
 Das Löschen eines Feldes ist ein Soft-Delete: Das Feld wird als `is_deleted` markiert und aus der UI ausgeblendet, die gespeicherten Feldwerte in bestehenden Datensätzen bleiben in der Datenbank erhalten.
 
-Im selben Feld-Detailbereich gibt es den Abschnitt `Metadaten-Export`. Dort kann ein Feld auf Exportformate wie `oai_dc` gemappt werden. Die Tabs für `LIDO` und `METS/MODS` sind bereits angelegt, aber noch Stub-UI.
+Im selben Feld-Detailbereich gibt es den Abschnitt `Metadaten-Export`. Dort kann ein Feld auf Exportformate wie `oai_dc` gemappt werden. Die Tabs fuer `LIDO` und `METS/MODS` sind bereits angelegt, aber noch Stub-UI.
 
 ---
 
 ## Eigenschaften einer Felddefinition
+
+Im Feldformular bleiben die Grundoptionen **Pflichtfeld**, **Wiederholbar** und – soweit möglich – **Mehrsprachig** direkt sichtbar. Feldtyp-spezifische Einstellungen wie Vokabular, Relation oder Normdaten-Quelle erscheinen ebenfalls direkt am Feld. Sortierung, Portal- und Suchdarstellung, öffentliche API-Ausgabe, Facetten, Validierung, Standardwert, Sperre und KI-Konfiguration liegen unter **Erweiterte Optionen**.
 
 | Eigenschaft | Pflicht | Beschreibung |
 |---|---|---|
@@ -38,8 +42,23 @@ Im selben Feld-Detailbereich gibt es den Abschnitt `Metadaten-Export`. Dort kann
 | `is_required` | Nein | Wenn gesetzt, muss das Feld beim Speichern eines Datensatzes befüllt sein. |
 | `is_repeatable` | Nein | Wenn gesetzt, können mehrere Werte pro Datensatz gespeichert werden. |
 | `sort_order` | Nein | Numerische Sortierreihenfolge im Formular. Kleinere Zahlen erscheinen zuerst. |
-| `target_subtype` | Nein | Wenn gesetzt, gilt das Feld nur für den angegebenen Subtyp (nur bei Entity und Occurrence relevant). |
+| `target_subtype` | Nein | Wenn gesetzt, gilt das Feld nur für den angegebenen Subtyp. |
+| `is_public` | Nein | Standardmäßig aktiv. Ist die Option **„Öffentlich über APIs ausgeben“** deaktiviert, bleibt der Wert für angemeldete Mitarbeitende sichtbar, wird aber weder im Public-Portal noch über anonyme REST-, Such-, OAI- oder IIIF-Ausgaben veröffentlicht. |
+| `detail_slot` | Nein | Ordnet das Feld auf öffentlichen Detailseiten dem Hauptbereich oder der Seitenspalte zu. Standard: Seitenspalte. |
+| `detail_role` | Nein | Kann das Feld als Beschreibung auszeichnen. Pro Datensatztyp und Subtyp ist nur ein Beschreibungsfeld zulässig. |
 | `settings` | Nein | Feldtyp-spezifische Optionen als JSON-Objekt (siehe unten). |
+
+## Öffentliche und interne Felder
+
+Die Sichtbarkeit eines Feldes in einer Detail- oder Listenansicht ist keine Zugriffskontrolle. Für Daten wie interne Notizen, Kontaktdaten oder noch nicht veröffentlichte Provenienzangaben muss zusätzlich **„Öffentlich über APIs ausgeben“** deaktiviert werden.
+
+Dann wird der gespeicherte Wert nicht gelöscht und bleibt in der Admin-UI sowie in authentifizierten API-Antworten verfügbar. Katalon entfernt ihn aber serverseitig aus allen anonymen Ausgabewegen: Public-Portal, öffentliche REST-Antworten, Suchindex und Facetten, OAI-PMH sowie IIIF-Manifeste. Das gilt auch für einzelne Sub-Felder einer Gruppe.
+
+## Felder auf Portal-Detailseiten anordnen
+
+Im Feldformular legt **Detailseiten-Bereich** fest, ob ein öffentliches Feld im Hauptbereich oder in der Seitenspalte erscheint. Mit **Detailseiten-Rolle: Beschreibung** wird ein Feld als zentraler Beschreibungstext verwendet. Pro Datensatztyp und Subtyp kann nur ein Feld diese Rolle haben.
+
+Die Position der gesamten Seitenspalte wird nicht pro Feld eingestellt, sondern unter **Einstellungen → Portal** global auf links oder rechts gesetzt. Felder, die nicht öffentlich ausgegeben werden, erscheinen unabhängig von diesen Layout-Einstellungen nicht im Portal.
 
 ---
 
@@ -79,17 +98,18 @@ Beispiele:
 
 ---
 
-### `date` – Datum nach EDTF
+### `date` – Datum
 
-Unterstützt den Extended Date/Time Format-Standard (EDTF). Damit lassen sich auch unscharfe oder unvollständige Datumsangaben ausdrücken.
+Akzeptiert Jahres-, Jahres-Monats- und Tagesangaben im ISO-Format. Unscharfe Angaben, Zeiträume und offene Intervalle lassen sich nicht über Syntax im Datumswert ausdrücken (kein EDTF) — dafür gibt es etablierte Muster (siehe „Cookbook: Datierungstyp" weiter unten).
 
 Beispiele für gültige Werte:
 - `1923` — nur das Jahr
 - `1923-05` — Jahr und Monat
 - `1923-05-14` — exaktes Datum
-- `1920~` — ungefähr 1920
-- `1910/1930` — Zeitraum
-- `[1920, 1930]` — eines der genannten Jahre
+- `-0043` — Jahr vor Christus (44 v. Chr.)
+- `-0043-03-15` — exaktes Datum vor Christus
+
+**Jahre vor Christus**: BCE-Jahre werden mit vorangestelltem Minuszeichen und vierstellig aufgefülltem Jahr eingegeben (`-0043` für 44 v. Chr.). Dabei gilt die ISO-8601-Jahreszählung mit Jahr 0 (1 v. Chr. = Jahr `0000`, 44 v. Chr. = Jahr `-0043`). Das eingebaute Kalender-Widget unterstützt keine Jahre v. Chr. — BCE-Werte direkt ins Textfeld eingeben.
 
 Beispiele für Felder:
 - Entstehungsdatum
@@ -184,6 +204,24 @@ Beispiele:
 - Vorlage → Object (ein anderes Objekt)
 - Exemplar von → Occurrence (ein bibliografisches Werk)
 
+Relationsfelder sind für fachlich benannte Beziehungen im Erfassungsformular
+bestimmt, etwa „Autor:in“ oder „Aufnahmeort“. Sie können einen Zieltyp, ein
+Relationstyp-Vokabular und optional einen festen Relationstyp festlegen. Ohne
+festen Typ kann die Person, die katalogisiert, einen passenden Typ aus dem
+Vokabular wählen. Mit festem Typ wird genau diese Semantik verwendet.
+
+Die Beziehungen-Karte eines gespeicherten Datensatzes ist keine zweite
+Bearbeitungsoberfläche für solche Felder: Sie zeigt den vollständigen
+Beziehungsgraphen und fügt nur weitere, freie Beziehungen zu anderen
+Haupttypen hinzu. So bleibt eine fachlich konfigurierte Beziehung im zugehörigen
+Formularfeld bearbeitbar, während zusätzliche Graph-Beziehungen weiterhin
+möglich sind.
+
+Für die Portalsuche kann ein Relationsfeld ausgewählte Felder seines Zieltyps
+in den Suchindex übernehmen. Ein fester Relationstyp beschränkt diese Werte auf
+die entsprechende Beziehung; ohne festen Typ werden Werte aller Beziehungen
+zum gewählten Zieltyp übernommen.
+
 ---
 
 ### `geo` – Geografische Koordinaten
@@ -196,42 +234,95 @@ Beispiele:
 
 ---
 
+### `url` – Weblink
+
+Speichert einen externen Link mit einem optionalen Linktitel. Die URL wird beim
+Speichern geprüft und in Admin-UI und Portal klickbar dargestellt.
+
+Beispiele:
+- Digitalisat in einem externen Repositorium
+- Projekt- oder Ausstellungsseite
+- Bereits vergebener externer Identifier mit Zielseite
+
+Ein Wert besteht aus URL und optionalem Titel:
+
+```json
+{"value": "https://example.org/digitalisat/42", "label": "Digitalisat"}
+```
+
+---
+
 ### `pid` – Persistenter Identifier
 
-Für Normdaten-IDs aus externen Quellen (GND, VIAF, Geonames, ORCID …). Das Authority-Plugin-System ermöglicht die Suche in der externen Quelle direkt aus der Erfassung.
+Für einen von Katalon vergebenen persistenten Identifier. PID-Felder sind im
+Erfassungsformular schreibgeschützt: Mitarbeitende wählen **Reservieren**, um
+einen Identifier zu vergeben; danach wird er als Resolver-Link angezeigt.
+Beim Veröffentlichen reserviert Katalon fehlende, konfigurierte PIDs automatisch.
+Schlägt die Vergabe fehl, wird die Veröffentlichung abgebrochen.
 
 **Settings:**
 
 | Schlüssel | Typ | Beschreibung |
 |---|---|---|
-| `authority` | String | ID des Authority-Adapters, z.B. `gnd`, `viaf`, `geonames`. |
+| `pid_provider` | String | `ark` oder `dnb_urn`. Legt den Vergabedienst fest. Nur vollständig konfigurierte Dienste sind auswählbar. |
 
 Beispiel:
 ```json
-{"authority": "gnd"}
+{"pid_provider": "ark"}
 ```
 
 Beispiele:
-- GND-ID einer Person
-- Geonames-ID eines Ortes
-- ORCID einer Forscherin
+- ARK für einen öffentlichen Datensatz
+- DNB-URN für einen veröffentlichten Datensatz
+
+Ist kein Dienst betriebsbereit, steht der Feldtyp `pid` bei neuen Feldern nicht
+zur Auswahl. Bereits vergebene PIDs bleiben sichtbar, auch wenn ihr Dienst
+später abgeschaltet wird.
+
+---
+
+### `group` – Feldgruppe
+
+Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`.
+
+Beispiele:
+- Maßangabe (Wert + Einheit)
+- Ausstellungsbeteiligung (Ausstellung + Rolle)
+
+---
+
+## Cookbook: Datierungstyp (unscharfe/qualifizierte Datierung)
+
+Das `date`-Feld akzeptiert nur konkrete Datumsangaben (siehe oben). Ungefähre Angaben und Zeiträume werden nicht über Syntax im Datumswert ausgedrückt (kein EDTF) — dafür gibt es zwei etablierte Muster:
+
+- **Zeitraum (von/bis)**: zwei separate `date`-Felder, z.B. `herstellungsdatum_von` / `herstellungsdatum_bis`.
+- **Qualifizierung (circa/vor/nach/exakt)**: eine Kombination aus `group` + `date` + `vocab`:
+
+1. Vokabular anlegen, z.B. `datierungstyp` mit Termen: `exakt`, `circa`, `vor`, `nach`, `undatiert`.
+2. Feld vom Typ `group` anlegen, z.B. `datierung` (Label „Datierung").
+3. Darunter zwei Sub-Felder anlegen:
+   - `datum` (Typ `date`)
+   - `typ` (Typ `vocab`, `settings.vocabulary_id` → Vokabular `datierungstyp`)
+
+Ergebnis: pro Datensatz lassen sich mehrere Datierungen mit je eigenem Typ erfassen (z.B. Entstehung „circa 1920", Erwerb „exakt 1955"), und der Typ ist als Vokabularwert facettierbar/durchsuchbar — unabhängig vom Datumswert. Auch die Qualifizierung eines BCE-Datums funktioniert so: `datum = -0043`, `typ = circa` („circa 44 v. Chr.").
 
 ---
 
 ## Subtyp-Felder
 
-Bei Entity und Occurrence kann ein Feld an einen bestimmten Subtyp gebunden werden.
+Bei Object, Entity, Place, Occurrence und Vorgang kann ein Feld an einen bestimmten Subtyp gebunden werden.
 
 - **Feld ohne `target_subtype`**: Erscheint für alle Datensätze dieses Primärtyps, unabhängig vom Subtyp.
 - **Feld mit `target_subtype = "person"`**: Erscheint nur bei Entitäten vom Subtyp `person`.
+- **Feld mit `target_subtype = "acquisition"`**: Erscheint nur bei Vorgängen vom Typ `acquisition`.
 
 **Anwendungsfall:**
 
 Eine Entität kann eine Person oder eine Organisation sein. Für Personen braucht man Geburtsdatum und Sterbeort, für Organisationen Gründungsjahr und Rechtsform. Durch Subtyp-Felder lässt sich das Formular entsprechend steuern.
 
-In der Admin-UI erscheint das Subtyp-Eingabefeld nur bei den Primärtypen Entity und Occurrence. Wenn das Subtyp-Eingabefeld leer gelassen wird, gilt das Feld für alle Subtypen.
+In der Admin-UI kann für jeden Datensatztyp ein vorhandener Subtyp gewählt werden. Wenn das Subtyp-Eingabefeld leer gelassen wird, gilt das Feld für alle Subtypen.
 
-Subtyp-Werte sind frei wählbare Zeichenketten. Es gibt keine systemseitige Validierung der Subtyp-Bezeichnungen.
+Subtypen werden in der Subtyp-Verwaltung angelegt und serverseitig validiert. Bei Vorgängen werden `loan_out`, `loan_in`, `acquisition`, `conservation`, `object_entry` und `deaccession` als Startbestand angelegt. Wie eigene Vorgangstypen sind sie löschbar, solange kein Vorgang sie verwendet; beim Löschen werden ihre subtyp-spezifischen Felddefinitionen und Formularvarianten deaktiviert. Eigene Vorgangstypen können zusätzlich angelegt und für Felder sowie Formularvarianten verwendet werden.
 
 ---
 
