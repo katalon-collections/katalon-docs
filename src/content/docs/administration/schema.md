@@ -279,6 +279,31 @@ Ist kein Dienst betriebsbereit, steht der Feldtyp `pid` bei neuen Feldern nicht
 zur Auswahl. Bereits vergebene PIDs bleiben sichtbar, auch wenn ihr Dienst
 später abgeschaltet wird.
 
+
+### `authority` – Normdatenfeld
+
+Für normierte Entitäten und Identifier aus angebundenen externen Quellen (GND, Wikidata, GeoNames, VIAF, Getty AAT, Getty TGN, ICONCLASS).
+
+Im Erfassungsformular bietet das Feld eine interaktive Autocomplete-Suche gegen die externe API in Echtzeit. Bei Auswahl werden Identifier, Label, Beschreibung und ggf. Geokoordinaten (GeoNames) gespeichert und als klickbare Verlinkung zur Originalquelle dargestellt.
+
+**Settings:**
+
+| Schlüssel | Typ | Beschreibung |
+|---|---|---|
+| `source` | String | ID der angebundenen Normdatenquelle, z. B. `gnd`, `wikidata`, `geonames`, `viaf`, `aat`, `tgn` oder `iconclass`. Es können nur Quellen gewählt werden, die unter **Einstellungen → Normdatenquellen** aktiviert sind. |
+
+Beispiel:
+```json
+{"source": "gnd"}
+```
+
+Beispiele:
+- GND-Datensatz einer Person oder Körperschaft
+- GeoNames-Ort mit Koordinaten und automatischer Kartenvorschau
+- Wikidata-Referenz für ikonografische oder sachliche Klassifikationen
+
+Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld innerhalb einer Feldgruppe (`group`) verwendet werden. Ausführliche Details siehe [Normdaten & Linked Data](/katalon-docs/administration/normdaten/).
+
 ---
 
 ### `group` – Feldgruppe
