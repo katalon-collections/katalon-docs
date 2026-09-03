@@ -17,7 +17,7 @@ Eine Formularvariante legt **keine neuen Felder** an und erzeugt **keinen zweite
 ## Varianten anlegen
 
 1. Admin-UI öffnen, im linken Menü unter **Konfiguration** den Punkt **Formularvarianten** wählen.
-2. Oben den Datensatztyp wählen (Objekte, Entitäten, Orte, Occurrences, Vorgänge).
+2. Oben den Datensatztyp wählen (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen).
 3. Falls für diesen Typ Subtypen konfiguriert sind, erscheint zusätzlich eine Subtyp-Auswahl. **Alle / Global** zeigt Varianten, die unabhängig vom Subtyp gelten; eine konkrete Auswahl zeigt zusätzlich subtyp-spezifische Felder.
 4. **Neue Variante** klicken.
 5. Namen (interner Bezeichner, z. B. `schnellerfassung`) und deutsches Label eingeben.
@@ -48,7 +48,7 @@ In der Variantenliste lässt sich pro Variante ankreuzen, für welche Rollen (Ad
 
 ## Wo Formularvarianten wirken
 
-- Im normalen Bearbeitungsformular für bestehende und neue Datensätze der fünf Datensatztypen (Objekte, Entitäten, Orte, Occurrences, Vorgänge).
+- Im normalen Bearbeitungsformular für bestehende und neue Datensätze der sechs Datensatztypen (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen).
 - In der Schnellerfassung, die beim Anlegen von Relationen aus einem anderen Formular heraus geöffnet wird (siehe Beziehungen-Karte in [Schema-Verwaltung](/katalon-docs/administration/schema)).
 
 Gruppenfelder werden als Ganzes über den Namen der Gruppe in die Variante aufgenommen; einzelne Kindfelder einer Gruppe lassen sich nicht separat aus- oder abwählen.

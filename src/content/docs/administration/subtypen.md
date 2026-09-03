@@ -10,7 +10,7 @@ Subtypen unterteilen einen Datensatztyp in fachlich unterschiedliche Ausprägung
 
 Nur Benutzer mit der Rolle `admin` oder `superuser` sehen diesen Menüpunkt und können Subtypen anlegen, ändern oder löschen.
 
-Subtypen gibt es für Objekte, Entitäten, Orte, Occurrences und Vorgänge. Für Objekte, Entitäten, Orte und Occurrences ist kein Subtyp vorkonfiguriert – Institutionen legen sie nach Bedarf selbst an. Bei Vorgängen sind sechs Typen bereits vorhanden: `loan_out` (Leihgabe ausgehend), `loan_in` (Leihgabe eingehend), `acquisition` (Erwerbung), `conservation` (Restaurierung/Konservierung), `object_entry` (Eingangsprüfung) und `deaccession` (Deakzession).
+Subtypen gibt es für Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen und Lagerorte. Für Objekte, Entitäten, Orte, Occurrences, Sammlungen und Lagerorte ist kein Subtyp vorkonfiguriert – Institutionen legen sie nach Bedarf selbst an. Bei Vorgängen sind sechs Typen bereits vorhanden: `loan_out` (Leihgabe ausgehend), `loan_in` (Leihgabe eingehend), `acquisition` (Erwerbung), `conservation` (Restaurierung/Konservierung), `object_entry` (Eingangsprüfung) und `deaccession` (Deakzession).
 
 Ein Datensatz ohne konfigurierten Subtyp verwendet nur das Schema des Primärtyps. Sobald für einen Primärtyp Subtypen existieren, muss ein neuer Datensatz (außer im Entwurfsstatus) einen davon auswählen.
 
@@ -19,7 +19,7 @@ Ein Datensatz ohne konfigurierten Subtyp verwendet nur das Schema des Primärtyp
 ## Subtypen anlegen
 
 1. Admin-UI öffnen, im linken Menü unter **Konfiguration** den Punkt **Subtypen** wählen.
-2. Oben den Primärtyp wählen (Objekte, Entitäten, Orte, Occurrences, Vorgänge).
+2. Oben den Primärtyp wählen (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen, Lagerorte).
 3. **Neuer Subtyp** klicken.
 4. Deutsches und englisches Label eingeben. Daraus wird automatisch ein Vorschlag für den internen Namen abgeleitet (z. B. aus „Person" wird `person`).
 5. Optional eine Beschreibung des institutionellen Einsatzes hinterlegen – hilfreich für andere Sachbearbeiter:innen, die später denselben Subtyp verwenden.
