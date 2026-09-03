@@ -3,8 +3,6 @@ title: Produktionsbetrieb
 description: Katalon auf einem Linux-Server mit Docker Compose und Nginx produktiv betreiben.
 ---
 
-# Katalon – Produktionsbetrieb mit Docker Compose
-
 Dieses Dokument beschreibt, wie Katalon auf einem Linux-Server in Produktion betrieben wird.
 
 **Empfohlener Weg für neue Instanzen:** [`katalon-cli`](https://github.com/katalon-collections/katalon-cli) (`uv tool install katalon-cli`) installiert und aktualisiert Produktionsinstanzen über gepinnte Release-Images, ohne Repository-Checkout — siehe [katalon-cli Repository](https://github.com/katalon-collections/katalon-cli). Der manuelle Weg unten (Repository klonen, Compose-Dateien selbst pflegen) bleibt für Sonderfälle und zum Verständnis der zugrundeliegenden Compose-Topologie relevant, wird aber nicht mehr als primärer Installationsweg empfohlen.

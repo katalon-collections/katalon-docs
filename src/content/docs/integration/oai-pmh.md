@@ -3,8 +3,6 @@ title: OAI-PMH Schnittstelle
 description: Metadatenbereitstellung über OAI-PMH (oai_dc, json_ld / CIDOC-CRM).
 ---
 
-# OAI-PMH Schnittstelle
-
 Katalon stellt Bestandsdaten über eine standardkonforme **OAI-PMH 2.0-Schnittstelle** bereit. Die Schnittstelle ist direkt über die Basis-URL erreichbar:
 
 ```text

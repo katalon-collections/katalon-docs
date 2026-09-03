@@ -2,8 +2,6 @@
 title: "Katalon: Metadaten- und Medienimport"
 ---
 
-# Katalon: Metadaten- und Medienimport
-
 ## Zweck
 
 Der Metadatenimport dient der Massenerfassung von Datensätzen aus tabellarischen oder XML-basierten Quelldaten. Typische Anwendungsfälle:

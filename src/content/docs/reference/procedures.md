@@ -3,8 +3,6 @@ title: Vorgänge
 description: Konzept und Dokumentation zu Vorgängen wie Leihverkehr, Erwerbung und Restaurierung.
 ---
 
-# Katalon – Vorgänge (Leihverkehr, Erwerbung, Restaurierung)
-
 Katalon verwaltet neben den Bestandsdaten (Objekte, Entitäten, Orte, Ereignisse, Sammlungen, Lagerorte) auch **Prozesse und Transaktionen** rund um den Bestand: Leihverkehr, Erwerbung, Restaurierung oder Eingangsprüfung.
 
 Solche Vorgänge sind in Museen, Archiven und Bibliotheken täglich relevant – für Versicherung, Standortverwaltung, Berichtspflichten und institutionelles Gedächtnis.

@@ -3,8 +3,6 @@ title: Erste Schritte
 description: Minimaler Weg vom leeren Katalon bis zum ersten öffentlichen Datensatz.
 ---
 
-# Erste Schritte
-
 ## 1. Anmelden
 
 Öffne die Admin-Oberfläche und melde dich mit dem automatisch erzeugten Admin-Account an.

@@ -2,8 +2,6 @@
 title: "Walkthrough: eine eigene Sammlung einrichten"
 ---
 
-# Walkthrough: eine eigene Sammlung einrichten
-
 Dieser Einstieg richtet eine kleine fotografische Sammlung ein. Das Beispiel trennt die Fotografie selbst, die fotografierende Person, den Aufnahmeort und eine Ausstellung. Dadurch bleibt die Information später suchbar und lässt sich ohne doppelte Eingaben weiterverwenden.
 
 > **Bild vorgesehen: Startseite der Admin-UI mit hervorgehobener Navigation.**

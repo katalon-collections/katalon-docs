@@ -2,8 +2,6 @@
 title: "Katalon – Mehrsprachigkeit"
 ---
 
-# Katalon – Mehrsprachigkeit
-
 ## Zweck
 
 Katalon unterstützt mehrere Sprachen auf drei Ebenen:

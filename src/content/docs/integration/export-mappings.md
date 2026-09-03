@@ -3,8 +3,6 @@ title: Export-Mappings
 description: Metadatenfelder flexibel auf Zielformate wie Dublin Core (oai_dc) und LIDO mappen.
 ---
 
-# Katalon – Export-Mappings
-
 Katalon trennt interne Erfassungsfelder von externen Metadatenformaten. Über die datengetriebene Mapping-Schicht kann jedes Schemafeld auf Zielpfade externer Exportmodelle gemappt werden.
 
 Die Konfiguration erfolgt im Schema-Editor direkt an der jeweiligen Felddefinition (**Konfiguration → Schemata → Feld auswählen → Metadaten-Export**).

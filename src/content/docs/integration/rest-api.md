@@ -3,8 +3,6 @@ title: REST API
 description: Daten aus Katalon per REST API suchen, lesen, filtern und als Linked Data exportieren.
 ---
 
-# REST API
-
 Katalon stellt alle Daten über eine versionierte REST API unter `/v1` bereit. Die vollständige maschinenlesbare Dokumentation (OpenAPI/Swagger) läuft in jeder Installation interaktiv unter:
 
 ```text

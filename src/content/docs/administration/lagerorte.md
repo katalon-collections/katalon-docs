@@ -2,8 +2,6 @@
 title: "Katalon – Lagerorte"
 ---
 
-# Katalon – Lagerorte
-
 ## Übersicht
 
 Lagerorte bilden ab, wo sich ein Objekt physisch befindet (Depot, Raum, Regal, Schublade, Vitrine …), in beliebiger Hierarchietiefe. Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Lagerorte**.

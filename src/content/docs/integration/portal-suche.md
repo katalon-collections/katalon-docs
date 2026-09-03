@@ -2,8 +2,6 @@
 title: "Suche im Portal"
 ---
 
-# Suche im Portal
-
 Die Schnellsuche im Kopf des Portals durchsucht Objekte, Entitäten, Orte und Vorgänge gemeinsam. Auf der Ergebnisseite lassen sich Treffer weiter über die angebotenen Facetten eingrenzen.
 
 Zahlenfelder, die als Facette eingerichtet sind, werden als Bereich gefiltert. Geben Sie bei **Von** und **Bis** einen genauen Wert ein oder verschieben Sie die beiden Regler. Eine der beiden Grenzen kann leer bleiben; **Alle** entfernt den Zahlenbereich wieder.

@@ -3,8 +3,6 @@ title: Serverumzug
 description: Katalon auf einen neuen Server umziehen – Datenbank, Medien und Konfiguration übertragen.
 ---
 
-# Katalon auf einen neuen Server umziehen
-
 Diese Anleitung gilt für eine manuell betriebene Docker-Compose-Installation. Bei einer Installation über `katalon-cli` verwaltet das Installer-Projekt die Dateien und den Update-Pfad.
 
 Ein Umzug übernimmt PostgreSQL, Mediendateien, die Instanzkonfiguration und TLS-Dateien. Elasticsearch wird nicht kopiert: Der Index entsteht aus der wiederhergestellten Datenbank neu.

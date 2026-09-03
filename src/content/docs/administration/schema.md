@@ -2,8 +2,6 @@
 title: "Katalon – Schema-Verwaltung"
 ---
 
-# Katalon – Schema-Verwaltung
-
 ## Übersicht
 
 Das Schema bestimmt, welche Felder ein Datensatz eines bestimmten Primärtyps hat. Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Schemata**. Felder können ohne Datenbankmigrationen angelegt, bearbeitet und gelöscht werden.

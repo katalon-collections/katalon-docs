@@ -3,8 +3,6 @@ title: Updates und Datenpflege
 description: Wie Katalon aktualisiert wird und worauf bei Versionssprüngen zu achten ist.
 ---
 
-# Katalon – Updates und Datenpflege
-
 Dieses Dokument erklärt, wie Katalon aktualisiert wird, was dabei mit deinen Daten und Anpassungen passiert, und worauf du bei bestimmten Versionssprüngen achten musst.
 
 ## Das Grundprinzip: Docker-first

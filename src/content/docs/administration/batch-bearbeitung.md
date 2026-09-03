@@ -2,8 +2,6 @@
 title: "Katalon – Massenbearbeitung (Batch Editing)"
 ---
 
-# Katalon – Massenbearbeitung (Batch Editing)
-
 ## Übersicht
 
 Die Massenbearbeitung erlaubt es, dieselbe Operation auf viele Datensätze gleichzeitig anzuwenden, ohne jeden Datensatz einzeln zu öffnen. Sie ist in allen Listenansichten verfügbar: Objekte, Entitäten, Orte, Occurrences, Vorgänge und Sammlungen.

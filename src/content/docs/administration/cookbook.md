@@ -2,8 +2,6 @@
 title: "Cookbook: erweiterte Anwendungsfälle"
 ---
 
-# Cookbook: erweiterte Anwendungsfälle
-
 Die Beispiele bauen auf dem [Walkthrough zur eigenen Sammlung](/katalon-docs/getting-started/eigene-sammlung) auf. Jedes Rezept beschreibt eine kleine, wiederverwendbare Konfiguration.
 
 ## Mehrere Personen an einer Fotografie

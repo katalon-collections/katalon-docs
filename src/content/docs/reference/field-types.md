@@ -3,8 +3,6 @@ title: Feldtypen
 description: Überblick über Feldtypen in der Schema-Engine.
 ---
 
-# Feldtypen
-
 Katalon-Felder werden in `field_definitions` konfiguriert. Der konkrete Wert liegt pro Datensatz in `metadata_`.
 
 | Feldtyp | Verwendung | Details |

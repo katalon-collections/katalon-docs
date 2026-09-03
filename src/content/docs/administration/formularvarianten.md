@@ -2,8 +2,6 @@
 title: "Katalon – Formularvarianten"
 ---
 
-# Katalon – Formularvarianten
-
 ## Übersicht
 
 Formularvarianten wählen und ordnen die vorhandenen Schemafelder eines Datensatztyps für unterschiedliche Erfassungssituationen aus – etwa eine schlanke Schnellerfassung neben der vollständigen Maske. Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Formularvarianten**.

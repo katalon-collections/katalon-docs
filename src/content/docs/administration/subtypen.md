@@ -2,8 +2,6 @@
 title: "Katalon – Subtypen"
 ---
 
-# Katalon – Subtypen
-
 ## Übersicht
 
 Subtypen unterteilen einen Datensatztyp in fachlich unterschiedliche Ausprägungen – zum Beispiel Person und Organisation bei Entitäten, oder Leihgabe ausgehend und Erwerbung bei Vorgängen. Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Subtypen**.

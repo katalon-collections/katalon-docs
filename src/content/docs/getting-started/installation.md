@@ -3,8 +3,6 @@ title: Installation
 description: Katalon lokal oder auf einem Server mit Docker Compose starten.
 ---
 
-# Installation
-
 Katalon ist Docker-first. Für einen normalen Start brauchst du Docker und Docker Compose v2.
 
 ## Schnellstart mit Docker Compose

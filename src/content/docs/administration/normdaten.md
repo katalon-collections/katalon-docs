@@ -3,8 +3,6 @@ title: Normdaten & Linked Data
 description: Externe Normdaten (GND, Wikidata, GeoNames etc.) anbinden, im Schema konfigurieren und SKOS-Thesauri importieren.
 ---
 
-# Katalon – Normdaten & Linked Data
-
 Katalon verbindet museale Erfassung mit Linked Open Data (LOD). Über das Authority-System können Datensätze direkt beim Erfassen mit normierten Identifikatoren und externen Thesauri verknüpft werden. Vokabulare unterstützen kanonische URIs und SKOS-Konkordanzen.
 
 ---
