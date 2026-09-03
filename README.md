@@ -1,5 +1,7 @@
 # Katalon Docs
 
+Live: [https://katalon-collections.github.io/katalon-docs/](https://katalon-collections.github.io/katalon-docs/)
+
 Starlight/Astro-Dokumentation für Katalon.
 
 ## Entwicklung
