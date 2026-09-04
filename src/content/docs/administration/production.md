@@ -312,6 +312,9 @@ Die Zugangsdaten werden im API-Log mit dem Block `====== KATALON FIRST RUN =====
 
 ## Zugriffsschutz für öffentliche Endpunkte
 
+:::note[Verfügbar ab Version 1.19.7]
+:::
+
 Portal-Suche, OAI-PMH und die [JSON-LD/Turtle-Export-Endpunkte](/katalon-docs/integration/linked-data-export/) sind bewusst ohne API-Key erreichbar — jeder Datensatz mit Status `public` ist darüber offen abrufbar (siehe [REST API: Authentifizierung](/katalon-docs/integration/rest-api/#authentifizierung)). Schutz vor Massenzugriff/Scraping läuft deshalb über Rate-Limiting und Crawler-Konventionen, nicht über Zugriffsbeschränkung.
 
 ### Rate-Limits
