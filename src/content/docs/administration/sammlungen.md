@@ -3,6 +3,9 @@ title: Sammlungen
 description: Kuratorische Bestände und Sammlungen hierarchisch strukturieren und Objekten zuordnen.
 ---
 
+:::note[Verfügbar ab Version 1.18.0]
+:::
+
 Sammlungen bilden die kuratorische und bestandshistorische Gliederung eines Hauses ab (z. B. Vorlass, Sammlung Moderne, Teilbestand Grafiken). Sie sind in Katalon ein eigenständiger Primärtyp mit voller Schema-, Hierarchie- und Subtyp-Unterstützung.
 
 Die Verwaltung erfolgt in der Admin-UI unter **Sammlungen**.

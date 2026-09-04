@@ -3,6 +3,9 @@ title: Linked Data Export (JSON-LD & RDF)
 description: Semantischer Export von Bestandsdaten in CIDOC-CRM und LRMoo als JSON-LD und Turtle.
 ---
 
+:::note[Verfügbar ab Version 1.17.2]
+:::
+
 Katalon verfügt über einen semantischen RDF- und JSON-LD-Serializer, der Bestandsdaten automatisiert nach den internationalen Ontologien **CIDOC-CRM** (ISO 21127) und **LRMoo** (Library Reference Model - object-oriented) abbildet.
 
 Der Export steht über die REST-API, per Content Negotiation sowie über die OAI-PMH-Schnittstelle zur Verfügung.
