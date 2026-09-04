@@ -84,6 +84,8 @@ curl -H "Accept: text/turtle" \
 
 Ohne passenden RDF-Accept-Header liefert der Endpunkt das gewohnte Anwendungs-JSON aus.
 
+Diese Export-Endpunkte erfordern keinen API-Key — jeder Datensatz mit Status `public` ist frei abrufbar. Für bulk-artiges automatisiertes Harvesting einzelner Datensätze sind die Endpunkte pro IP rate-limitiert (Betreiber-Konfiguration `RATE_LIMIT_PUBLIC_EXPORT`, Default `30/minute`); für Massenabfragen ist [OAI-PMH](/katalon-docs/integration/oai-pmh/) der vorgesehene Weg. Details: [Produktionsbetrieb: Zugriffsschutz für öffentliche Endpunkte](/katalon-docs/administration/production/#zugriffsschutz-für-öffentliche-endpunkte).
+
 ---
 
 ## Abruf über OAI-PMH

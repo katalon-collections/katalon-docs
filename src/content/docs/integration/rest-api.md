@@ -28,6 +28,8 @@ X-API-Key: <api-key>
 
 API-Keys können in der Admin-Oberfläche pro Benutzerkonto mit spezifischen Rechten erzeugt werden.
 
+Öffentliche/anonyme Endpunkte sind pro IP-Adresse rate-limitiert (Betreiber-Konfiguration, siehe [Produktionsbetrieb: Zugriffsschutz für öffentliche Endpunkte](/katalon-docs/administration/production/#zugriffsschutz-für-öffentliche-endpunkte)); bei Überschreitung antwortet die API mit HTTP 429.
+
 ---
 
 ## Suche

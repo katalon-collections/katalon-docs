@@ -21,7 +21,8 @@ Dieses Dokument beschreibt, wie Katalon auf einem Linux-Server in Produktion bet
 - [ ] TLS-Zertifikate ausgestellt
 - [ ] `.env` vollständig ausgefüllt — insbesondere `SECRET_KEY`, Datenbankpasswort, `KATALON_BASE_URL`, `CORS_ORIGINS`
 - [ ] `MEDIA_ROOT`-Host-Verzeichnis existiert und gehört UID/GID `1000` (`install -d -o 1000 -g 1000 -m 755 /srv/katalon/media`, **nicht** `mkdir -p`) — `api`- und `worker`-Container laufen als nicht-root User `app` (UID 1000). Fehlt das, schlagen Uploads still mit `Permission denied` fehl, ohne Health-Check-Alarm — siehe Abschnitt "Medien-Upload schlägt fehl" unten.
-- [ ] `docker/nginx.prod.conf` auf eigene Domain(en) angepasst
+- [ ] `docker/nginx.prod.conf` auf eigene Domain(en) angepasst (enthält bereits `/robots.txt`/`/llms.txt`-Routing für das Portal sowie ein statisches `Disallow: /` für die Admin-Subdomain)
+- [ ] Rate-Limits für öffentliche Endpunkte geprüft (`RATE_LIMIT_*`, Defaults meist ausreichend) — siehe [Zugriffsschutz für öffentliche Endpunkte](#zugriffsschutz-für-öffentliche-endpunkte) unten
 - [ ] `.env` VITE-Build-Argumente für Admin/Portal gesetzt
 - [ ] Wikidata-Adapter: `WIKIDATA_USER_AGENT` setzen oder `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL` vollständig pflegen (Wikidata-Policy erfordert identifizierbaren User-Agent)
 - [ ] Backup-Strategie eingerichtet (Cron für DB-Dump, Media-Volume gesichert)
@@ -59,6 +60,8 @@ Mindestens diese Werte anpassen:
 | `OAI_ADMIN_EMAIL` | Erscheint im OAI-PMH Identify-Response |
 | `WIKIDATA_USER_AGENT` | Optionaler User-Agent für Wikidata. Leer = automatisch aus `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL`. |
 | `SMTP_*` | Optionaler externer SMTP-Relay für transaktionale E-Mails. Passwort nur als Betreiber-Secret setzen. |
+| `RATE_LIMIT_*` | Rate-Limits für öffentliche Endpunkte (Portal-Suche, OAI-PMH, JSON-LD/Turtle-Export, Authority-Proxy, globaler Default) — siehe [Zugriffsschutz für öffentliche Endpunkte](#zugriffsschutz-für-öffentliche-endpunkte) unten. |
+| `ROBOTS_DISALLOW_PATHS` / `LLMS_TXT_*` | Steuerung von `/robots.txt` und `/llms.txt` — siehe unten. |
 
 ### ARKs einrichten
 
@@ -306,6 +309,38 @@ Die Zugangsdaten werden im API-Log mit dem Block `====== KATALON FIRST RUN =====
 1. Browser: `https://admin.deine-domain.de`
 2. Login mit den First-Run-Zugangsdaten
 3. Sofort das Passwort ändern (Admin → Benutzer → eigenes Konto)
+
+## Zugriffsschutz für öffentliche Endpunkte
+
+Portal-Suche, OAI-PMH und die [JSON-LD/Turtle-Export-Endpunkte](/katalon-docs/integration/linked-data-export/) sind bewusst ohne API-Key erreichbar — jeder Datensatz mit Status `public` ist darüber offen abrufbar (siehe [REST API: Authentifizierung](/katalon-docs/integration/rest-api/#authentifizierung)). Schutz vor Massenzugriff/Scraping läuft deshalb über Rate-Limiting und Crawler-Konventionen, nicht über Zugriffsbeschränkung.
+
+### Rate-Limits
+
+Alle über `.env` konfigurierbar (slowapi-Syntax `"N/unit"`, z. B. `30/minute`, `500/hour`):
+
+| Variable | Default | Betrifft |
+|---|---|---|
+| `RATE_LIMIT_DEFAULT` | `200/minute` | Globaler Fallback für alle Endpunkte ohne eigenes Limit |
+| `RATE_LIMIT_PUBLIC_EXPORT` | `30/minute` | JSON-LD/Turtle-Export je Datensatz (`/{typ}/{id}/export`) — der wahrscheinlichste Ziel-Endpunkt für Bulk-Scraping |
+| `RATE_LIMIT_PUBLIC_SEARCH` | `100/minute` | Portal-Suche (`/portal/v1/search`, `/portal/v1/search/advanced`) |
+| `RATE_LIMIT_OAI` | `100/minute` | OAI-PMH (`/oai`) |
+| `RATE_LIMIT_AUTHORITY_PROXY` | `60/minute` | Normdaten-Proxy (GND/Geonames, erfordert ohnehin einen eingeloggten Benutzer) |
+
+Login und Passwort-Reset haben eigene, fest codierte Brute-Force-Limits und sind nicht über `.env` steuerbar — anderes Bedrohungsmodell als Crawler-/Scraper-Traffic.
+
+### robots.txt & llms.txt
+
+Katalon stellt `/robots.txt` und `/llms.txt` auf der Portal-Domain bereit — beides sind reine Konventionen für wohlerzogene Bots/Agenten, kein technischer Zugriffsschutz:
+
+```bash
+curl https://deine-domain.de/robots.txt
+curl https://deine-domain.de/llms.txt
+```
+
+- `ROBOTS_DISALLOW_PATHS` — Pfade, die `/robots.txt` für alle Bots sperrt (Default `["/v1/"]`; Portal-HTML-Seiten bleiben crawlbar).
+- `LLMS_TXT_ENABLED` / `LLMS_TXT_EXTRA_NOTES` — `/llms.txt` weist LLM-Agenten explizit auf die JSON-LD/Turtle-Export-Endpunkte und OAI-PMH als strukturierte Datenquelle hin, statt HTML zu scrapen. Ab-/anschaltbar, mit optionalem Freitext-Zusatz.
+
+`docker/nginx.prod.conf` routet beide Pfade auf der Portal-Domain zur API; die Admin-Subdomain bekommt stattdessen ein statisches `Disallow: /`, damit die Admin-UI nie indexiert wird. Bei einer eigenen nginx-Config diese Routen entsprechend nachziehen.
 
 ## Updates einspielen
 
