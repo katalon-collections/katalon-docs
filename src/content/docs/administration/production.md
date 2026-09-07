@@ -328,6 +328,7 @@ Alle über `.env` konfigurierbar (slowapi-Syntax `"N/unit"`, z. B. `30/minute`, 
 | `RATE_LIMIT_PUBLIC_SEARCH` | `100/minute` | Portal-Suche (`/portal/v1/search`, `/portal/v1/search/advanced`) |
 | `RATE_LIMIT_OAI` | `100/minute` | OAI-PMH (`/oai`) |
 | `RATE_LIMIT_AUTHORITY_PROXY` | `60/minute` | Normdaten-Proxy (GND/Geonames, erfordert ohnehin einen eingeloggten Benutzer) |
+| `RATE_LIMIT_SPARQL` | `60/minute` | SPARQL-Endpoint (`/sparql`, Abfragen gegen den Triple Store) |
 
 Login und Passwort-Reset haben eigene, fest codierte Brute-Force-Limits und sind nicht über `.env` steuerbar — anderes Bedrohungsmodell als Crawler-/Scraper-Traffic.
 
@@ -344,6 +345,69 @@ curl https://deine-domain.de/llms.txt
 - `LLMS_TXT_ENABLED` / `LLMS_TXT_EXTRA_NOTES` — `/llms.txt` weist LLM-Agenten explizit auf die JSON-LD/Turtle-Export-Endpunkte und OAI-PMH als strukturierte Datenquelle hin, statt HTML zu scrapen. Ab-/anschaltbar, mit optionalem Freitext-Zusatz.
 
 `docker/nginx.prod.conf` routet beide Pfade auf der Portal-Domain zur API; die Admin-Subdomain bekommt stattdessen ein statisches `Disallow: /`, damit die Admin-UI nie indexiert wird. Bei einer eigenen nginx-Config diese Routen entsprechend nachziehen.
+
+---
+
+## Optionale RDF-Projektion & SPARQL-Schnittstelle (Oxigraph)
+
+:::note[Verfügbar ab Version 1.19.20]
+:::
+
+Katalon enthält einen optionalen Triple Store (**Oxigraph**) für semantische Graphabfragen via SPARQL 1.1. Um den Standard-Betrieb ressourcenschonend zu halten, ist der Oxigraph-Dienst als Docker Compose-Profil `rdf` konzipiert und standardmäßig inaktiv (Zero Clutter).
+
+### 1. In `.env` aktivieren
+
+Füge folgende Variablen zu deiner `.env`-Datei hinzu:
+
+```bash
+# Docker Compose Profile aktivieren
+COMPOSE_PROFILES=rdf
+
+# Oxigraph Triple Store Integration
+OXIGRAPH_ENABLED=true
+OXIGRAPH_URL=http://oxigraph:7878
+
+# SPARQL 1.1 Protocol Endpoint
+SPARQL_ENDPOINT_ENABLED=true
+SPARQL_REQUIRE_AUTH=true          # 'false' setzen für offenen, anonymen Lesezugriff
+SPARQL_QUERY_TIMEOUT=30.0         # Maximaldauer einer SPARQL-Abfrage in Sekunden
+SPARQL_MAX_QUERY_LENGTH=65536     # Maximale Query-Größe in Bytes (64 KB)
+RATE_LIMIT_SPARQL=60/minute       # Ratenbegrenzung für SPARQL-Anfragen
+```
+
+### 2. Container starten
+
+Starte den Stack mit dem Profil `rdf`:
+
+```bash
+docker compose --profile rdf up -d
+```
+
+Docker startet nun zusätzlich den Container `oxigraph` mit dem persistenten Volume `oxigraph_data`.
+
+### 3. Named Graphs initial aufbauen (Rebuild)
+
+Nach dem ersten Start ist der Triple Store noch leer. Die Daten werden nicht automatisch beim Booten, sondern über einen Celery-Task synchronisiert:
+
+1. **Über die Admin-Oberfläche:**
+   - Gehe zu **Einstellungen** (Zahnrad-Symbol).
+   - In der Sektion **Linked Data & SPARQL** siehst du den Status und den Triple-Zähler.
+   - Klicke auf **„RDF-Index neu aufbauen“**.
+2. **Oder per API / curl:**
+   ```bash
+   curl -X POST "https://admin.deine-domain.de/sparql/rebuild" \
+     -H "Authorization: Bearer <dein-admin-token>"
+   ```
+
+Der Worker verarbeitet alle publizierten Datensätze im Hintergrund und erzeugt die entsprechenden Named Graphs (`urn:katalon:graph:<type>:<uuid>`).
+
+### Laufende Synchronisation
+
+Sobald `OXIGRAPH_ENABLED=true` aktiv ist, synchronisiert Katalon bei jeder Veröffentlichung, Aktualisierung oder Löschung eines Datensatzes den zugehörigen Named Graph automatisch in Oxigraph. Nicht-öffentliche Entwürfe verbleiben isoliert in PostgreSQL.
+
+### Backup & Wiederherstellung
+
+Da Oxigraph eine reine, abgeleitete Projektion aus PostgreSQL darstellt, kann der gesamte Triple Store im Katastrophenfall jederzeit verlustfrei über *„RDF-Index neu aufbauen“* aus der Datenbank rekonstruiert werden. Ein separates Backup des Volumes `oxigraph_data` ist daher im Normalbetrieb nicht zwingend erforderlich.
 
 ## Updates einspielen
 

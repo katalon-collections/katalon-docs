@@ -53,3 +53,52 @@ Für ein Feld mit mehreren Farbwerten in einer Zelle ist die Transformation `spl
 > Zeigen: Quellspalte, Zielfeld, Transformation und Fehler- oder Vorschau-Bereich. Alt-Text: „CSV-Import im Probelauf mit Feldzuordnung und Transformationen.“
 
 Die einzelnen Import-Schritte stehen unter [Metadaten- und Medienimport](/katalon-docs/administration/import).
+
+## Maschinenlesbare Lizenzen und Rechteangaben (ECHOES / FAIR)
+
+Internationale Metadaten- und Interoperabilitätsstandards (wie **ECHOES D6.2** REQ-META-002, Europeana, Deutsche Digitale Bibliothek oder Open-Access-Leitlinien) verlangen für jeden publizierten Datensatz ein **maschinenlesbares Lizenz- oder Rechte-Statement**.
+
+### Warum kein Freitextfeld (`text`)?
+
+Ein reines Textfeld (z. B. `text` mit Werten wie „CC-BY 4.0“, „Creative Commons“, „Public Domain“ oder „Frei für wissenschaftliche Nutzung“) ist **nicht maschinenlesbar**:
+- Externe Harvester, OAI-PMH-Aggregatoren und Repositorien können Schreibweisen, Tippfehler oder unterschiedliche Sprachvarianten nicht zuverlässig auswerten.
+- Semantische Export-Schnittstellen (JSON-LD, RDF/Turtle, SPARQL) können kein standardisiertes Lizenz-Prädikat mit dereferenzierbarer URI erzeugen.
+
+### Empfohlene Modellierung: Kontrolliertes Vokabular (`vocab`)
+
+Für Lizenzangaben wird der Feldtyp **`vocab`** verwendet. Dadurch ist die Erfassung strikt an qualitätsgesicherte Begriffe mit kanonischen URIs gebunden.
+
+#### Schritt 1: Lizenz-Vokabular anlegen
+
+1. Öffne die Admin-UI und navigiere zu **Konfiguration → Vokabulare**.
+2. Klicke auf **Neues Vokabular**:
+   - **Name:** `licenses`
+   - **Bezeichnung (DE):** `Lizenzen & Nutzungsrechte`
+   - **Bezeichnung (EN):** `Licenses & Rights`
+3. Lege die in deiner Institution zulässigen Lizenzen als Begriffe an. Trage dabei im Feld **Kanonische URI** die offizielle Lizenz-URI von Creative Commons bzw. RightsStatements.org ein:
+
+| Begriff (Label DE) | Label EN | Kanonische URI (`canonical_uri`) | Bedeutung / Empfehlung |
+|---|---|---|---|
+| **Gemeinfrei (CC0 1.0)** | Public Domain Dedication (CC0 1.0) | `https://creativecommons.org/publicdomain/zero/1.0/` | Vollständig rechtefrei, Metadaten-Standard |
+| **Namensnennung (CC BY 4.0)** | Attribution (CC BY 4.0) | `https://creativecommons.org/licenses/by/4.0/` | Standard Open Access |
+| **Namensnennung - Weitergabe unter gleichen Bedingungen (CC BY-SA 4.0)** | Attribution-ShareAlike (CC BY-SA 4.0) | `https://creativecommons.org/licenses/by-sa/4.0/` | Abgeleitete Werke unter gleicher Lizenz |
+| **Namensnennung - Nicht kommerziell (CC BY-NC 4.0)** | Attribution-NonCommercial (CC BY-NC 4.0) | `https://creativecommons.org/licenses/by-nc/4.0/` | Nur nicht-kommerzielle Nachnutzung |
+| **In Copyright (InC 1.0)** | In Copyright (InC 1.0) | `http://rightsstatements.org/vocab/InC/1.0/` | Urheberrechtlich geschützt, keine Nachnutzung ohne Erlaubnis |
+| **Urheberrechtsschutz erloschen (NoC-NC 1.0)** | No Copyright - Non-Commercial (NoC-NC 1.0) | `http://rightsstatements.org/vocab/NoC-NC/1.0/` | Gemeinfrei, vertraglich nur nicht-kommerziell nachnutzbar |
+
+#### Schritt 2: Schema-Feld definieren
+
+1. Navigiere zu **Konfiguration → Schemata** und wähle den Primärtyp (z. B. **Objekte**).
+2. Klicke auf **Neues Feld**:
+   - **Name:** `license`
+   - **Bezeichnung (DE):** `Lizenz`
+   - **Bezeichnung (EN):** `License`
+   - **Feldtyp:** `vocab`
+   - **Vokabular:** Wähle `Lizenzen & Nutzungsrechte` aus.
+   - **Öffentlich über APIs ausgeben:** Aktiviert lassen.
+3. Unter **Erweiterte Optionen → Metadaten-Export**:
+   - Mappe das Feld auf das Dublin-Core-Element `dcterms:license` (oder `dc:rights`).
+
+#### Schritt 3: Rechteangaben bei Medien (Digitalisaten)
+
+Medien-Datensätze (Bilder, Scans, Digitalisate) verfügen in Katalon bereits über ein integriertes Feld für Lizenz und Rechteinhaber. Wenn ein analoges Objekt und dessen Digitalisat unterschiedlichen Rechten unterliegen (z. B. historisches Objekt gemeinfrei, Repro-Fotografie lizenziert nach CC BY), wird die Objektlizenz über das Schemafeld `license` und die Bildlizenz direkt am Mediendatensatz erfasst.

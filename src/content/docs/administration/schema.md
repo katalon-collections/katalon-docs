@@ -161,6 +161,11 @@ Beispiele für Felder:
 - Kameratyp (Vokabular: Kameratypen)
 - Genre (Vokabular: Genres)
 
+
+:::tip[Best Practice: Lizenz- und Rechtefelder]
+Lizenz- und Rechteangaben (z. B. Creative Commons, RightsStatements.org) sollten **niemals als Freitextfeld** (`text`), sondern stets als kontrolliertes Vokabularfeld (`vocab`) mit hinterlegter kanonischer URI angelegt werden, um Anforderungen an maschinenlesbare Metadaten (z. B. ECHOES D6.2, Europeana, DDB) zu erfüllen.
+👉 Siehe das Rezept im [Cookbook: Maschinenlesbare Lizenzen und Rechteangaben](/katalon-docs/administration/cookbook#maschinenlesbare-lizenzen-und-rechteangaben-echoes--fair).
+:::
 ---
 
 ### `vocab_free` – Vokabularfeld mit Freitext

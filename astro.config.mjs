@@ -40,6 +40,7 @@ export default defineConfig({
 						{ label: 'Metadaten- & Medienimport', slug: 'administration/import' },
 						{ label: 'Stapelbearbeitung', slug: 'administration/batch-bearbeitung' },
 						{ label: 'Cookbook (Rezepte)', slug: 'administration/cookbook' },
+						{ label: 'Benutzer & Rollen', slug: 'administration/benutzer-und-rollen' },
 					],
 				},
 				{
@@ -48,6 +49,7 @@ export default defineConfig({
 						{ label: 'Portal-Suche', slug: 'integration/portal-suche' },
 						{ label: 'REST API', slug: 'integration/rest-api' },
 						{ label: 'Linked Data Export (JSON-LD & RDF)', slug: 'integration/linked-data-export' },
+						{ label: 'SPARQL-Endpoint (Oxigraph)', slug: 'integration/sparql' },
 						{ label: 'OAI-PMH Schnittstelle', slug: 'integration/oai-pmh' },
 						{ label: 'Export-Mappings', slug: 'integration/export-mappings' },
 					],

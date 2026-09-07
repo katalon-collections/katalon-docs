@@ -8,8 +8,12 @@ description: Semantischer Export von Bestandsdaten in CIDOC-CRM und LRMoo als JS
 
 Katalon verfügt über einen semantischen RDF- und JSON-LD-Serializer, der Bestandsdaten automatisiert nach den internationalen Ontologien **CIDOC-CRM** (ISO 21127) und **LRMoo** (Library Reference Model - object-oriented) abbildet.
 
-Der Export steht über die REST-API, per Content Negotiation sowie über die OAI-PMH-Schnittstelle zur Verfügung.
+Der Export steht über die REST-API, per Content Negotiation, über die OAI-PMH-Schnittstelle sowie über den integrierten [SPARQL-Endpoint (Oxigraph)](/katalon-docs/integration/sparql/) zur Verfügung.
 
+
+:::tip[Architekturprinzip: Relationales MMS mit RDF-Projektion]
+Katalon ist primär ein relationales Sammlungsmanagementsystem und kein nativer Graph-Store. Daten werden pragmatisch über relationale Formulare erfasst; die semantische Modellierung in CIDOC-CRM/LRMoo und die Bereitstellung via RDF/SPARQL erfolgt als automatisierte Projektion. Details siehe [Konzept im SPARQL-Kapitel](/katalon-docs/integration/sparql/#konzept-relationales-mms-mit-rdf-projektion-vs-wikibase).
+:::
 ---
 
 ## Semantische Modellierung
@@ -110,3 +114,11 @@ https://katalon.example.org/oai?verb=ListRecords&metadataPrefix=json_ld
 ```
 
 Das Format ist im OAI-PMH `ListMetadataFormats`-Response registriert und verweist auf das CIDOC-CRM/LRMoo JSON-LD-Schema.
+
+---
+
+## SPARQL-Endpoint
+
+Für komplexe Forschungsabfragen und typübergreifende Graph-Analysen steht der integrierte Triple Store zur Verfügung:
+
+👉 Siehe [SPARQL-Endpoint (Oxigraph)](/katalon-docs/integration/sparql/) für Dokumentation der W3C SPARQL 1.1 Schnittstelle, Authentifizierung, Query-Beispiele und Named Graphs.
