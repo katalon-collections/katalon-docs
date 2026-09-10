@@ -65,6 +65,7 @@ export default defineConfig({
 					label: 'Betrieb & Wartung',
 					items: [
 						{ label: 'Einstellungen', slug: 'administration/einstellungen' },
+						{ label: 'Portal-Themes & Erweiterungen', slug: 'administration/portal-themes' },
 						{ label: 'Audit-Log', slug: 'administration/audit-log' },
 						{ label: 'Produktionsbetrieb', slug: 'administration/production' },
 						{ label: 'Updates & Datenpflege', slug: 'administration/upgrading' },
