@@ -39,6 +39,7 @@ export default defineConfig({
 						{ label: 'Mehrsprachigkeit', slug: 'administration/mehrsprachigkeit' },
 						{ label: 'Metadaten- & Medienimport', slug: 'administration/import' },
 						{ label: 'Stapelbearbeitung', slug: 'administration/batch-bearbeitung' },
+						{ label: 'Datensatz sperren', slug: 'administration/datensatz-sperren' },
 						{ label: 'Cookbook (Rezepte)', slug: 'administration/cookbook' },
 						{ label: 'Benutzer & Rollen', slug: 'administration/benutzer-und-rollen' },
 					],
