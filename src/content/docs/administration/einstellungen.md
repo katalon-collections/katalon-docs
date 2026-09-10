@@ -32,6 +32,31 @@ Branding und Grundkonfiguration des Public-Portals:
 - **Akzentfarbe** sowie einzelne Farbtoken (Kopfzeile Hintergrund/Schrift, Seiten- und Panelhintergrund) für ein einfaches Custom-Theming ohne CSS-Kenntnisse.
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
 
+## Startseite
+
+:::note[Verfügbar ab Version 1.28.0]
+Die Portal-Startseite lässt sich aus konfigurierbaren Inhaltsbausteinen zusammensetzen, statt fest auf einen Objekt-Einstieg beschränkt zu sein.
+:::
+
+Unter **Einstellungen → Startseite** lässt sich die öffentliche Startseite aus einer geordneten Liste von Bausteinen zusammensetzen. Blöcke lassen sich hinzufügen, per Pfeil-Buttons umsortieren, ein-/ausschalten und entfernen. Verfügbare Blocktypen:
+
+- **Freier Text** — mehrsprachiger Einführungstext (Deutsch/Englisch), z. B. Begrüßung oder institutioneller Kontext.
+- **Ausgewählte Objekte** — zeigt die unter **Portal & Institution** gepflegten Hervorgehobenen Objekte; hier nur die maximale Anzahl konfigurierbar.
+- **Neueste Objekte** — die zuletzt angelegten Objekte, Anzahl konfigurierbar.
+- **Sammlungen** — oberste Sammlungen, alle Sammlungen, oder eine manuell gewählte Auswahl per Sammlungs-ID.
+
+Jeder Block kann eine eigene, mehrsprachige Überschrift bekommen. Fehlt eine referenzierte Sammlung oder ist die Liste der Hervorgehobenen Objekte leer, wird der Block einfach übersprungen — die Startseite bleibt nutzbar.
+
+## Terminologie
+
+:::note[Verfügbar ab Version 1.29.0]
+Die im Portal sichtbaren Bezeichnungen der Kerntypen lassen sich pro Installation anpassen, ohne das Datenmodell oder die API zu verändern.
+:::
+
+Unter **Einstellungen → Terminologie** lässt sich für jeden im Portal sichtbaren Kerntyp — Objekte, Entitäten, Orte, Occurrences, Sammlungen — eine eigene Bezeichnung hinterlegen, getrennt nach Singular und Plural und pro Sprache (Deutsch/Englisch). Eine bibliothekarische Installation kann so z. B. durchgehend „Werk“/„Werke“ statt „Objekt“/„Objekte“ anzeigen, ein Museum „Exponat“/„Exponate“ — intern bleibt es derselbe Record-Typ `object`.
+
+Die konfigurierten Begriffe werden automatisch überall im Portal verwendet, wo der jeweilige Datensatztyp benannt wird: Hauptnavigation, Startseite, Suchergebnisse, Facetten und Detailseiten. Ein leeres Feld fällt auf die eingebaute Standardbezeichnung zurück; **Auf Standard zurücksetzen** entfernt eine gespeicherte Anpassung für einen Typ vollständig.
+
 ## ID-Schemas
 
 Pro Primärtyp lässt sich ein **ID-Schema** mit Platzhaltern definieren, aus dem beim Anlegen eines neuen Datensatzes automatisch die nächste ID vorgeschlagen wird, z. B. `ulb_x_{counter:05d}`.

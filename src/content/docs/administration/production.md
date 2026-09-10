@@ -409,6 +409,71 @@ Sobald `OXIGRAPH_ENABLED=true` aktiv ist, synchronisiert Katalon bei jeder Verö
 
 Da Oxigraph eine reine, abgeleitete Projektion aus PostgreSQL darstellt, kann der gesamte Triple Store im Katastrophenfall jederzeit verlustfrei über *„RDF-Index neu aufbauen“* aus der Datenbank rekonstruiert werden. Ein separates Backup des Volumes `oxigraph_data` ist daher im Normalbetrieb nicht zwingend erforderlich.
 
+## Optionales S3-kompatibles Medien-Speicherbackend
+
+:::note[Verfügbar ab Version 1.29.0]
+:::
+
+Standardmäßig liegen Mediendateien unter `MEDIA_ROOT` auf dem lokalen Dateisystem (unverändertes Verhalten, keine Aktion nötig). Alternativ lassen sich Mediendateien in einem S3-kompatiblen Objektspeicher ablegen — Ceph RADOSGW, MinIO, Hetzner Object Storage, Garage oder AWS S3. Strikt opt-in über `STORAGE_BACKEND=s3`; Logos und Portal-Themes bleiben unabhängig vom gewählten Backend immer lokal unter `MEDIA_ROOT`, nur die eigentlichen Objekt-Mediendateien wandern nach S3.
+
+### 1. Bucket vorbereiten
+
+Der Bucket muss vor der Aktivierung existieren; Katalon legt ihn nicht selbst an. Die konfigurierten Zugangsdaten benötigen Put-, Get- und Delete-Rechte auf dem Bucket.
+
+### 2. In `.env` konfigurieren
+
+```bash
+STORAGE_BACKEND=s3
+S3_ENDPOINT_URL=https://s3.example-provider.com
+S3_BUCKET=katalon-media
+S3_REGION=us-east-1
+S3_ACCESS_KEY=...
+S3_SECRET_KEY=...
+S3_FORCE_PATH_STYLE=true
+S3_VERIFY_TLS=true
+#S3_CA_BUNDLE=/pfad/zu/ca-bundle.pem   # nur bei privater CA nötig
+```
+
+| Variable | Default | Bedeutung |
+|---|---|---|
+| `STORAGE_BACKEND` | `local` | `s3` aktiviert das Objektspeicher-Backend |
+| `S3_ENDPOINT_URL` | leer | Leer = AWS-Default-Endpoint. Bei Ceph RADOSGW/MinIO/Hetzner/Garage die jeweilige Endpoint-URL setzen |
+| `S3_BUCKET` | leer | Pflichtfeld bei `STORAGE_BACKEND=s3` |
+| `S3_REGION` | `us-east-1` | RADOSGW/MinIO ignorieren die Region inhaltlich, SigV4 braucht aber einen Wert |
+| `S3_ACCESS_KEY` / `S3_SECRET_KEY` | leer | Pflichtfelder bei `STORAGE_BACKEND=s3` |
+| `S3_FORCE_PATH_STYLE` | `true` | Path-Style-Adressierung (`endpoint/bucket/key`) funktioniert überall ohne DNS-Wildcard-Setup |
+| `S3_VERIFY_TLS` | `true` | `false` nur für Test-Umgebungen mit selbstsigniertem Zertifikat |
+| `S3_CA_BUNDLE` | leer | Pfad zu einem CA-Bundle, wenn der Endpoint ein Zertifikat einer privaten CA verwendet |
+
+Fehlen `S3_BUCKET`, `S3_ACCESS_KEY` oder `S3_SECRET_KEY` bei `STORAGE_BACKEND=s3`, verweigert der API-Start mit einer entsprechenden Fehlermeldung.
+
+### 3. Compose-Overlay aktivieren
+
+`docker-compose.s3.yml` reicht die `S3_*`-Variablen an `api`, `worker` **und** `cantaloupe` durch und stellt Cantaloupe auf `S3Source` um. Als letztes Overlay nach den übrigen anhängen:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.cantaloupe.yml \
+  -f docker-compose.prod.yml -f docker-compose.s3.yml up -d
+```
+
+**Wichtig — Cantaloupe braucht DNS für den Bucket:** Cantaloupes `S3Source` (Version 5.0.x) kennt keine Path-Style-Adressierung, sondern spricht ausschließlich virtual-hosted (`<bucket>.<endpoint-host>`). `<bucket>.<endpoint-host>` muss also auflösbar sein — entweder per Wildcard-DNS auf den Objektspeicher-Endpoint oder per explizitem DNS-Eintrag für genau diesen Bucket-Namen. Das Backend selbst (boto3, für Upload/Download über die API) spricht dagegen per Default Path-Style (`S3_FORCE_PATH_STYLE=true`) und braucht dieses DNS-Setup nicht.
+
+### Ohne Cloud-Account testen (MinIO)
+
+Für den Dev-Stack steht `docker-compose.minio.yml` bereit — startet einen lokalen MinIO-Container samt Konsole (`http://localhost:9001`, `minioadmin`/`minioadmin`) und verdrahtet `api`, `worker` und `cantaloupe` automatisch dagegen:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml \
+  -f docker-compose.cantaloupe.yml -f docker-compose.minio.yml up -d
+```
+
+Der Bucket muss auch hier einmalig angelegt werden (MinIO-Konsole oder S3-API).
+
+### Grenzen
+
+- **Keine Live-Migration:** Der Wechsel zwischen `local` und `s3` verschiebt bestehende Mediendateien nicht automatisch. Ein Backend-Wechsel ist nur für neue Instanzen bzw. vor dem ersten Produktionsstart sinnvoll; bereits gespeicherte Dateien müssten manuell auf den neuen Bucket bzw. zurück nach `MEDIA_ROOT` übertragen werden, inklusive Anpassung der `storage_key`-Werte in der Datenbank.
+- **Keine presigned URLs:** Ausgelieferte Mediendateien (`/objects/{id}/media/{media_id}/file`) streamen bei S3 immer durch die API, nicht per Redirect auf eine presigned URL. So bleibt die Sichtbarkeitsprüfung (öffentlich/privat) wirksam — private Medien können nicht über eine direkt aufrufbare S3-URL an der API vorbeigeleitet werden. Der lokale Backend-Pfad nutzt dagegen weiterhin die effiziente `FileResponse`-Sendfile-Auslieferung.
+
 ## Updates einspielen
 
 ```bash
