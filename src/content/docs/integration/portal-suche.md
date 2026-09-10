@@ -13,3 +13,11 @@ Unter **Erweiterte Suche** wird zuerst der gewünschte Ergebnistyp gewählt. Dan
 Bei festen Vokabularfeldern werden die zulässigen Begriffe zur Auswahl angeboten. Freie Vokabularfelder schlagen konfigurierte Begriffe vor, erlauben aber weiterhin einen eigenen Wert.
 
 Die Ergebnisliste verwendet dieselbe Seite wie die Schnellsuche. Die Suchdefinition bleibt in der URL erhalten und kann daher als Lesezeichen gespeichert oder weitergegeben werden. Bei sehr breiten Relationsbedingungen fordert das Portal dazu auf, die Suche weiter einzugrenzen.
+
+## Facetten einrichten
+
+Welche Facetten im Portal angeboten werden, legen Sie in den Admin-Einstellungen unter **Facetten** pro Datensatztyp fest. Voraussetzung ist, dass das Feld öffentlich ausgegeben wird und in der Detailansicht erscheint.
+
+:::note[Verfügbar ab Version 1.26.0]
+Das Ein- oder Ausschalten einer Facette wirkt **sofort** — ein Neuaufbau des Suchindex ist dafür nicht nötig. Nur wenn Sie die Sichtbarkeit eines Feldes selbst ändern (**„Öffentlich über APIs ausgeben“** oder Detailansicht), baut Katalon den Suchindex im Hintergrund neu auf; bei sehr großen Beständen kann das einige Minuten dauern (siehe [Schema verwalten](../../administration/schema)).
+:::

@@ -52,6 +52,10 @@ Die Sichtbarkeit eines Feldes in einer Detail- oder Listenansicht ist keine Zugr
 
 Dann wird der gespeicherte Wert nicht gelöscht und bleibt in der Admin-UI sowie in authentifizierten API-Antworten verfügbar. Katalon entfernt ihn aber serverseitig aus allen anonymen Ausgabewegen: Public-Portal, öffentliche REST-Antworten, Suchindex und Facetten, OAI-PMH sowie IIIF-Manifeste. Das gilt auch für einzelne Sub-Felder einer Gruppe.
 
+:::note[Verfügbar ab Version 1.26.0]
+Das (De-)Aktivieren von **„Öffentlich über APIs ausgeben“** ändert den Inhalt des Suchindex und löst automatisch einen Neuaufbau im Hintergrund aus. Bei größeren Beständen (mehrere zehntausend Datensätze) kann es einige Minuten dauern, bis die Änderung vollständig im Portal wirksam ist. Das reine Ein- oder Ausschalten einer **Facette** (in den Admin-Einstellungen unter Facetten) benötigt dagegen keinen Neuaufbau und wirkt sofort — siehe [Suche im Portal](../../integration/portal-suche).
+:::
+
 ## Felder auf Portal-Detailseiten anordnen
 
 Im Feldformular legt **Detailseiten-Bereich** fest, ob ein öffentliches Feld im Hauptbereich oder in der Seitenspalte erscheint. Mit **Detailseiten-Rolle: Beschreibung** wird ein Feld als zentraler Beschreibungstext verwendet. Pro Datensatztyp und Subtyp kann nur ein Feld diese Rolle haben.
