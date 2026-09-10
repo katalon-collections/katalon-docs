@@ -28,7 +28,7 @@ Für kontrollierte Vokabulare im Importer den Reiter **Vokabulare** öffnen. Zue
 | Zeichenkodierung | UTF-8 (mit oder ohne BOM) |
 | Trennzeichen | Automatische Erkennung: Komma (`,`), Semikolon (`;`), Tabulator (`\t`), Pipe (`\|`) |
 | Kopfzeile | Pflicht — erste Zeile wird als Spaltennamen interpretiert |
-| Maximale Gesamtgröße | 100 MB pro Upload-Anfrage; bei mehreren XML-Dateien zählt ihre Summe |
+| Maximale Gesamtgröße | 500 MB pro Upload-Anfrage (Betreiber-Konfiguration `importer_max_upload_size_mb`); bei mehreren XML-Dateien zählt ihre Summe |
 | XML | Zwei-Schritt-Flow: Upload, dann Record-Element wählen |
 
 Die Trennzeichenerkennung analysiert die ersten 4 KB der Datei und wählt das häufigste Zeichen aus den unterstützten Trennzeichen.
@@ -101,18 +101,21 @@ Wiederholte XML-Subfelder werden positionsweise zu mehreren Containerinstanzen z
 
 #### Auto-Mapping
 
-Nach dem Upload versucht der Importer, Spalten automatisch zuzuordnen. Eine Spalte wird automatisch gemappt, wenn:
+Nach dem Upload versucht der Importer, Spalten automatisch zuzuordnen, nach folgender Priorität:
 
-1. Der Spaltenname (nach Normalisierung auf Kleinbuchstaben und Unterstriche) exakt dem internen Feldnamen entspricht, **oder**
-2. Der Spaltenname exakt dem deutschen Label eines Feldes entspricht (Groß-/Kleinschreibung ignoriert).
+1. **Exakt:** Der Spaltenname (nach Normalisierung auf Kleinbuchstaben und Unterstriche) entspricht exakt dem internen Feldnamen, oder exakt dem deutschen Label eines Feldes (Groß-/Kleinschreibung ignoriert).
+2. **Synonym:** Der Spaltenname steht in einer festen Synonymliste für gängige Feldnamen (z. B. `titel`, `objektbezeichnung` → `title`; `autor`, `urheber`, `künstler` → `creator`; `datum`, `jahr`, `datierung` → `date`).
+3. **Fuzzy:** Bleibt kein exakter oder Synonym-Treffer, sucht der Importer per Levenshtein-Distanz das ähnlichste Feld (internen Namen oder DE-Label).
 
 Beispiele für automatisches Matching:
 
-| CSV-Spalte | Matched auf Feld |
-|---|---|
-| `title` | Feld mit `name = "title"` |
-| `Titel` | Feld mit `label.de = "Titel"` |
-| `date-created` | Feld mit `name = "date_created"` (Bindestrich → Unterstrich) |
+| CSV-Spalte | Matched auf Feld | Über |
+|---|---|---|
+| `title` | Feld mit `name = "title"` | exakt |
+| `Titel` | Feld mit `label.de = "Titel"` | exakt |
+| `date-created` | Feld mit `name = "date_created"` (Bindestrich → Unterstrich) | exakt |
+| `Autor` | Feld mit `name = "creator"` | Synonym |
+| `Titl` (Tippfehler) | Feld mit `name = "title"` | Fuzzy |
 
 Das Auto-Mapping ist ein Vorschlag und kann manuell korrigiert werden.
 
@@ -218,7 +221,7 @@ Spalten, die auf den leeren String gemappt sind oder nicht im Mapping erscheinen
 | Einschränkung | Details |
 |---|---|
 | Unterstützte Metadatenformate | CSV, TSV, Excel (.xlsx) und XML. |
-| Max. 100 MB je Upload-Anfrage | Bei mehreren XML-Dateien darf ihre Gesamtgröße 100 MB nicht überschreiten. |
+| Max. 500 MB je Upload-Anfrage | Betreiber-Konfiguration `importer_max_upload_size_mb`, Default 500 MB. Bei mehreren XML-Dateien darf ihre Gesamtgröße das Limit nicht überschreiten. |
 | Bilddateien in separatem Schritt | Die Zuordnung kann im Metadatenimport vorbereitet werden; die Dateien werden danach im Medien-Tab hochgeladen. |
 | Bestehende Datensätze | `skip`, `merge` und `replace` werden unterstützt. Bei `skip` können Medienreferenzen ergänzt werden, ohne Metadaten zu ändern. |
 | Status immer `draft` | Neue Datensätze starten standardmäßig als `draft`, können aber per `auto_publish` veröffentlicht werden. |

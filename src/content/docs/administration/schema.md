@@ -160,6 +160,16 @@ Beispiel:
 
 Die UUID des Vokabulars findet man in der Admin-UI unter **Konfiguration → Vokabulare**.
 
+:::note[Verfügbar ab Version 1.25.2]
+Hierarchie-Browser: Bei hierarchischen Vokabularen (Broader/Narrower) lässt sich
+neben der Textsuche der Baum direkt im Feld durchklicken. Der Baum-Button rechts
+neben dem Eingabefeld öffnet die Strukturansicht, über die Tabs „Suche“ und
+„Struktur“ wechselt man zwischen beiden Modi. Die Pfeile vor einem Begriff
+klappen die jeweils tiefere Ebene auf oder zu; ein Klick auf den Begriff selbst
+übernimmt ihn in das Feld. Der ausgewählte Term zeigt weiterhin seinen
+übergeordneten Pfad (Broader-Kette) als Breadcrumb an.
+:::
+
 Beispiele für Felder:
 - Materialart (Vokabular: Materialien)
 - Kameratyp (Vokabular: Kameratypen)
@@ -189,6 +199,12 @@ Texteingabe mit optionalem Vokabular als Autocomplete-Quelle. Im Gegensatz zu `v
 | Schlüssel | Typ | Beschreibung |
 |---|---|---|
 | `vocabulary_id` | UUID | Optional. Vokabular, dessen Terms als Autocomplete-Vorschläge angezeigt werden. Ohne Angabe: reines Freitextfeld ohne Vorschläge. |
+
+:::note[Verfügbar ab Version 1.25.2]
+Ist ein hierarchisches Vokabular hinterlegt, steht auch hier der Hierarchie-Browser
+zur Verfügung (Baum-Button rechts neben dem Eingabefeld): Begriffe lassen sich
+durch die Struktur klicken statt sie zu suchen, freie Eingabe bleibt weiterhin möglich.
+:::
 
 Beispiel:
 ```json

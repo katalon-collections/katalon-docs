@@ -6,6 +6,13 @@ title: "Katalon – Massenbearbeitung (Batch Editing)"
 
 Die Massenbearbeitung erlaubt es, dieselbe Operation auf viele Datensätze gleichzeitig anzuwenden, ohne jeden Datensatz einzeln zu öffnen. Sie ist in allen Listenansichten verfügbar: Objekte, Entitäten, Orte, Occurrences, Vorgänge und Sammlungen.
 
+## Einzelnen Datensatz öffnen
+
+Klicken Sie auf den Labelwert eines Datensatzes, um ihn direkt zu öffnen. Für weitere Aktionen steht weiterhin das Menü mit den drei Punkten am rechten Rand der Tabellenzeile zur Verfügung.
+
+:::note[Verfügbar ab Version 1.22.0]
+:::
+
 ## Auswahl treffen
 
 1. In der linken Spalte der Tabelle einzelne Datensätze auswählen.

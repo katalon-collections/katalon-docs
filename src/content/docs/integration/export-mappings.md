@@ -5,7 +5,7 @@ description: Metadatenfelder flexibel auf Zielformate wie Dublin Core (oai_dc) u
 
 Katalon trennt interne Erfassungsfelder von externen Metadatenformaten. Über die datengetriebene Mapping-Schicht kann jedes Schemafeld auf Zielpfade externer Exportmodelle gemappt werden.
 
-Die Konfiguration erfolgt im Schema-Editor direkt an der jeweiligen Felddefinition (**Konfiguration → Schemata → Feld auswählen → Metadaten-Export**).
+Die Konfiguration erfolgt auf einer eigenen Oberfläche, getrennt vom Schema-Editor (**Export → Format-Mapping**, Typ und Format wählen).
 
 ---
 
@@ -22,7 +22,7 @@ Die Konfiguration erfolgt im Schema-Editor direkt an der jeweiligen Felddefiniti
 
 ### Dublin Core (`oai_dc`)
 
-Wird für die Bereitstellung über OAI-PMH verwendet. Im Schema-Editor stehen die 15 Standard-Elemente zur Auswahl:
+Wird für die Bereitstellung über OAI-PMH verwendet. Im Format-Mapping stehen die 15 Standard-Elemente zur Auswahl:
 
 - `dc:title` – Titel oder Bezeichnung
 - `dc:creator` – Urheber:in / Schöpfer:in
@@ -42,7 +42,7 @@ Wird für die Bereitstellung über OAI-PMH verwendet. Im Schema-Editor stehen di
 
 ### LIDO (`lido`)
 
-Das Mapping-Interface ist bereits für LIDO (Lightweight Information Describing Objects) vorbereitet, um künftige GLAM-Standardexporte an Europeana und DDB ohne Änderung der Schema-Infrastruktur zu ermöglichen.
+LIDO (Lightweight Information Describing Objects) ist als Zielformat bereits nutzbar — Feldmapping funktioniert wie bei Dublin Core über dieselbe Oberfläche. Es dient GLAM-Standardexporten, etwa an Europeana und DDB.
 
 ---
 

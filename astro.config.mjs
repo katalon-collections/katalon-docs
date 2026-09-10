@@ -52,6 +52,7 @@ export default defineConfig({
 						{ label: 'SPARQL-Endpoint (Oxigraph)', slug: 'integration/sparql' },
 						{ label: 'OAI-PMH Schnittstelle', slug: 'integration/oai-pmh' },
 						{ label: 'Export-Mappings', slug: 'integration/export-mappings' },
+						{ label: 'Langzeitarchivierung', slug: 'integration/preservation-export' },
 					],
 				},
 				{
