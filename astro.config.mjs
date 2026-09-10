@@ -16,6 +16,7 @@ export default defineConfig({
 					label: 'Loslegen',
 					items: [
 						{ label: 'Überblick', slug: 'index' },
+						{ label: 'Über Katalon Collections', slug: 'ueber' },
 						{ label: 'Installation', slug: 'getting-started/installation' },
 						{ label: 'Erste Schritte', slug: 'getting-started/first-steps' },
 						{ label: 'Eigene Sammlung einrichten', slug: 'getting-started/eigene-sammlung' },
@@ -27,12 +28,14 @@ export default defineConfig({
 						{ label: 'Sammlungen & Bestände', slug: 'administration/sammlungen' },
 						{ label: 'Lagerorte', slug: 'administration/lagerorte' },
 						{ label: 'Vorgänge (Leihverkehr & Restaurierung)', slug: 'reference/procedures' },
+						{ label: 'Arbeitslisten', slug: 'administration/arbeitslisten' },
 					],
 				},
 				{
 					label: 'Konfiguration & Erfassung',
 					items: [
 						{ label: 'Schema verwalten', slug: 'administration/schema' },
+						{ label: 'Vokabulare verwalten', slug: 'administration/vokabulare' },
 						{ label: 'Normdaten & Linked Data', slug: 'administration/normdaten' },
 						{ label: 'Formularvarianten', slug: 'administration/formularvarianten' },
 						{ label: 'Subtypen', slug: 'administration/subtypen' },
@@ -40,6 +43,8 @@ export default defineConfig({
 						{ label: 'Metadaten- & Medienimport', slug: 'administration/import' },
 						{ label: 'Stapelbearbeitung', slug: 'administration/batch-bearbeitung' },
 						{ label: 'Datensatz sperren', slug: 'administration/datensatz-sperren' },
+						{ label: 'Statische Seiten', slug: 'administration/statische-seiten' },
+						{ label: 'Banner', slug: 'administration/banner' },
 						{ label: 'Cookbook (Rezepte)', slug: 'administration/cookbook' },
 						{ label: 'Benutzer & Rollen', slug: 'administration/benutzer-und-rollen' },
 					],
@@ -59,6 +64,8 @@ export default defineConfig({
 				{
 					label: 'Betrieb & Wartung',
 					items: [
+						{ label: 'Einstellungen', slug: 'administration/einstellungen' },
+						{ label: 'Audit-Log', slug: 'administration/audit-log' },
 						{ label: 'Produktionsbetrieb', slug: 'administration/production' },
 						{ label: 'Updates & Datenpflege', slug: 'administration/upgrading' },
 						{ label: 'Serverumzug', slug: 'administration/serverumzug' },
