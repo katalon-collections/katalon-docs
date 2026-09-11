@@ -18,19 +18,64 @@ Die relationale PostgreSQL-Datenbank bleibt dabei stets die alleinige Quelle der
 Bei der Evaluierung von Linked Data und SPARQL in Katalon ist die architektonische Stoßrichtung wichtig: **Katalon funktioniert genau umgekehrt wie ein nativer Graph-Store oder Wikibase.**
 
 ### 1. Zuerst die relationale Datenbank für den Sammlungsalltag
+
 Im Zentrum steht ein schnelles, konsistentes und einfach zu bedienendes Sammlungsmanagementsystem (MMS) auf Basis von PostgreSQL und Elasticsearch:
+
 - **7 feste GLAM-Kerntypen:** Objekte, Akteure/Körperschaften, Orte, Ereignisse/Werke, Sammlungen, Lagerorte und Vorgänge bilden das stabile Grundgerüst.
 - **Pragmatische Schema-Engine:** Felder (`field_definitions`), Subtypen und kontrollierte Vokabulare (`skos:Concept`) werden administrativ über die Oberfläche konfiguriert und steuern direkt die Eingabemasken.
 - **Relationennetz:** Typübergreifende Beziehungen zwischen Datensätzen besitzen Typ-Codes und Metadaten (JSONB).
 - **Volltext & Facetten:** Elasticsearch liefert die performante Such- und Filterschicht für Portal und Admin-Bereich.
 
-### 2. Linked Data & SPARQL als „Sahnehäubchen“
-Statt Rohdaten direkt als Tripel (Subjekt–Prädikat–Objekt) zu erfassen, generiert Katalon den Wissensgraphen vollautomatisch:
-- **Materialisierte Projektion:** Öffentlich publizierte Daten werden asynchron nach CIDOC-CRM (ISO 21127), LRMoo und SKOS übersetzt und in Oxigraph bereitgestellt.
-- **Keine TBox-Modellierung / Inferenz:** Katalon ist kein Werkzeug zum Erfinden freier OWL-Ontologien oder Ausführen von semantischem Reasoning (Axiome, Disjointness). Es bildet die erfassten Bestandsdaten deterministisch auf die etablierten Standard-Ontologien ab.
-- **SPARQL 1.1 als Lese- und Integrationsschicht:** Der SPARQL-Endpunkt dient externen Forschenden, Schnittstellen und Linked-Open-Data-Verknüpfungen für komplexe Graphabfragen (z. B. transitive Pfade via `skos:broader*`), ohne die operative Erfassungsdatenbank zu belasten.
+### 2. Automatische RDF-Projektion statt nativer Tripel-Erfassung
 
-> **Merksatz:** Man wählt Katalon nicht, um eine freie Ontologie von Grund auf in RDF zu designen (dafür ist z. B. Wikibase gedacht). Man wählt Katalon, um eine Sammlung strukturiert, relational und alltagstauglich zu inventarisieren – und erhält Linked Open Data inklusive SPARQL-Endpunkt als integriertes, schlüsselfertiges Nebenprodukt dazu.
+Statt Rohdaten direkt als Tripel (Subjekt, Prädikat, Objekt) zu erfassen, generiert Katalon den Wissensgraphen vollautomatisch als asynchrone Projektion nach Oxigraph.
+
+Das trägt der GLAM-Praxis Rechnung: Kaum ein Museum erfasst im Alltag direkt native CIDOC-CRM-Tripel (`E22 Human-Made Object → P108i → E12 Production → P14 → E21 Person`). Der reale Datenfluss im Kulturbereich verläuft fast immer über lokale Systeme und zwischengeschaltete Austauschformate:
+
+```text
+Lokales System (Katalon / MuseumPlus / Alma)
+        ↓  (relationales, institutseigenes Datenmodell)
+Austauschformat (LIDO / MARCXML / EAD / Dublin Core)
+        ↓
+Aggregator (DDB / Europeana)
+        ↓  (zentrale Harmonisierung, Normalisierung & Anreicherung)
+EDM / RDF / Knowledge Graph
+```
+
+Aggregatoren wie die Deutsche Digitale Bibliothek (DDB) transformieren heterogene Zulieferungen nachträglich in RDF/EDM. Katalon schlägt die Brücke direkt im Haus: **Einfaches relationales Erfassungsmodell für den Arbeitsalltag, automatische Projektion nach CIDOC-CRM und LRMoo im Hintergrund.**
+
+### 3. Konsequenz: Freie Modellierung und die Grenzen von SPARQL
+
+Katalon erlaubt es, Schemafelder völlig frei zu konfigurieren. Für die Ausgabe über SPARQL hat diese Freiheit jedoch eine direkte Konsequenz:
+
+**Der SPARQL-Endpunkt kann nur die Strukturen als Graph verknüpfen, die im relationalen Modell als Relation, Entität oder Vokabular angelegt wurden.**
+
+Katalon übersetzt die erfassten Primärtypen und Relationen deterministisch in RDF-Klassen und Prädikate. Fehlt die relationale Struktur in den Rohdaten, kann auch die RDF-Projektion keine Wunder vollbringen.
+
+#### Freitext versus relationales Netz im Vergleich
+
+- **Szenario A: Freitext im Objekt (Sackgasse für SPARQL)**
+  Wird die Urheberschaft als einfaches Textfeld im Objekt erfasst (z. B. `kuenstler = "Marta Keller, München"`), landet dieser Wert im Triple Store lediglich als flaches Literal an der Objekt-URI.
+  *Folge:* Eine SPARQL-Abfrage nach allen Objekten von Künstler:innen aus einem bestimmten Ort oder eine Verknüpfung mit GND und Wikidata ist **unmöglich**. Im Graphen existiert weder ein Akteursknoten noch ein Ortsknoten, über den gefiltert oder traversiert werden könnte.
+
+- **Szenario B: Relational modelliert (Echter Wissensgraph)**
+  Das Objekt wird über eine typisierte Relation (`geschaffen von`) mit einem Datensatz vom Typ **Entität** (Person) verknüpft. Die Person besitzt eine GND-URI und ist wiederum über eine Relation mit dem **Ort** (München) verbunden.
+  *Folge:* Katalon projiziert saubere CIDOC-CRM-Knoten und Prädikate:
+  ```sparql
+  # Liefert alle Objekte von Akteuren mit Wohn- oder Wirkort
+  SELECT ?object ?actor ?place WHERE {
+    ?object crm:P14_carried_out_by ?actor .
+    ?actor  crm:P74_has_current_or_former_residence ?place .
+  }
+  ```
+
+#### Leitlinien für ein SPARQL-fähiges Schema
+
+1. **Akteure und Orte als eigene Datensätze:** Personen, Körperschaften und Orte nicht in Freitextfeldern vergraben, sondern als verknüpfte Entitäten (`entity`, `place`) modellieren.
+2. **Typisierte Relationen nutzen:** Relationen präzise benennen (`geschaffen von`, `ausgestellt in`). Katalon bildet typisierte Relationen automatisch auf spezifische CRM-Prädikate ab (`crm:P14_carried_out_by`, `crm:P7_took_place_at`, `crm:P138_represents`).
+3. **Kontrollierte Vokabulare für Typen:** Für Objekttypen, Techniken und Rollen Vokabulare einsetzen. Diese werden als `skos:Concept` projiziert und erlauben hierarchische Graph-Abfragen (`skos:broader*`).
+4. **Normdaten und PIDs hinterlegen:** GND-, Wikidata- oder AAT-IDs am Datensatz erfassen. Katalon erzeugt daraus `owl:sameAs`- und Normdaten-Triples für das Semantic Web.
+
 ---
 
 ## Architektur & Synchronisation
