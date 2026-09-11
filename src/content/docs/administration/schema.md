@@ -25,6 +25,11 @@ Das Löschen eines Feldes ist ein Soft-Delete: Das Feld wird als `is_deleted` ma
 
 Im selben Feld-Detailbereich gibt es den Abschnitt `Metadaten-Export`. Dort kann ein Feld auf Exportformate wie `oai_dc` gemappt werden. Die Tabs fuer `LIDO` und `METS/MODS` sind bereits angelegt, aber noch Stub-UI.
 
+Direkt unter dem Label lässt sich ein mehrsprachiger **Hilfetext** hinterlegen. Er erscheint im Erfassungsformular als kleines Hinweis-Icon (?) neben dem Feldlabel und zeigt beim Klick Ausfüllhinweise, Konventionen oder Beispiele für dieses Feld an — hilfreich etwa für Datumsformate, Kontrollierte-Vokabular-Konventionen oder interne Abkürzungen, die nicht aus dem Feldlabel allein hervorgehen.
+
+:::note[Verfügbar ab Version 1.30.0]
+:::
+
 ---
 
 ## Eigenschaften einer Felddefinition
@@ -36,6 +41,7 @@ Im Feldformular bleiben die Grundoptionen **Pflichtfeld**, **Wiederholbar** und 
 | `name` | Ja | Interner Bezeichner (Kleinbuchstaben, Unterstriche). Unveränderlich nach dem Anlegen. Beispiel: `photographer` |
 | `label.de` | Empfohlen | Deutsches Anzeigelabel. Erscheint in der UI. |
 | `label.en` | Optional | Englisches Anzeigelabel. |
+| `help_text.de` / `help_text.en` | Optional | Hilfetext, der Katalogisierenden im Erfassungsformular neben dem Feldlabel als Hinweis-Icon angezeigt wird (z. B. Ausfüllhinweise oder Konventionen für das Feld). |
 | `field_type` | Ja | Feldtyp (siehe unten). |
 | `is_required` | Nein | Wenn gesetzt, muss das Feld beim Speichern eines Datensatzes befüllt sein. |
 | `is_repeatable` | Nein | Wenn gesetzt, können mehrere Werte pro Datensatz gespeichert werden. |
