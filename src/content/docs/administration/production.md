@@ -346,6 +346,34 @@ curl https://deine-domain.de/llms.txt
 
 `docker/nginx.prod.conf` routet beide Pfade auf der Portal-Domain zur API; die Admin-Subdomain bekommt stattdessen ein statisches `Disallow: /`, damit die Admin-UI nie indexiert wird. Bei einer eigenen nginx-Config diese Routen entsprechend nachziehen.
 
+## Custom-Betrieb ohne öffentliches Portal
+
+:::note[Verfügbar ab Version 1.32.0]
+:::
+
+Manche Institutionen wollen Katalon nur als interne Erfassungsoberfläche betreiben — ohne
+öffentliches Portal-Frontend, teils auch ohne öffentliche REST-API/OAI-PMH. Das ist kein
+eigenständig gepflegtes Installationsprofil, sondern ein Custom-Rezept auf Basis der
+Standard-Compose-/nginx-Dateien:
+
+1. **Portal-Container weglassen** — den `portal`-Service in einem
+   [Compose-Override](#instanzspezifische-docker-compose-anpassungen) nicht starten (oder aus
+   einer lokalen Kopie von `docker-compose.prod.yml` entfernen).
+2. **Öffentliche `location`-Blöcke aus `docker/nginx.prod.conf` entfernen**, je nachdem wie
+   weit die Schließung gehen soll: `/portal/v1/`, `/oai`, `/sparql`, `^/(objects|entities|...)`
+   (kanonische Record-URIs), `/robots.txt`, `/llms.txt`. Wer stattdessen eine eigene
+   Konsumenten-Anwendung gegen die REST-API bauen will, lässt `/portal/v1/` bewusst offen und
+   entfernt nur den Rest.
+3. **Admin-UI von den jetzt toten Links befreien** — beim Admin-Build
+   `VITE_PORTAL_ENABLED=false` als Build-Argument setzen. Blendet den Button „Im Portal
+   ansehen" sowie die angezeigte OAI-Endpunkt-URL in den Einstellungen aus.
+4. **IIIF** (`cantaloupe`) bleibt in jedem Fall Pflicht-Container — wird auch für interne
+   Bildvorschauen bei der Erfassung gebraucht, unabhängig vom Portal.
+
+Das ist bewusst kein per Installer abfragbares Profil und wird nicht als eigener
+`katalon-cli`-Installationspfad angeboten — nur ein dokumentierter, manuell gepflegter
+Ausgangspunkt für Selbst-Hoster mit entsprechendem Bedarf.
+
 ---
 
 ## Optionale RDF-Projektion & SPARQL-Schnittstelle (Oxigraph)
