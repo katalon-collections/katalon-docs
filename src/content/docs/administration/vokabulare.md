@@ -51,6 +51,16 @@ Diese Begriffe stehen anschließend an Relationsfeldern (Feldtyp `relation`) im 
 
 ---
 
-## Löschen
+## Löschen und Integritätsschutz
 
-Ein Vokabular lässt sich nur löschen, wenn kein Schemafeld mehr darauf verweist. Einzelne Begriffe können jederzeit gelöscht werden; bereits gespeicherte Datensätze behalten den früher gewählten Wert als reinen Text, verlieren aber die Verknüpfung zum Begriff.
+Ein Vokabular lässt sich nur löschen, wenn kein aktives Schemafeld mehr darauf verweist.
+
+:::note[Verfügbar ab Version 1.34.0]
+Beim Löschen einzelner Begriffe (Terme) prüft Katalon automatisch, ob der Begriff noch in Datensätzen (Objekten, Entitäten, Orten, Vorgängen usw.) oder als übergeordneter Begriff in der Vokabular-Hierarchie verwendet wird:
+
+- **Unbenutzte Begriffe:** Können direkt gelöscht werden.
+- **Benutzte Begriffe:** Katalon blockiert das unbedachte Löschen und zeigt die genaue Anzahl betroffener Datensätze an. Es stehen zwei Optionen zur Verfügung:
+  1. **Umbuchen (Ersatzbegriff wählen):** Alle Vorkommen in bestehenden Datensätzen werden automatisch auf einen anderen, auszuwählenden Begriff desselben Vokabulars migriert.
+  2. **Trotzdem löschen (Erzwingen):** Der Begriff wird aus dem Vokabular entfernt. In bestehenden Datensätzen bleibt der gespeicherte Wert (`{id, label}`) als historischer Eintrag erhalten. Im Erfassungsformular wird der Wert mit einem Badge **„Term gelöscht“** gekennzeichnet. Solche Datensätze können weiterhin ohne Validierungsfehler geöffnet und gespeichert werden.
+:::
+

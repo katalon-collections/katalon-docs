@@ -21,7 +21,18 @@ Nur Benutzer mit der Rolle `admin` oder `superuser` können Felder anlegen, änd
 
 Nach dem Speichern ist das Feld sofort in allen Erfassungsformularen sichtbar. Bestehende Datensätze ohne den neuen Feldwert sind weiterhin gültig, sofern das Feld nicht als Pflichtfeld markiert ist.
 
-Das Löschen eines Feldes ist ein Soft-Delete: Das Feld wird als `is_deleted` markiert und aus der UI ausgeblendet, die gespeicherten Feldwerte in bestehenden Datensätzen bleiben in der Datenbank erhalten.
+### Felder löschen und Altdaten (Legacy-Felder)
+
+Das Löschen eines Feldes ist ein Soft-Delete: Das Feld wird als `is_deleted` markiert und aus der Schema-Konfiguration sowie neuen Eingabeformularen entfernt. Bereits gespeicherte Feldwerte in bestehenden Datensätzen bleiben in der Datenbank unberührt erhalten.
+
+:::note[Verfügbar ab Version 1.34.0]
+Wird ein bestehender Datensatz geöffnet, der noch Werte eines inzwischen entfernten Feldes enthält, zeigt das Erfassungsformular diese Werte in einem gesonderten Bereich als **„Nicht im Schema“** (Legacy-Felder) an:
+
+- Die gespeicherten Werte bleiben vollständig lesbar und gehen beim Speichern des Datensatzes nicht verloren.
+- Katalogisierende können nicht mehr benötigte Altdaten über **„Wert entfernen“** gezielt bereinigen.
+- Das Vorhandensein solcher Altdaten blockiert das Speichern des restlichen Datensatzes nicht.
+:::
+
 
 Im selben Feld-Detailbereich gibt es den Abschnitt `Metadaten-Export`. Dort kann ein Feld auf Exportformate wie `oai_dc` gemappt werden. Die Tabs fuer `LIDO` und `METS/MODS` sind bereits angelegt, aber noch Stub-UI.
 
@@ -520,6 +531,22 @@ Der Ausdruck wird in `settings.validation_regex` gespeichert:
 In der Admin-UI gibt es ein Eingabefeld für den Regex direkt im Feld-Formular (nur sichtbar wenn `field_type = text`).
 
 ---
+
+## Typvalidierung und Datenintegrität
+
+:::note[Verfügbar ab Version 1.34.0]
+Katalon validiert beim Speichern eines Datensatzes alle Metadaten serverseitig strikt gegen die im Schema deklarierten Feldtypen:
+
+- **Zahlen (`number`):** Nur echte Zahlen (Ganz- oder Fließkommazahlen bzw. `null`) werden akzeptiert; Zeichenketten werden abgewiesen.
+- **Wahrheitswerte (`boolean`):** Erfordern echte Booleans (`true`/`false` oder `null`).
+- **Datumsangaben (`date`):** Werden auf standardkonforme Datumsformate geprüft.
+- **Geokoordinaten (`geo`):** Werden auf gültige Koordinatenangaben bzw. GeoJSON-Strukturen validiert.
+- **Vokabulare (`vocab`, `vocab_free`):** Referenzierte Term-IDs werden auf Existenz in der Datenbank geprüft. Historische Werte von nachträglich gelöschten Begriffen werden bei der Aktualisierung bestehender Datensätze toleriert.
+- **Gruppen (`group`):** Alle Unterfelder einer Gruppe werden rekursiv typgeprüft.
+:::
+
+---
+
 
 ## Vokabularfelder konfigurieren
 
