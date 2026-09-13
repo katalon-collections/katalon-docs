@@ -68,6 +68,17 @@ Im Feldformular legt **Detailseiten-Bereich** fest, ob ein öffentliches Feld im
 
 Die Position der gesamten Seitenspalte wird nicht pro Feld eingestellt, sondern unter **Einstellungen → Portal** global auf links oder rechts gesetzt. Felder, die nicht öffentlich ausgegeben werden, erscheinen unabhängig von diesen Layout-Einstellungen nicht im Portal.
 
+## Systemfelder: `idno` und `label`
+
+Jeder Datensatz der sieben Haupttypen (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen, Lagerorte) hat neben den frei konfigurierbaren Feldern zwei feste Systemfelder: `idno` (ID-Nr.) und `label` (Titel). Im Schema-Editor stehen sie mit dem Vermerk **System** immer ganz oben in der Feldliste und lassen sich nicht löschen oder umsortieren. Im Erfassungsformular erscheinen sie als eigene Eingaben im Bereich **Stammdaten**, nicht in der frei sortierbaren Metadaten-Sektion darunter. Anpassbar bleibt bei beiden nur der mehrsprachige Anzeigename (Label DE/EN) und der Hilfetext — Feldtyp, Pflicht, Wiederholbarkeit und die übrigen Struktureinstellungen sind fest vorgegeben.
+
+**`idno`** ist die fachliche/institutionelle Kennung des Datensatzes (Inventarnummer, Signatur, Standortnummer o. Ä.) zusätzlich zur internen, für Nutzer:innen nicht sichtbaren Datensatz-ID. Sie ist beim Speichern eines öffentlichen oder internen Datensatzes ein Pflichtfeld. Wer die manuelle Eingabe vermeiden will, hinterlegt unter **Konfiguration → ID-Nummern** ein automatisches Nummernschema für den jeweiligen Haupttyp — dann wird `idno` beim Anlegen automatisch vergeben (siehe z. B. [Lagerorte](/katalon-docs/administration/lagerorte) für ein Beispiel dieser Konfiguration).
+
+**`label`** ist der Titel bzw. die Bezeichnung des Datensatzes und ebenfalls Pflicht. Existiert für ein Objekt kein sinnvoller eigener Titel — etwa eine unbenannte Gebrauchsgrafik oder eine naturwissenschaftliche Probe ohne Titel —, vergibt das Fachpersonal selbst einen kurzen Ersatztitel in eckigen Klammern, z. B. `[Ohne Titel]` oder beschreibender `[Basaltprobe, Fundort X]`. Diese Klammer-Konvention orientiert sich an gängigen Katalogisierungsstandards (RDA "devised title", ISAD(G) "supplied title") und markiert den Titel als von der katalogisierenden Person ergänzt statt vom Objekt selbst übernommen. Katalon vergibt einen solchen Ersatztitel nicht automatisch.
+
+:::note[Verfügbar ab Version 1.34.0]
+:::
+
 ---
 
 ## Alle Feldtypen
