@@ -24,6 +24,8 @@ Administratoren und Superuser können jede Sperre unabhängig von dieser Berecht
 
 Der Datensatz zeigt danach oberhalb des Formulars einen violetten Hinweisbalken mit Benutzer, Grund und — falls gesetzt — Ablaufdatum.
 
+![Aktive Datensatz-Sperre mit violettem Hinweisbalken und Sperrgrund im Formular](../../../assets/screenshots/administration/sperre-banner.png)
+
 ## Wirkung der Sperre
 
 Solange eine Sperre aktiv ist, weist der Server jeden Speicherversuch anderer Benutzer mit einem Konfliktfehler zurück, unabhängig vom Kanal (Formular oder API). Die Sperre gilt für alle sieben Datensatztypen (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen, Lagerorte).

@@ -21,6 +21,8 @@ Die Verwaltung erfolgt in der Admin-UI unter **Sammlungen**.
 
 Die Sammlungsliste (`#collections-list`) zeigt hierarchische Sammlungen automatisch eingerückt als Baumdarstellung an, solange keine Filter, Suche oder manuelle Sortierung aktiv sind.
 
+![Hierarchische Sammlungsstruktur in der Listenansicht](../../../assets/screenshots/sammlungen/sammlungsbaum.png)
+
 Beim Verschieben oder Umhängen einer Sammlung über das Feld **Übergeordnete Sammlung** verhindert Katalon zyklische Abhängigkeiten (eine Sammlung kann nicht ihr eigenes Kind werden).
 
 ---

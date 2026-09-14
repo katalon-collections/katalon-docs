@@ -4,11 +4,15 @@ title: "Suche im Portal"
 
 Die Schnellsuche im Kopf des Portals durchsucht Objekte, Entitäten, Orte und Vorgänge gemeinsam. Auf der Ergebnisseite lassen sich Treffer weiter über die angebotenen Facetten eingrenzen.
 
+![Öffentliche Portalsuche mit Facetten nach Objekttyp, Subtyp und Material](../../../assets/screenshots/portal/suche-facetten.png)
+
 Zahlenfelder, die als Facette eingerichtet sind, werden als Bereich gefiltert. Geben Sie bei **Von** und **Bis** einen genauen Wert ein oder verschieben Sie die beiden Regler. Eine der beiden Grenzen kann leer bleiben; **Alle** entfernt den Zahlenbereich wieder.
 
 Unter **Erweiterte Suche** wird zuerst der gewünschte Ergebnistyp gewählt. Danach lassen sich öffentliche Suchfelder mit **alle** oder **mindestens eine** kombinieren. Bei Relationsfeldern können Bedingungen für verknüpfte Datensätze ergänzt werden. Bis zu zwei Verknüpfungsschritte sind möglich, zum Beispiel:
 
 > Objekte, deren Fotograf vor 1950 geboren wurde und dessen Geburtsort Bremen ist.
+
+![Erweiterte Suche im Portal mit Bedingungen für verknüpfte Datensätze](../../../assets/screenshots/portal/erweiterte-suche.png)
 
 Bei festen Vokabularfeldern werden die zulässigen Begriffe zur Auswahl angeboten. Freie Vokabularfelder schlagen konfigurierte Begriffe vor, erlauben aber weiterhin einen eigenen Wert.
 
@@ -17,6 +21,8 @@ Die Ergebnisliste verwendet dieselbe Seite wie die Schnellsuche. Die Suchdefinit
 ## Facetten einrichten
 
 Welche Facetten im Portal angeboten werden, legen Sie in den Admin-Einstellungen unter **Facetten** pro Datensatztyp fest. Voraussetzung ist, dass das Feld öffentlich ausgegeben wird und in der Detailansicht erscheint.
+
+![Konfiguration der Suchfacetten pro Datensatztyp in den Admin-Einstellungen](../../../assets/screenshots/einstellungen/facetten-konfiguration.png)
 
 :::note[Verfügbar ab Version 1.26.0]
 Das Ein- oder Ausschalten einer Facette wirkt **sofort** — ein Neuaufbau des Suchindex ist dafür nicht nötig. Nur wenn Sie die Sichtbarkeit eines Feldes selbst ändern (**„Öffentlich über APIs ausgeben“** oder Detailansicht), baut Katalon den Suchindex im Hintergrund neu auf; bei sehr großen Beständen kann das einige Minuten dauern (siehe [Schema verwalten](../../administration/schema)).

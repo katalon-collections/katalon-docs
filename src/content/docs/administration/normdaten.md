@@ -27,6 +27,8 @@ Katalon bringt vorbereitete Adapter für die wichtigsten internationalen Normdat
 
 Die Verwaltung der Quellen erfolgt in der Admin-UI unter **Einstellungen → Normdatenquellen**:
 
+![Übersicht und Konfiguration der externen Normdatenquellen in den Admin-Einstellungen](../../../assets/screenshots/normdaten/quellen-uebersicht.png)
+
 1. Jede Quelle besitzt einen Schalter zum **Aktivieren / Deaktivieren**.
 2. Über **Verbindung testen** führt Katalon eine Live-Abfrage an die externe API aus und zeigt das Ergebnis oder Fehlermeldungen direkt an.
 3. **Besonderheiten bei APIs:**

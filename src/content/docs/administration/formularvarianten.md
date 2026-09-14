@@ -23,6 +23,8 @@ Eine Formularvariante legt **keine neuen Felder** an und erzeugt **keinen zweite
 7. Optional **Globaler Default für diesen Typ/Subtyp** setzen (siehe unten).
 8. Speichern.
 
+![Formularvarianten-Editor zur Auswahl und Anordnung von Feldern für Schnellerfassungen](../../../assets/screenshots/administration/formularvariante-editor.png)
+
 Pflichtfelder (auch Pflichtfelder innerhalb einer Gruppe) sind in der Feldliste bereits angehakt und lassen sich nicht abwählen – eine Variante darf kein Feld verstecken, das beim Speichern zwingend benötigt wird. Das Backend prüft diese Regel unabhängig von der UI beim Anlegen und Bearbeiten einer Variante.
 
 ---

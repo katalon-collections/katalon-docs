@@ -16,6 +16,8 @@ Die Verwaltung erfolgt in der Admin-UI unter **Arbeitslisten**.
 3. Optional einen **Datensatztyp** festlegen, auf den die Liste beschränkt bleibt — ohne Festlegung können Datensätze aller sieben Kerntypen gemischt enthalten sein.
 4. **Mit allen Bearbeitern teilen** aktivieren, damit die Liste für alle angemeldeten Benutzer sichtbar und bearbeitbar wird. Ohne diese Option ist die Liste nur für die erstellende Person sichtbar (**Meine Arbeitslisten**).
 
+![Anlegen einer neuen Arbeitsliste mit Typbeschränkung und Freigabeoption](../../../assets/screenshots/arbeitslisten/uebersicht-modal.png)
+
 ---
 
 ## Datensätze hinzufügen und verwalten

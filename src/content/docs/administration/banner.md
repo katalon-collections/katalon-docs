@@ -20,6 +20,8 @@ Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Banner**.
 5. Optional ein **Ablaufdatum** setzen. Nach Erreichen des Zeitpunkts wird das Banner automatisch nicht mehr angezeigt, ohne dass es manuell deaktiviert werden muss.
 6. **Speichern**.
 
+![Aktiver Hinweisbanner im Kopfbereich der Admin-Oberfläche und Banner-Übersicht](../../../assets/screenshots/administration/banner-hinweis.png)
+
 Mehrere aktive Banner werden gleichzeitig angezeigt.
 
 ---

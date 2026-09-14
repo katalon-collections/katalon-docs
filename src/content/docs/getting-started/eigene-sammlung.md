@@ -4,8 +4,7 @@ title: "Walkthrough: eine eigene Sammlung einrichten"
 
 Dieser Einstieg richtet eine kleine fotografische Sammlung ein. Das Beispiel trennt die Fotografie selbst, die fotografierende Person, den Aufnahmeort und eine Ausstellung. Dadurch bleibt die Information später suchbar und lässt sich ohne doppelte Eingaben weiterverwenden.
 
-> **Bild vorgesehen: Startseite der Admin-UI mit hervorgehobener Navigation.**
-> Zeigen: die Bereiche **Konfiguration**, **Objekte**, **Entitäten**, **Orte**, **Occurrences** und **Vorgänge**. Alt-Text: „Navigation der Katalon-Admin-UI mit den Bereichen für Konfiguration und Datensätze.“
+![Navigation der Katalon-Admin-UI mit den Bereichen für Konfiguration und Datensätze.](../../../assets/screenshots/getting-started/admin-navigation.png)
 
 Für die Konfiguration ist eine Rolle `admin` oder `superuser` nötig. Die Onboarding-Tour beim ersten Login führt durch dieselben Bereiche; dieser Text ist absichtlich ausführlicher und kann unabhängig von der Tour benutzt werden.
 
@@ -29,8 +28,7 @@ Subtypen sind optional. Sie lohnen sich, wenn ein Primärtyp unterschiedliche Fo
 3. Den vorgeschlagenen internen Namen prüfen, etwa `fotografie`. Nach dem Speichern ist dieser Name der stabile Schlüssel und nicht mehr änderbar.
 4. Bei einem häufigen Typ **Standard-Subtyp** aktivieren.
 
-> **Bild vorgesehen: Formular „Neuer Subtyp“ für Objekt.**
-> Zeigen: Labels in zwei Sprachen, interner Name und Standard-Subtyp. Alt-Text: „Subtyp Fotografie mit dem internen Namen fotografie.“
+![Subtyp Fotografie mit dem internen Namen fotografie.](../../../assets/screenshots/getting-started/subtyp-neu.png)
 
 Felder ohne Subtyp gelten für alle Datensätze eines Primärtyps. Ein Feld, das an `fotografie` gebunden ist, erscheint nur dort. Die vollständige Erklärung steht unter [Subtypen](/katalon-docs/administration/subtypen).
 
@@ -46,8 +44,7 @@ Relationen brauchen eine fachliche Bedeutung. Unter **Konfiguration → Vokabula
 
 Der erste Ausdruck gilt vom Ausgangsdatensatz zum Ziel. Die Gegenrichtung erscheint, wenn dieselbe Verbindung vom Ziel aus gelesen wird. Die Beschränkung auf Typkombinationen verhindert hier zum Beispiel, dass eine Fotografie mit einem Ort als „fotografiert von“ verknüpft wird.
 
-> **Bild vorgesehen: Editor eines Relationstyps.**
-> Zeigen: Label, Gegenrichtungslabel sowie Auswahl von Quell- und Zieltyp. Alt-Text: „Relationstyp fotografiert von für Objekt zu Entität.“
+![Relationstyp fotografiert von für Objekt zu Entität.](../../../assets/screenshots/getting-started/relationstyp-editor.png)
 
 ## Erfassungsfelder konfigurieren
 
@@ -67,8 +64,7 @@ Unter **Konfiguration → Schemata** werden Felder angelegt. Für den Anfang rei
 
 Beim Relationsfeld das zuvor angelegte Relationsvokabular auswählen und den festen Relationstyp setzen. Ein fest eingestellter Typ bewahrt die Bedeutung des Feldes: In „Fotograf:in“ wird immer „fotografiert von“ gespeichert.
 
-> **Bild vorgesehen: Feldeditor für „Fotograf:in“.**
-> Zeigen: Feldtyp Relation, Zieltyp Entität, Relationsvokabular und fester Relationstyp. Alt-Text: „Schemafeld Fotograf:in als Relation von einem Objekt zu einer Entität.“
+![Schemafeld Fotograf:in als Relation von einem Objekt zu einer Entität.](../../../assets/screenshots/getting-started/schema-feldeditor.png)
 
 Details zu Feldtypen, Mehrsprachigkeit und Suchoptionen stehen in der [Schema-Verwaltung](/katalon-docs/administration/schema). Relationsfelder werden dort auch für den Suchindex beschrieben.
 
@@ -78,8 +74,7 @@ Lege zuerst die Kontextdatensätze an: Entität, Ort und Occurrence. Anschließe
 
 Die Trefferliste erscheint erst nach mindestens zwei eingegebenen Zeichen. Ist ein Ziel noch nicht vorhanden, kann die Schnellerfassung den passenden Datensatz direkt aus dem Relationsfeld anlegen. Sie übernimmt einen fest vorgegebenen Ziel-Subtyp, falls das Feld einen solchen hat.
 
-> **Bild vorgesehen: Objektformular mit den drei ausgefüllten Relationsfeldern.**
-> Zeigen: die Fotografie und die Chips für Fotografin, Aufnahmeort und Ausstellung. Alt-Text: „Objektformular mit verknüpfter Entität, Ort und Occurrence.“
+![Objektformular mit verknüpfter Entität, Ort und Occurrence.](../../../assets/screenshots/getting-started/objekt-relationen.png)
 
 ## Fachlich definierte und freie Beziehungen
 
@@ -87,8 +82,7 @@ Die Relationsfelder im Formular sind der richtige Ort für wiederkehrende fachli
 
 Nicht dieselbe Verbindung an beiden Stellen eintragen. Eine doppelte Relation schafft keine zusätzliche Information.
 
-> **Bild vorgesehen: Beziehungen-Karte eines gespeicherten Objekts.**
-> Zeigen: vorhandene fachliche Beziehungen und die Aktion zum Anlegen einer zusätzlichen freien Beziehung. Alt-Text: „Beziehungen-Karte mit bestehenden Verknüpfungen eines Objekts.“
+![Beziehungen-Karte mit bestehenden Verknüpfungen eines Objekts.](../../../assets/screenshots/getting-started/beziehungen-karte.png)
 
 ## Einen Vorgang hinzufügen
 
@@ -100,8 +94,7 @@ Vorgänge dokumentieren institutionelle Arbeit am Bestand, etwa Leihverkehr, Erw
 4. Den Status auf **Aktiv** setzen, wenn die Leihgabe läuft. Den Sammlungsstatus des Objekts bei Bedarf bewusst auf **Ausgeliehen** setzen.
 5. Nach Rückkehr **Abschließen** wählen. Katalon schlägt für `loan_out` den Objektstatus **Aktiv** vor. Der Vorschlag kann bestätigt oder ohne Statusänderung abgeschlossen werden.
 
-> **Bild vorgesehen: Vorgangsformular „Leihgabe ausgehend“.**
-> Zeigen: Typ, Status, Referenznummer, Beginn, Rückgabedatum und Beziehungen-Karte. Alt-Text: „Aktiver Vorgang Leihgabe ausgehend mit verknüpftem Objekt und empfangender Institution.“
+![Aktiver Vorgang Leihgabe ausgehend mit verknüpftem Objekt und empfangender Institution.](../../../assets/screenshots/getting-started/vorgang-leihgabe.png)
 
 Ein Objekt kann nicht in zwei gleichzeitig aktiven Vorgängen des Typs `loan_out` stehen. Andere Vorgangstypen und selbst angelegte Typen haben keine eingebauten Fachregeln. Der Abschluss ändert Objektstatus nie ungefragt.
 

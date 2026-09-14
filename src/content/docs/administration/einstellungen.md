@@ -40,6 +40,8 @@ Die Portal-Startseite lässt sich aus konfigurierbaren Inhaltsbausteinen zusamme
 
 Unter **Einstellungen → Startseite** lässt sich die öffentliche Startseite aus einer geordneten Liste von Bausteinen zusammensetzen. Blöcke lassen sich hinzufügen, per Pfeil-Buttons umsortieren, ein-/ausschalten und entfernen. Verfügbare Blocktypen:
 
+![Modulare Konfiguration der Portal-Startseite mit sortierbaren Inhaltsbausteinen](../../../assets/screenshots/einstellungen/startseite-bausteine.png)
+
 - **Freier Text** — mehrsprachiger Einführungstext (Deutsch/Englisch), z. B. Begrüßung oder institutioneller Kontext.
 - **Ausgewählte Objekte** — zeigt die unter **Portal & Institution** gepflegten Hervorgehobenen Objekte; hier nur die maximale Anzahl konfigurierbar.
 - **Neueste Objekte** — die zuletzt angelegten Objekte, Anzahl konfigurierbar.

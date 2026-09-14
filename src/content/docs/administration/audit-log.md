@@ -27,6 +27,8 @@ Massenbearbeitungen erscheinen als einzelne Einträge pro betroffenem Datensatz,
 
 ## Filtern und suchen
 
+![Lückenlose Änderungshistorie im Audit-Log mit Aktionsfiltern und Feldänderungen](../../../assets/screenshots/administration/audit-log-diff.png)
+
 - **Volltextsuche** über Datensatzlabel und geänderte Werte.
 - **Zeitraum** über Von-/Bis-Datum.
 - **Aktionstyp**-Filterleiste (Alle, Erstellt, Geändert, Gelöscht, Veröffentlicht, Medien, Beziehung).

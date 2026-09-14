@@ -20,7 +20,11 @@ Klicken Sie auf den Labelwert eines Datensatzes, um ihn direkt zu öffnen. Für 
 3. Wenn mehr als eine Seite an Treffern vorhanden ist, erscheint in der Aktionsleiste der Link **„Alle N Datensätze dieser Suche auswählen"**. Damit wird die Auswahl auf alle Treffer der aktuellen Filter/Suche seitenübergreifend erweitert.
 4. Auf **Massenbearbeitung** klicken.
 
+![Ausgewählte Datensätze mit Aktionsleiste für Massenbearbeitung](../../../assets/screenshots/batch-bearbeitung/auswahl.png)
+
 ## Unterstützte Operationen
+
+![Dialog zur Auswahl der Massenbearbeitungs-Operation](../../../assets/screenshots/batch-bearbeitung/dialog.png)
 
 | Operation | Beschreibung |
 |---|---|

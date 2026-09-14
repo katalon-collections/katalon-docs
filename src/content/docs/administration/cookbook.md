@@ -10,8 +10,7 @@ Eine Fotografie kann eine Fotografin, einen Auftraggeber und eine abgebildete Pe
 
 Das Feld „Fotograf:in“ darf wiederholbar sein. Jede ausgewählte Entität wird mit demselben Relationstyp verknüpft. Für verschiedene Rollen braucht es verschiedene Relationstypen, keine Notiz im Personennamen.
 
-> **Bild vorgesehen: Relationsvokabular mit drei Rollen.**
-> Zeigen: unterschiedliche Relationstypen mit Hin- und Gegenrichtungen. Alt-Text: „Relationsvokabular für Fotografin, Auftraggeber und abgebildete Person.“
+![Vokabular-Einträge des Relationsvokabulars mit Rollen und Typbindung.](../../../assets/screenshots/cookbook/relationsvokabular.png)
 
 ## Interne Angaben getrennt von öffentlichen Metadaten halten
 
@@ -19,8 +18,7 @@ Für Restaurierungsnotizen, interne Kontaktangaben oder noch ungeprüfte Proveni
 
 Die Darstellung auf einer Portal-Detailseite ist keine Zugriffskontrolle. Die Option zur öffentlichen Ausgabe entscheidet darüber, ob ein Wert den geschützten Bereich überhaupt verlässt.
 
-> **Bild vorgesehen: Erweiterte Optionen eines Schemafelds.**
-> Zeigen: deaktivierte öffentliche API-Ausgabe und den erklärenden Hinweis. Alt-Text: „Internes Schemafeld, das nicht über öffentliche APIs ausgegeben wird.“
+![Internes Schemafeld, das nicht über öffentliche APIs ausgegeben wird.](../../../assets/screenshots/cookbook/schemafeld-erweitert.png)
 
 ## Unscharfe Datierung erfassen
 
@@ -34,8 +32,7 @@ Für einen Erwerbungsvorgang ein Objekt zunächst mit Sammlungsstatus **In Bearb
 
 Bei einer Restaurierung (`conservation`) werden Befund, Maßnahmen und Werkstatt als Felder und Beziehungen erfasst. Mehrere Restaurierungen am selben Objekt sind möglich. Beim Abschluss schlägt Katalon für diesen Typ keinen Sammlungsstatus vor, weil eine Restaurierung nicht automatisch über die Verfügbarkeit entscheidet.
 
-> **Bild vorgesehen: Schema für den Vorgangstyp Restaurierung.**
-> Zeigen: subtypspezifische Felder Befund und Maßnahme sowie Relation zur Werkstatt. Alt-Text: „Vorgangsschema für eine Restaurierung mit eigenen Metadatenfeldern.“
+![Schema-Editor für den Vorgangstyp Restaurierung mit subtypspezifischen Feldern.](../../../assets/screenshots/cookbook/vorgangsschema-restaurierung.png)
 
 ## Eigene Vorgangstypen für lokale Abläufe
 
@@ -49,8 +46,7 @@ Vor einem Import die Ziel-Felder und Vokabulare anlegen. Im Importer Spalten zuo
 
 Für ein Feld mit mehreren Farbwerten in einer Zelle ist die Transformation `split` mit `;` passend. Für ein kontrolliertes Vokabular zuerst die Terme importieren und anschließend `vocab_map` verwenden. Beziehungen entstehen nicht durch einen Namen in einer CSV-Spalte; dafür braucht es eine passende Auflösungs- oder Anlege-Regel im Importablauf.
 
-> **Bild vorgesehen: Importer im Probelauf mit Mapping-Tabelle.**
-> Zeigen: Quellspalte, Zielfeld, Transformation und Fehler- oder Vorschau-Bereich. Alt-Text: „CSV-Import im Probelauf mit Feldzuordnung und Transformationen.“
+![Vorschau eines Importer-Laufs mit Split-Transformation für Mehrfachwerte.](../../../assets/screenshots/cookbook/importer-probelauf.png)
 
 Die einzelnen Import-Schritte stehen unter [Metadaten- und Medienimport](/katalon-docs/administration/import).
 

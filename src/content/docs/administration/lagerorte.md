@@ -23,6 +23,8 @@ Lagerorte sind reine Bestandsverwaltungsdaten. Sie erscheinen nicht im Portal, n
 
 Lagerorte lassen sich beliebig tief verschachteln (z. B. Depot → Raum → Regal → Fach). Ein Lagerort ohne übergeordneten Eintrag erscheint als Wurzelknoten im Baum. Beim Verschieben eines Eintrags über **Übergeordneter Lagerort** verhindert das System Zyklen – ein Eintrag darf nicht sein eigener Vorfahre werden.
 
+![Lagerorthierarchie mit ausgewähltem Depot und zugeordneten Objekten](../../../assets/screenshots/lagerorte/standort-hierarchie.png)
+
 ---
 
 ## Felder

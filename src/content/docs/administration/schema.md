@@ -361,6 +361,8 @@ Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld inner
 
 Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`.
 
+![Anlegen einer Feldgruppe im Schema-Editor mit Subfeldern und Mehrsprachigkeit](../../../assets/screenshots/schema/feldgruppe-editor.png)
+
 Beispiele:
 - Maßangabe (Wert + Einheit)
 - Ausstellungsbeteiligung (Ausstellung + Rolle)
