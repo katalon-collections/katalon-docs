@@ -33,11 +33,16 @@ Die Rolle `viewer` eignet sich für:
 - Externe oder interne Forschende, die Zugriff auf den kuratorischen Datenbestand im Backend benötigen.
 - Mitarbeiter im Lesemodus (z. B. Ausleihe, Direktion, Aufsicht), die Datensätze recherchieren, aber nicht versehentlich verändern dürfen.
 
+:::note[Verfügbar ab Version 1.35.0]
+Ein Betrachter ist eine interne Lesrolle. Er sieht in der Admin-UI bei den Datensatztypen, für die er Leserechte besitzt, alle konfigurierten Felder und gespeicherten Werte, auch als nicht öffentlich markierte Angaben. Die Einstellung **Öffentlich** steuert nur, welche Angaben das Portal für nicht als Mitarbeitende erkannte Besucher ausliefert.
+:::
+
 **Rechte & Einschränkungen:**
-- **Bestandsdaten:** Kann Bestandsdaten (Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen) und verknüpfte Medien einsehen.
+- **Bestandsdaten:** Kann die in der Rechteverwaltung freigegebenen Datensatztypen und verknüpfte Medien einsehen. Vorgänge und Lagerorte sind für Betrachter immer gesperrt.
 - **Keine Schreibrechte:** Schaltflächen zum Anlegen neuer Datensätze, Speichern von Änderungen, Löschen von Datensätzen oder Hinzufügen/Entfernen von Verknüpfungen sind inaktiv bzw. ausgeblendet.
 - **Kein Konfigurationszugriff:** Menüpunkte unter *Konfiguration* (Schemata, Subtypen, Lagerorte, Formularvarianten, Vokabulare, Export etc.) und *Verwaltung* (Benutzer, Einstellungen) sind für Betrachter nicht sichtbar.
 - **Import / KI-Assistenz:** Keine Berechtigung zum Starten von Daten- oder Medienimporten sowie zur Nutzung schreibender KI-Vervollständigungen.
+- **Abgrenzung zum geplanten Portalbenutzer:** Der künftig vorgesehene `public_user` erhält ausschließlich Zugriff auf das Portal, nicht auf die Admin-UI, und nur auf öffentliche Angaben. Diese Rolle ist noch nicht verfügbar.
 
 ---
 
