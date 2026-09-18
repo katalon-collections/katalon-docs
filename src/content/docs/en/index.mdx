@@ -1,0 +1,52 @@
+---
+title: Katalon Collections Documentation
+description: User guide for Katalon Collections.
+template: splash
+hero:
+  tagline: Open-source metadata management system for galleries, libraries, archives, and museums.
+  actions:
+    - text: Installation
+      link: /katalon-docs/en/getting-started/installation/
+      icon: rocket
+    - text: Set Up Your Own Collection
+      link: /katalon-docs/en/getting-started/eigene-sammlung/
+      icon: right-arrow
+      variant: minimal
+    - text: First Steps
+      link: /katalon-docs/en/getting-started/first-steps/
+      icon: document
+      variant: minimal
+    - text: About Katalon Collections
+      link: /katalon-docs/en/ueber/
+      icon: information
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Getting Started
+
+<CardGrid>
+	<Card title="Your Own Collection" icon="rocket">
+		Set up and curate a collection step by step.
+	</Card>
+	<Card title="Schema & Authority Data" icon="setting">
+		Field definitions, controlled vocabularies, and linked-data sources (GND, Wikidata, GeoNames).
+	</Card>
+	<Card title="Collection Management" icon="open-book">
+		Hierarchical collections, storage locations, loans, and conservation.
+	</Card>
+	<Card title="Interfaces & LOD" icon="document">
+		REST API, semantic JSON-LD/RDF export (CIDOC-CRM & LRMoo), and OAI-PMH.
+	</Card>
+</CardGrid>
+
+## What Is Katalon?
+
+Katalon Collections is a metadata management system for galleries, libraries, archives, and museums.
+
+The domain data lives in seven core types: Objects, Entities, Places, Occurrences, Collections, Storage Locations, and Procedures (loans, acquisitions, conservation). Fields, forms, and controlled vocabularies with authority-data integration can be flexibly customized.
+
+Background on motivation and principles: [About Katalon Collections](/katalon-docs/en/ueber/).
+
+<script is:inline src="/katalon-docs/lang-redirect.js"></script>

@@ -33,7 +33,3 @@ Katalon Collections wird von **Karl Krägelin** entwickelt und gepflegt.
 - **Lizenz:** [AGPL-3.0-or-later](https://github.com/katalon-collections/katalon/blob/main/LICENSE)
 - **Quellcode:** [github.com/katalon-collections/katalon](https://github.com/katalon-collections/katalon)
 - **Diese Dokumentation:** [github.com/katalon-collections/katalon-docs](https://github.com/katalon-collections/katalon-docs)
-
-:::note
-Dieser Abschnitt wird noch um Hintergrund zu Person und Entstehungsgeschichte ergänzt.
-:::

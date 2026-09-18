@@ -77,7 +77,7 @@ Ausgangspunkt: `docker-compose.override.yml.example` nach `docker-compose.overri
 
 | Was | Warum sicher |
 |---|---|
-| Alle Datensätze (Objekte, Entitäten, Orte, Ereignisse) | PostgreSQL-Volume |
+| Alle Datensätze (Objekte, Entitäten, Orte, Occurrences, Sammlungen, Lagerorte, Vorgänge) | PostgreSQL-Volume |
 | Schemata und Felddefinitionen | PostgreSQL-Volume |
 | Vokabulare | PostgreSQL-Volume |
 | Konfigurierte Normdatenquellen | PostgreSQL-Volume |

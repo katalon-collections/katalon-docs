@@ -7,6 +7,69 @@ Dieses Dokument beschreibt, wie Katalon auf einem Linux-Server in Produktion bet
 
 **Empfohlener Weg für neue Instanzen:** [`katalon-cli`](https://github.com/katalon-collections/katalon-cli) (`uv tool install katalon-cli`) installiert und aktualisiert Produktionsinstanzen über gepinnte Release-Images, ohne Repository-Checkout — siehe [katalon-cli Repository](https://github.com/katalon-collections/katalon-cli). Der manuelle Weg unten (Repository klonen, Compose-Dateien selbst pflegen) bleibt für Sonderfälle und zum Verständnis der zugrundeliegenden Compose-Topologie relevant, wird aber nicht mehr als primärer Installationsweg empfohlen.
 
+## Verwaltungswerkzeug `katalon-manage`
+
+:::note[Verfügbar ab Version 1.35.0]
+:::
+
+Für Wartungsaufgaben im API-Container steht `katalon-manage` bereit:
+
+```bash
+docker compose exec api katalon-manage --help
+```
+
+### Bestandsdaten zurücksetzen
+
+`katalon-manage db-reset` löscht Bestandsdaten und legt vorher standardmäßig ein
+PostgreSQL-Backup an. Ohne `--all` bleiben Konfiguration, Benutzerkonten, Schemata,
+Vokabulare sowie Rollen- und Funktionsrechte erhalten. `--all` löscht auch diese
+Konfiguration und ist nur für eine bewusst vollständig zurückzusetzende Instanz geeignet.
+
+Optionen: `--backup-dir PFAD` wählt das Sicherungsverzeichnis, `--no-backup` überspringt
+die Sicherung und `--yes` unterdrückt die interaktive Bestätigung.
+
+### CSV importieren
+
+`katalon-manage import-csv DATEI --type TYP --mapping MAPPING.json` importiert Objekte,
+Entitäten, Orte oder Occurrences anhand eines JSON-Mappings. `--dry-run` validiert und
+zeigt die Vorschau, ohne Daten zu ändern. Optional steuern `--subtype`, `--idno-strategy`
+(`auto`, `column`, `skip`), `--upsert-strategy` (`skip`, `merge`, `replace`) und
+`--auto-publish` den Import; `--media-selector` ordnet beim Objektimport Dateinamen zu.
+
+### XML importieren
+
+`katalon-manage import-xml DATEI --type TYP --mapping MAPPING.json --record-xpath XPATH`
+importiert dieselben Datensatztypen aus XML. `--record-xpath` wählt die einzelnen
+Datensätze aus; für XML-Namensräume verwendet der Ausdruck die Clark-Notation. Die
+Optionen entsprechen dem CSV-Import; `--media-selector` erwartet hier einen XPath.
+
+### Administrator-Passwort zurücksetzen
+
+`katalon-manage reset-admin` erstellt interaktiv ein neues zufälliges Passwort für ein
+Admin- oder Superuser-Konto. Bei mehreren solchen Konten wird das Zielkonto abgefragt.
+Das Passwort wird nur ausgegeben und zusätzlich mit Dateirechten `0600` unter
+`/var/lib/katalon/reset-credentials.txt` abgelegt. Wie jedes Zugangsdatum muss es
+anschließend sicher behandelt und nach der Anmeldung geändert werden.
+
+[~/Coding/Katalon Collections/katalon-docs/src/content/docs/en/administration/production.md#D648]
+
+## The `katalon-manage` administration tool
+
+:::note[Available from version 1.35.0]
+:::
+
+`katalon-manage` is available inside the API container for maintenance tasks. Show its
+full help with:
+
+```bash
+docker compose exec api katalon-manage --help
+```
+
+`katalon-manage db-reset` deletes collection data and creates a PostgreSQL backup by
+default. Without `--all`, it retains configuration, user accounts, schemas,
+vocabularies, and role and feature permissions. `--all` also deletes that configuration
+and is only suitable when intentionally resetting an entire instance.
+
 ## Voraussetzungen
 
 - Linux-Server (Debian/Ubuntu empfohlen), min. 4 GB RAM, 20 GB Disk

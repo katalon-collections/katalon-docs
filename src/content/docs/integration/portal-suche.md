@@ -2,7 +2,7 @@
 title: "Suche im Portal"
 ---
 
-Die Schnellsuche im Kopf des Portals durchsucht Objekte, Entitäten, Orte und Vorgänge gemeinsam. Auf der Ergebnisseite lassen sich Treffer weiter über die angebotenen Facetten eingrenzen.
+Die Schnellsuche im Kopf des Portals durchsucht Objekte, Entitäten, Orte und Occurrences gemeinsam. Auf der Ergebnisseite lassen sich Treffer weiter über die angebotenen Facetten eingrenzen.
 
 ![Öffentliche Portalsuche mit Facetten nach Objekttyp, Subtyp und Material](../../../assets/screenshots/portal/suche-facetten.png)
 

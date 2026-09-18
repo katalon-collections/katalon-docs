@@ -11,7 +11,7 @@ Neben der automatischen Bearbeitungsanzeige (siehe unten) gibt es eine manuelle,
 
 ## Berechtigung
 
-Das Setzen einer Sperre ist eine eigene Berechtigung (**Manuelle Sperre setzen**) und wird pro Rolle unter **Konfiguration → Benutzer & Rollen** vergeben. Ohne diese Berechtigung erscheint der Button **Sperren** im Bearbeitungsformular nicht.
+Das Setzen einer Sperre ist eine eigene Berechtigung (**Manuelle Sperre setzen**) und wird pro Rolle unter **Verwaltung → Benutzer → Rollenrechte** vergeben. Ohne diese Berechtigung erscheint der Button **Sperren** im Bearbeitungsformular nicht.
 
 Administratoren und Superuser können jede Sperre unabhängig von dieser Berechtigung aufheben (siehe [Sperre erzwungen aufheben](#sperre-erzwungen-aufheben)).
 

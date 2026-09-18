@@ -59,7 +59,6 @@ Unter **Konfiguration → Schemata** werden Felder angelegt. Für den Anfang rei
 | Objekt | Gezeigt in | Relation | Zieltyp Occurrence, Relationstyp „gezeigt in“, wiederholbar |
 | Entität | Name | Text | Pflichtfeld |
 | Ort | Name | Text | Pflichtfeld |
-| Ort | Koordinaten | Geo | optional |
 | Occurrence | Titel | Text | Pflichtfeld |
 
 Beim Relationsfeld das zuvor angelegte Relationsvokabular auswählen und den festen Relationstyp setzen. Ein fest eingestellter Typ bewahrt die Bedeutung des Feldes: In „Fotograf:in“ wird immer „fotografiert von“ gespeichert.

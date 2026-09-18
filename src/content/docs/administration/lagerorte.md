@@ -31,7 +31,7 @@ Lagerorte lassen sich beliebig tief verschachteln (z. B. Depot → Raum → Rega
 
 | Feld | Pflicht | Beschreibung |
 |---|---|---|
-| Inventarnummer / ID | Ja | Eindeutige Kennung des Lagerorts. Muss beim Speichern ausgefüllt sein, es sei denn, unter **Konfiguration → ID-Nummern** ist für Lagerorte ein automatisches Nummernschema hinterlegt – dann wird die ID beim Anlegen automatisch vergeben. |
+| Inventarnummer / ID | Ja | Eindeutige Kennung des Lagerorts. Muss beim Speichern ausgefüllt sein, es sei denn, unter **Einstellungen → ID-Schemas** ist für Lagerorte ein automatisches Nummernschema hinterlegt – dann wird die ID beim Anlegen automatisch vergeben. |
 | Lagerort-Typ | Nein | Klassifiziert den Lagerort nach Art (z. B. Depot, Regal, Schublade, Vitrine). Neue Typen werden unter [Subtypen verwalten](/katalon-docs/administration/subtypen) für den Bereich „Lagerorte" angelegt und ermöglichen typspezifische Zusatzfelder. |
 | Übergeordneter Lagerort | Nein | Bestimmt die Position in der Hierarchie. Leer lassen für einen Wurzelknoten. |
 

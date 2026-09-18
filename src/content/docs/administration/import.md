@@ -44,7 +44,7 @@ Die Trennzeichenerkennung analysiert die ersten 4 KB der Datei und wählt das h�
 3. Nach dem Upload zeigt der Importer: Anzahl der erkannten Zeilen, Liste der Spaltenköpfe, Vorschau der ersten fünf Zeilen.
 
 Wenn der Upload fehlschlägt:
-- Datei oder Summe der gemeinsam gewählten Dateien ist größer als 100 MB → Upload aufteilen
+- Datei oder Summe der gemeinsam gewählten Dateien ist größer als 500 MB → Upload aufteilen
 - Dateiformat nicht unterstützt → CSV, TSV, Excel oder XML verwenden
 - Kodierungsfehler → Datei als UTF-8 speichern
 
