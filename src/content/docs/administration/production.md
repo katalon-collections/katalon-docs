@@ -646,12 +646,26 @@ Elasticsearch-Daten können jederzeit aus der Datenbank neu indexiert werden (`P
 
 ```bash
 curl https://deine-domain.de/health
-# → {"status": "ok", "checks": {"database": "ok", "elasticsearch": "ok"}}
+# → {
+#     "status": "ok",
+#     "checks": {
+#       "database": "ok",
+#       "elasticsearch": "ok",
+#       "redis": "ok",
+#       "beat_heartbeat": "ok",
+#       "cantaloupe": "ok"
+#     },
+#     "queue_backlog": 0,
+#     "backup_age_hours": 6.2
+#   }
 ```
 
-Der Endpoint prüft Datenbank und Elasticsearch aktiv. Ist eine Abhängigkeit
-nicht erreichbar, liefert er HTTP `503` mit `{"status": "degraded", ...}` —
-so kann ein Load Balancer einen ausgefallenen Backend-Zustand erkennen.
+Der Endpoint prüft aktiv Datenbank, Elasticsearch, Redis, Cantaloupe (IIIF-Bildserver) und den Celery-Beat/Worker-Herzschlag; ist Oxigraph aktiviert (`OXIGRAPH_ENABLED=true`), erscheint zusätzlich ein `oxigraph`-Eintrag. Ist eine dieser Abhängigkeiten nicht erreichbar, liefert er HTTP `503` mit `{"status": "degraded", ...}` —
+so kann ein Load Balancer einen ausgefallenen Backend-Zustand erkennen. `queue_backlog` (Länge der Standard-Task-Queue) und `backup_age_hours` (Alter des letzten erfolgreichen Backups) sind rein informativ und wirken sich nicht auf den HTTP-Status aus — als Grundlage für eigene Monitoring-Schwellenwerte geeignet.
+
+:::note[Verfügbar ab Version 1.34.4]
+Redis-, Cantaloupe-, Oxigraph- und Celery-Heartbeat-Prüfung sowie `queue_backlog` und `backup_age_hours` im Health-Check.
+:::
 
 ### Logs
 

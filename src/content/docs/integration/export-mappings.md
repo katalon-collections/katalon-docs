@@ -170,6 +170,16 @@ Damit Katalon-Felder auf komplexe Zielpfade gemappt werden können, muss das Sch
   - Ein separates Datierungsfeld speichert die Entstehungszeit mit normiertem Jahr oder ISO-Intervall.
   - Der Ort wird als Relation zu einem Datensatz vom Typ **Ort** erfasst.
 
+:::note[Verfügbar ab Version 1.37.0]
+Eine Mapping-Regel der Quellenart „Relation" kann auch Relationen auswerten, bei denen
+der zu exportierende Datensatz nicht die Quelle, sondern das Ziel ist (Einstellung
+„Richtung: Eingehend"). Das erspart doppelte Relationsfelder — z. B. liest ein
+Objekt-Export so eine Relation aus, die ein Vorgang auf dieses Objekt gesetzt hat,
+ohne dass am Objekt selbst ein eigenes Feld dafür angelegt werden muss. Die Auswahl
+der Relationsart im Mapping-Editor zeigt dabei nur Relationstypen, die für den
+aktuellen Datensatztyp als Quelle oder Ziel zulässig sind.
+:::
+
 ### 2. Strukturierte Maße statt Maß-Strings
 
 - **Ungeeignet für LIDO:** Ein Freitextfeld `masse` mit `"Höhe 45 cm, Breite 30 cm"`.
@@ -179,7 +189,7 @@ Damit Katalon-Felder auf komplexe Zielpfade gemappt werden können, muss das Sch
 
 Aggregatoren wie die Deutsche Digitale Bibliothek (DDB) und Europeana verlangen für `lido:objectWorkType` kontrollierte Begriffe mit stabilen URIs (bevorzugt Getty Art & Architecture Thesaurus [AAT] oder GND). Katalon unterstützt hierfür zwei bewährte Erfassungsstrategien:
 
-:::note[Verfügbar ab Version 1.36.0]
+:::note[Verfügbar ab Version 1.37.0]
 Subtypen können direkt in der Konfiguration mit Normdaten (AAT, GND, Wikidata) verknüpft werden.
 :::
 

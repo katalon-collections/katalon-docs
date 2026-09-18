@@ -4,7 +4,11 @@ title: "Katalon – Batch Editing"
 
 ## Overview
 
-Batch editing lets you apply the same operation to many records at once, without opening each record individually. It is available in all list views: Objects, Entities, Places, Occurrences, Procedures, and Collections.
+Batch editing lets you apply the same operation to many records at once, without opening each record individually. It is available in all list views: Objects, Entities, Places, Occurrences, Procedures, Collections, and Storage Locations.
+
+:::note[Available from version 1.34.6]
+Storage Locations in batch editing.
+:::
 
 ## Opening a single record
 

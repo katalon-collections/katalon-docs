@@ -33,6 +33,25 @@ Wird ein bestehender Datensatz geöffnet, der noch Werte eines inzwischen entfer
 - Das Vorhandensein solcher Altdaten blockiert das Speichern des restlichen Datensatzes nicht.
 :::
 
+### Felder wiederherstellen
+
+Gelöschte Felder lassen sich über die Feldliste mit **„Wiederherstellen“** reaktivieren.
+Katalon prüft dabei serverseitig, ob das noch möglich ist:
+
+- Ist das Feld ein Subfeld einer Feldgruppe, muss die übergeordnete Gruppe aktiv sein —
+  gelöschte Eltern-Gruppen müssen zuerst selbst wiederhergestellt werden.
+- Interner Feldname und ggf. konfigurierte Detailrolle dürfen nicht mit einem
+  inzwischen neu angelegten aktiven Feld kollidieren; in dem Fall meldet Katalon einen
+  Fehler statt eines stillen Konflikts.
+- Wird eine Feldgruppe wiederhergestellt, werden ihre gelöschten Subfelder automatisch
+  mit reaktiviert. Einzelne Subfelder lassen sich zusätzlich separat über den
+  Wiederherstellen-Button in der Detailansicht der Gruppe zurückholen.
+
+:::note[Verfügbar ab Version 1.37.0]
+Kollisions- und Eltern-Prüfung beim Wiederherstellen sowie das kaskadierende
+Wiederherstellen von Subfeldern einer Feldgruppe.
+:::
+
 Direkt unter dem Label lässt sich ein mehrsprachiger **Hilfetext** hinterlegen. Er erscheint im Erfassungsformular als kleines Hinweis-Icon (?) neben dem Feldlabel und zeigt beim Klick Ausfüllhinweise, Konventionen oder Beispiele für dieses Feld an — hilfreich etwa für Datumsformate, Kontrollierte-Vokabular-Konventionen oder interne Abkürzungen, die nicht aus dem Feldlabel allein hervorgehen.
 
 :::note[Verfügbar ab Version 1.30.0]

@@ -25,12 +25,21 @@ Persönliche Kontoeinstellungen: E-Mail und Passwort ändern, eigene **API-Schl�
 
 Branding und Grundkonfiguration des Public-Portals:
 
-- **Site-Titel, Untertitel, Hero-Text** und **Logo** (Upload direkt im Formular).
+- **Site-Titel, Untertitel, Hero-Text** — je konfigurierter Sprache einzeln pflegbar — und **Logo** (Upload direkt im Formular).
 - **Platzhalterbild** für Datensätze ohne Medien.
 - **Hervorgehobene Objekte** auf der Startseite (Liste von Datensatz-IDs).
-- **Durchsuchbare Datensatztypen** in der Portal-Navigation (Objekte, Entitäten, Orte, Occurrences).
+- **Durchsuchbare Datensatztypen** in der Portal-Navigation (Objekte, Entitäten, Orte, Occurrences, Sammlungen).
+- **IIIF-Manifest-Link** auf der Objekt-Detailseite ein-/ausblenden (Standard: eingeblendet, sofern Bildmedien vorhanden sind).
 - **Akzentfarbe** sowie einzelne Farbtoken (Kopfzeile Hintergrund/Schrift, Seiten- und Panelhintergrund) für ein einfaches Custom-Theming ohne CSS-Kenntnisse.
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
+
+:::note[Verfügbar ab Version 1.36.0]
+Site-Titel, Untertitel und Hero-Text sind pro Sprache konfigurierbar; das Portal zeigt den Text der aktiven Nutzersprache.
+:::
+
+:::note[Verfügbar ab Version 1.32.0]
+Schalter für den IIIF-Manifest-Link auf der Objekt-Detailseite.
+:::
 
 ## Startseite
 

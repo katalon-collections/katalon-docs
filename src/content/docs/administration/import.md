@@ -70,6 +70,18 @@ Unterstützte Transformationsschritte pro Spalte:
 - `vocab_map`
 - `expression`
 
+#### Mapping-Vorlagen speichern und wiederverwenden
+
+Ein fertig konfiguriertes Mapping lässt sich als **Vorlage** in der Datenbank speichern und bei einem späteren Import erneut laden — nützlich für wiederkehrende Importquellen mit gleichbleibender Spaltenstruktur (z. B. ein Sammlungsverwaltungssystem, das regelmäßig CSV-Exporte liefert).
+
+- **Vorlage speichern** öffnet einen Dialog mit Namensfeld; bestehende Vorlagen können unter demselben Namen aktualisiert oder als neue Vorlage angelegt werden.
+- **Vorlage laden** listet gespeicherte Vorlagen für den aktuell gewählten Ziel-Typ.
+- Vorlagen sind an Objekte, Entitäten, Orte oder Occurrences gebunden; das Mapping wird beim Laden über die REST-API auch außerhalb der Admin-UI abrufbar (`GET /v1/importer/mappings`).
+- **Profil exportieren** lädt das aktuelle Mapping zusätzlich als JSON-Datei herunter, unabhängig von einer gespeicherten Vorlage.
+
+:::note[Verfügbar ab Version 1.31.0]
+:::
+
 #### Cookbook: häufige Transformationen
 
 Die Vorschau im Transformationsdialog zeigt die ersten drei Werte nach jedem gespeicherten Schritt. Immer zuerst den Probelauf ausführen.

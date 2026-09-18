@@ -33,6 +33,25 @@ When an existing record is opened that still contains values for a field that ha
 - The presence of such legacy data does not block saving the rest of the record.
 :::
 
+### Restoring fields
+
+Deleted fields can be reactivated from the field list via **"Restore"**. Katalon
+validates this server-side:
+
+- If the field is a subfield of a field group, the parent group must be active —
+  deleted parent groups must be restored themselves first.
+- The internal field name and any configured detail role must not collide with an
+  active field created in the meantime; Katalon reports an error instead of a silent
+  conflict.
+- Restoring a field group automatically reactivates its deleted subfields as well.
+  Individual subfields can also be restored separately via the restore button in the
+  group's detail view.
+
+:::note[Available from version 1.37.0]
+Collision and parent checks on restore, plus cascading restore of a field group's
+subfields.
+:::
+
 Directly below the label, a multilingual **help text** can be set. It appears in the data-entry form as a small info icon (?) next to the field label and shows entry guidance, conventions, or examples for this field when clicked — useful for things like date formats, controlled-vocabulary conventions, or internal abbreviations that aren't obvious from the field label alone.
 
 :::note[Available from version 1.30.0]

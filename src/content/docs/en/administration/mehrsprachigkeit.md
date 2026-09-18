@@ -66,6 +66,18 @@ DE  [German description………………………………]  [+ EN]
 
 One object per language is stored, e.g. `{"de": "Deutsche Beschreibung", "en": "English description"}`.
 
+### AI-assisted translation
+
+When AI assistance is enabled, Katalon can generate a translation proposal for a single translatable field from the already entered primary language into a missing target language.
+
+- In the schema editor, in addition to **"Multilingual"**, the field must also have **"Enable AI-assisted translation"** turned on — configurable per field.
+- In the form, the translate trigger next to the respective language opens a dialog showing the current source-language value and the AI suggestion side by side. The suggestion can be freely edited before it is applied.
+- Requirement: AI assistance is enabled globally, and both source and target language are among the instance's configured languages.
+- Every applied AI translation is logged in the audit log (see [Audit Log](audit-log)).
+
+:::note[Available from version 1.36.0]
+:::
+
 ---
 
 ## Portal display
@@ -75,6 +87,10 @@ The public catalog shows translatable content in the **active language** with fa
 - Language selection order: URL parameter `?lang=` → saved choice → browser language → primary language.
 - The language switcher sits at the top right of the header.
 - If a text is missing in the active language, Katalon falls back to primary language → German → first available language.
+- Vocabulary terms in fields of type **Vocabulary** also show the label in the active language on the detail page instead of a fixed default label.
+
+:::note[Available from version 1.36.0]
+:::
 
 ---
 

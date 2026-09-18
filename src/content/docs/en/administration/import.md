@@ -70,6 +70,18 @@ Supported transformation steps per column:
 - `vocab_map`
 - `expression`
 
+#### Saving and reusing mapping templates
+
+A finished mapping can be saved in the database as a **template** and loaded again for a later import — useful for recurring import sources with a stable column layout (e.g. a collection management system that regularly delivers CSV exports).
+
+- **Save template** opens a dialog with a name field; existing templates can be updated under the same name or saved as a new template.
+- **Load template** lists saved templates for the currently selected target type.
+- Templates are bound to objects, entities, places, or occurrences; a saved mapping is also retrievable outside the admin UI via the REST API (`GET /v1/importer/mappings`).
+- **Export profile** additionally downloads the current mapping as a JSON file, independent of any saved template.
+
+:::note[Available from version 1.31.0]
+:::
+
 #### Cookbook: common transformations
 
 The preview in the transformation dialog shows the first three values after each saved step. Always run a dry run first.

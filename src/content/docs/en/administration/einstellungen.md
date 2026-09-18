@@ -25,12 +25,21 @@ Personal account settings: change email and password, generate/revoke your own *
 
 Branding and basic configuration of the public portal:
 
-- **Site title, subtitle, hero text**, and **logo** (upload directly in the form).
+- **Site title, subtitle, hero text** — configurable individually per language — and **logo** (upload directly in the form).
 - **Placeholder image** for records without media.
 - **Featured objects** on the homepage (list of record IDs).
-- **Searchable record types** in the portal navigation (Objects, Entities, Places, Occurrences).
+- **Searchable record types** in the portal navigation (Objects, Entities, Places, Occurrences, Collections).
+- **IIIF manifest link** on the object detail page, shown or hidden (default: shown when image media is present).
 - **Accent color** as well as individual color tokens (header background/text, page and panel background) for simple custom theming without CSS knowledge.
 - **Position of the detail page sidebar** (left/right).
+
+:::note[Available from version 1.36.0]
+Site title, subtitle, and hero text are configurable per language; the portal shows the text for the active user language.
+:::
+
+:::note[Available from version 1.32.0]
+Toggle for the IIIF manifest link on the object detail page.
+:::
 
 ## Homepage
 

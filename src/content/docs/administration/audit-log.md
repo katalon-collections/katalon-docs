@@ -20,8 +20,17 @@ Die typübergreifende Übersicht ist in der Admin-UI unter **Audit-Log** erreich
 | **Medien hinzugefügt / geändert / gelöscht** | Änderungen an angehängten Mediendateien. |
 | **Beziehung hinzugefügt / geändert / gelöscht** | Relationen zu anderen Datensätzen. |
 | **KI-Schema-Assistenz** | Von der KI vorgeschlagene und übernommene Schemaänderungen, inkl. verwendetem Modell und Token-Verbrauch. |
+| **KI-Übersetzung** | Übernommener KI-Übersetzungsvorschlag für ein mehrsprachiges Feld, inkl. verwendetem Modell, Quell- und Zielsprache. |
 
 Massenbearbeitungen erscheinen als einzelne Einträge pro betroffenem Datensatz, aber mit gemeinsamer Batch-Kennung — siehe [Massenbearbeitung](batch-bearbeitung).
+
+---
+
+## KI-generierte Feldwerte kennzeichnen
+
+Unabhängig vom Audit-Log markiert Katalon einzelne Feldwerte, die durch den KI-Assistenten erzeugt wurden (Textvorschlag oder Übersetzung), direkt im Bearbeitungsformular mit einem kleinen **„KI"**-Symbol neben dem Feld. Der Mauszeiger zeigt beim Draufhalten Modellname und Erstellungszeitpunkt (`KI-generiert (<Modell>) am <Zeitpunkt>`).
+
+Diese Kennzeichnung (`ai_provenance`) steht für alle sieben Kerntypen zur Verfügung: Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen und Lagerorte.
 
 ---
 

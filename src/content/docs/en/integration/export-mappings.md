@@ -118,6 +118,16 @@ For Katalon fields to be mapped to complex target paths, the schema must provide
   - A separate dating field stores the creation time with a normalized year or ISO interval.
   - The place is captured as a relation to a record of type **Place**.
 
+:::note[Available from version 1.37.0]
+A mapping rule with source kind "Relation" can also resolve relations where the
+record being exported is not the source but the target (setting "Direction:
+Inbound"). This avoids duplicate relation fields — for example, an object export
+can read a relation a procedure has set pointing to that object, without needing a
+dedicated field on the object itself. The relation-type selector in the mapping
+editor only shows relation types that are valid for the current record type as
+source or target.
+:::
+
 ### 2. Structured measurements instead of measurement strings
 
 - **Unsuitable for LIDO:** A free-text field `masse` containing `"Height 45 cm, width 30 cm"`.

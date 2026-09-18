@@ -2,9 +2,13 @@
 title: "Portal Search"
 ---
 
-The quick search at the top of the portal searches Objects, Entities, Places, and Occurrences together. On the results page, hits can be narrowed down further using the available facets.
+The quick search at the top of the portal searches Objects, Entities, Places, and Occurrences together. On the results page, hits can be narrowed down further using the available facets. Every result card shows a small marker next to the title with the record's subtype (e.g. "Painting", "Person"); if the record has no subtype, the general record type is shown instead.
 
 ![Public portal search with facets by object type, subtype, and material](../../../../assets/screenshots/portal/suche-facetten.png)
+
+:::note[Available from version 1.36.0]
+Consistent subtype marker on result cards.
+:::
 
 Number fields set up as a facet are filtered as a range. Enter an exact value in **From** and **To**, or move the two sliders. One of the two bounds can be left empty; **All** removes the number range again.
 

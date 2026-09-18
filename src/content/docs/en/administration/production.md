@@ -600,10 +600,25 @@ Elasticsearch data can be reindexed from the database at any time (`POST /v1/sea
 
 ```bash
 curl https://your-domain.com/health
-# → {"status": "ok", "checks": {"database": "ok", "elasticsearch": "ok"}}
+# → {
+#     "status": "ok",
+#     "checks": {
+#       "database": "ok",
+#       "elasticsearch": "ok",
+#       "redis": "ok",
+#       "beat_heartbeat": "ok",
+#       "cantaloupe": "ok"
+#     },
+#     "queue_backlog": 0,
+#     "backup_age_hours": 6.2
+#   }
 ```
 
-The endpoint actively checks the database and Elasticsearch. If a dependency is unreachable, it returns HTTP `503` with `{"status": "degraded", ...}` — so a load balancer can detect a failed backend state.
+The endpoint actively checks the database, Elasticsearch, Redis, Cantaloupe (IIIF image server), and the Celery Beat/worker heartbeat; if Oxigraph is enabled (`OXIGRAPH_ENABLED=true`), an additional `oxigraph` entry appears. If any of these dependencies is unreachable, it returns HTTP `503` with `{"status": "degraded", ...}` — so a load balancer can detect a failed backend state. `queue_backlog` (length of the default task queue) and `backup_age_hours` (age of the last successful backup) are informational only and never affect the HTTP status — useful as a basis for your own monitoring thresholds.
+
+:::note[Available from version 1.34.4]
+Redis, Cantaloupe, Oxigraph, and Celery heartbeat checks, plus `queue_backlog` and `backup_age_hours`, in the health check.
+:::
 
 ### Logs
 

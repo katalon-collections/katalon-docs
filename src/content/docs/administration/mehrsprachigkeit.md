@@ -66,6 +66,18 @@ DE  [Deutsche Beschreibung………………………………]  [+ EN]
 
 Gespeichert wird ein Objekt pro Sprache, z. B. `{"de": "Deutsche Beschreibung", "en": "English description"}`.
 
+### KI-gestützte Übersetzung
+
+Bei aktivierter KI-Unterstützung kann Katalon für ein einzelnes übersetzbares Feld einen Übersetzungsvorschlag von der bereits erfassten Primärsprache in eine fehlende Zielsprache erstellen.
+
+- Im Schema-Editor muss beim Feld zusätzlich zu **„Mehrsprachig"** die Option **„KI-gestützte Übersetzung aktivieren"** gesetzt sein — pro Feld einzeln konfigurierbar.
+- Im Formular öffnet der Übersetzen-Auslöser neben der jeweiligen Sprache einen Dialog mit dem aktuellen Wert der Quellsprache und dem KI-Vorschlag nebeneinander. Der Vorschlag lässt sich vor dem Übernehmen frei bearbeiten.
+- Voraussetzung: KI-Assistenz ist global aktiviert und Quell- sowie Zielsprache sind unter den konfigurierten Sprachen der Instanz vorhanden.
+- Jede übernommene KI-Übersetzung wird im Audit-Log protokolliert (siehe [Audit-Log](audit-log)).
+
+:::note[Verfügbar ab Version 1.36.0]
+:::
+
 ---
 
 ## Portal-Anzeige
@@ -75,6 +87,10 @@ Der öffentliche Katalog zeigt übersetzbare Inhalte in der **aktiven Sprache** 
 - Sprachwahl-Reihenfolge: URL-Parameter `?lang=` → gespeicherte Wahl → Browsersprache → Primärsprache.
 - Der Sprachumschalter sitzt oben rechts im Header.
 - Fehlt ein Text in der aktiven Sprache, fällt Katalon auf Primärsprache → Deutsch → erste vorhandene Sprache zurück.
+- Vokabular-Terme in Feldern vom Typ **Vokabular** zeigen auf der Detailseite ebenfalls das Label in der aktiven Sprache statt eines festen Standardlabels.
+
+:::note[Verfügbar ab Version 1.36.0]
+:::
 
 ---
 
