@@ -1,12 +1,23 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import mermaid from 'astro-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://katalon-collections.github.io',
 	base: '/katalon-docs',
+	markdown: {
+		syntaxHighlight: {
+			type: 'shiki',
+			excludeLangs: ['mermaid'],
+		},
+	},
 	integrations: [
+		mermaid({
+			theme: 'default',
+			autoTheme: true,
+		}),
 		starlight({
 			title: 'Katalon Docs',
 			description: 'Dokumentation für Katalon, das Open-Source Metadata Management System für GLAM.',
