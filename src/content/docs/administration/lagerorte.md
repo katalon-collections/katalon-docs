@@ -61,3 +61,10 @@ Die Karte „Zugeordnete Lagerorte" erscheint nur, wenn im System mindestens ein
 ## Lagerorte löschen
 
 Das Löschen eines Lagerorts, der noch mit Objekten verknüpft ist, fragt zur Bestätigung nach, da bestehende Zuordnungen mitgelöscht werden.
+
+## Papierkorb
+
+:::note[Verfügbar ab Version 1.38.0]
+:::
+
+Administratoren können oben rechts **Papierkorb** öffnen. Dort erscheinen gelöschte Lagerorte getrennt von der aktiven Hierarchie. Über das Aktionsmenü lassen sie sich **wiederherstellen** oder nach einer zusätzlichen Bestätigung **endgültig löschen**. Das endgültige Löschen kann nicht rückgängig gemacht werden.

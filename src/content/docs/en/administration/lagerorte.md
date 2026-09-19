@@ -61,3 +61,10 @@ The "Assigned Storage Locations" card only appears if at least one storage locat
 ## Deleting storage locations
 
 Deleting a storage location that is still linked to objects prompts for confirmation, since existing assignments will be deleted along with it.
+
+## Trash
+
+:::note[Available from version 1.38.0]
+:::
+
+Administrators can open **Trash** at the top right. Deleted storage locations appear there separately from the active hierarchy. The action menu lets them **restore** a location or, after an additional confirmation, **delete it permanently**. Permanent deletion cannot be undone.
