@@ -10,6 +10,12 @@ Configuration happens in a dedicated interface, separate from the schema editor 
 :::tip[Export starts at cataloguing]
 An export mapping can only carry what has been structured and maintained in the cataloguing schema. While simple formats like Dublin Core get by with a handful of standard fields, standards like LIDO require deeper data modeling (e.g. relations to actors, events, and structured measurements). See [Making the data model export-ready](#making-the-data-model-export-ready) below for guidance on preparing schemas.
 :::
+
+:::caution[Mapping is more than technical work — the semantic assignment is on you]
+Katalon handles the technical side: producing correctly structured, schema-valid XML in the target format you choose. What Katalon cannot know is what a foreign format's target elements are *meant to hold* — whether a given field belongs in `dc:creator` rather than `dc:contributor`, whether a dating field should map to `lido:earliestDate` or a plain display date, or whether a relation type actually carries the role semantics an aggregator expects. That semantic assignment is the genuinely hard part of an export mapping, not operating the interface.
+
+Before setting up a mapping for a target format, consult that format's **official documentation** (see [Determining requirements](#determining-requirements-where-to-look-up-mandatory-fields)) and, where possible, **talk to the institutions or aggregators who will reuse the data** to clarify their concrete requirements and conventions. A technically valid, schema-conformant mapping with content in the wrong places is often worse for downstream users than no export at all, because the error goes unnoticed until someone checks the content itself.
+:::
 ---
 
 ## How it works
@@ -17,7 +23,9 @@ An export mapping can only carry what has been structured and maintained in the 
 - A field from `field_definitions` can be mapped to multiple export targets.
 - An export target is a concrete target path within an export format (e.g. `dc:creator` or `dc:date`).
 - Format-specific serialization stays encapsulated in the backend export service; the mapping itself remains purely declarative.
-- If no specific mappings are defined for a primary type, OAI-DC falls back to a conservative default (title, date, description).
+- A format is only offered for a record type (in the export area and via OAI-PMH) once at least one field is mapped to it — there is no automatic fallback that guesses generic field names anymore.
+
+**No format ships pre-configured.** Katalon's internal cataloguing is a freely configurable field schema, not a fixed data model tied to any one export format — similar to how Pandoc reads and writes many document formats through one internal representation, instead of assuming a schema and delivering ready-made records in a given format. Every institution must deliberately map its schema onto each target format before that format becomes available at all. This lets the same record be delivered as LIDO to a museum aggregator and as METS/MODS to a library aggregator, via two independently maintained mappings.
 
 ---
 
@@ -50,6 +58,8 @@ The format mapping offers the 15 standard elements for selection:
 ### LIDO (`lido`) – event-oriented museum standard
 
 LIDO (Lightweight Information Describing Objects) is usable as a target format for museum holdings. Field mapping works through the same interface as for Dublin Core. It serves standardized exports to aggregators such as the Deutsche Digitale Bibliothek (DDB) and Europeana. LIDO requires a substantially deeper and more structured data foundation than Dublin Core.
+
+Katalon checks two things before a LIDO record leaves the system: the mapping *configuration* must include a title and an object-type target (`validate_mapping`), and each individual *record* must actually resolve a non-empty value for both. A record whose mapped title field happens to be empty is not exported with an empty `<lido:appellationValue/>` — single-record export rejects it with an error, a batch export skips it (noting the skip at the end of the file), and OAI-PMH returns `cannotDisseminateFormat` or drops it from the result list.
 
 ### Other standard formats in the GLAM sector
 

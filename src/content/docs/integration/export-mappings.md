@@ -10,6 +10,12 @@ Die Konfiguration erfolgt auf einer eigenen Oberfläche, getrennt vom Schema-Edi
 :::tip[Export beginnt bei der Erfassung]
 Ein Export-Mapping kann nur transportieren, was im Erfassungsschema strukturiert angelegt und gepflegt wurde. Während einfache Formate wie Dublin Core mit wenigen Standardfeldern auskommen, verlangen Standards wie LIDO eine tiefere Datenmodellierung (z. B. Relationen zu Akteuren, Ereignisse und strukturierte Maße). Hinweise zur Vorbereitung der Schemata finden Sie weiter unten unter [Das Datenmodell exportfähig gestalten](#das-datenmodell-exportfähig-gestalten).
 :::
+
+:::caution[Mapping ist mehr als Technik — die inhaltliche Zuordnung liegt bei Ihnen]
+Katalon übernimmt die technische Seite: korrekt strukturiertes, schemakonformes XML im gewählte Zielformat zu erzeugen. Katalon weiß aber nicht, was die Zielelemente eines Fremdformats *inhaltlich* bedeuten sollen — welches Feld tatsächlich in `dc:creator` statt `dc:contributor` gehört, ob ein Datierungsfeld als `lido:earliestDate` oder als reines Anzeigedatum zu mappen ist, oder ob ein Relationstyp die Rollen-Semantik erfüllt, die ein Aggregator erwartet. Diese inhaltliche Zuordnung ist der eigentlich anspruchsvolle Teil eines Export-Mappings, nicht die Bedienung der Oberfläche.
+
+Bevor Sie ein Mapping für ein Zielformat anlegen: die **offizielle Format-Dokumentation** konsultieren (siehe [Voraussetzungen ermitteln](#voraussetzungen-ermitteln-wo-schlägt-man-pflichtfelder-nach)) und, wo möglich, mit den **Institutionen oder Aggregatoren sprechen, die die Daten später nachnutzen** — um deren konkrete Anforderungen und Konventionen zu klären. Ein technisch valides, schemakonformes Mapping mit falsch zugeordneten Inhalten ist für Nachnutzende oft schlechter als gar kein Export, weil der Fehler nicht auffällt, bis jemand die Daten inhaltlich prüft.
+:::
 ---
 
 ## Funktionsweise
@@ -17,7 +23,9 @@ Ein Export-Mapping kann nur transportieren, was im Erfassungsschema strukturiert
 - Ein Feld aus `field_definitions` kann auf mehrere Exportziele gemappt werden.
 - Ein Exportziel ist ein konkreter Zielpfad innerhalb eines Exportformats (z. B. `dc:creator` oder `dc:date`).
 - Format-spezifische Serialisierung bleibt im Backend-Export-Service gekapselt, das Mapping selbst bleibt rein deklarativ.
-- Werden für einen Primärtyp keine spezifischen Mappings hinterlegt, greift für OAI-DC ein konservativer Standard-Fallback (Titel, Datum, Beschreibung).
+- Ein Format wird für einen Datensatztyp erst angeboten (im Export-Bereich wie über OAI-PMH), sobald mindestens ein Feld dafür gemappt ist — es gibt keinen automatischen Rate-Fallback auf generische Feldnamen mehr.
+
+**Kein Format ist vorkonfiguriert.** Katalons interne Erfassung ist ein frei konfigurierbares Feldschema, kein an ein Exportformat gebundenes festes Datenmodell — ähnlich wie Pandoc, das viele Dokumentformate über eine interne Repräsentation liest und schreibt, statt ein Schema vorauszusetzen und sofort fertige Datensätze in einem bestimmten Format zu liefern. Jede Institution muss ihr Schema bewusst auf jedes gewünschte Zielformat mappen, bevor dieses Format überhaupt zur Verfügung steht. Das erlaubt, denselben Datensatz z. B. als LIDO für einen Museums-Aggregator und als METS/MODS für einen Bibliotheks-Aggregator auszuliefern — mit zwei unabhängig gepflegten Mappings.
 
 ---
 
@@ -71,6 +79,7 @@ LIDO (Lightweight Information Describing Objects) ist der primäre Standard für
   - Mindestens ein gemappter Objekttitel (`lido:objectIdentificationWrap/.../lido:appellationValue`).
   - Mindestens eine Objektart (`lido:objectClassificationWrap/.../lido:objectWorkType`).
   - Werden Ereignisfelder (Datum, Akteur, Ort) gemappt, verlangt das System zwingend auch einen gemappten Ereignistyp (`lido:eventWrap/.../lido:eventType/lido:term`).
+- **Pflichtfeldprüfung pro Datensatz:** Die Prüfung oben betrifft nur die Mapping-*Konfiguration*. Zusätzlich prüft Katalon bei jedem einzelnen Datensatz, ob Titel und Objektart tatsächlich einen Wert liefern (z. B. weil das gemappte Feld bei diesem Datensatz leer geblieben ist). Datensätze, bei denen das nicht der Fall ist, werden **nicht** mit leeren Pflichtelementen exportiert: der Einzelexport lehnt mit einer Fehlermeldung ab, ein Massenexport überspringt den Datensatz (mit Hinweis am Dateiende) und OAI-PMH liefert `cannotDisseminateFormat` bzw. lässt den Datensatz aus der Trefferliste weg.
 - **Was nicht geprüft wird:** Institutionen- oder portalspezifische Pflichtregeln (z. B. das DDB-LIDO-Anwendungsprofil oder Schematron-Regeln der Europeana bezüglich Mindestauflösung von Digitalisaten oder kontrollierten Vokabularen).
 - **Empfohlene externe Validierung:** Über das [DDB-Validierungstool](https://validator.deutsche-digitale-bibliothek.de/) oder den [Europeana Schematron Validator](https://metis.europeana.eu/schematron-validator/).
 
