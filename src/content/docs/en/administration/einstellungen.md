@@ -32,10 +32,11 @@ Branding and basic configuration of the public portal:
 - **IIIF manifest link** on the object detail page, shown or hidden (default: shown when image media is present).
 - **Accent color** as well as individual color tokens (header background/text, page and panel background) for simple custom theming without CSS knowledge.
 - **Position of the detail page sidebar** (left/right).
-- **Metadata display** on detail pages: label above value (default) or "label: value" inline.
+- **Metadata display** on detail pages: label above value (default) or "label: value" inline. In the inline layout, labels sit in a fixed column (long labels wrap) and the values start aligned next to it.
+- **Field labels in uppercase** on detail pages (metadata and relations), default: off.
 
 :::note[Available from version 1.40.0]
-Toggle for the metadata display (label above value / "label: value").
+Toggle for the metadata display (label above value / "label: value") and for uppercase field labels.
 :::
 
 :::note[Available from version 1.36.0]

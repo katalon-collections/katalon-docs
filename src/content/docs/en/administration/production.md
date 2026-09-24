@@ -52,7 +52,7 @@ prints the password and also writes it with `0600` file permissions to
 
 ## Prerequisites
 
-- Linux server (Debian/Ubuntu recommended), min. 4 GB RAM, 20 GB disk
+- Linux server (Debian/Ubuntu recommended), 8 GB RAM as a guideline. Size disk space for the media, database, search index, and backups.
 - Docker ≥ 24 and Docker Compose v2 installed
 - Public IP address, DNS records set for your domains
 - TLS certificates (Let's Encrypt recommended)

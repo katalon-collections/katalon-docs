@@ -32,10 +32,11 @@ Branding und Grundkonfiguration des Public-Portals:
 - **IIIF-Manifest-Link** auf der Objekt-Detailseite ein-/ausblenden (Standard: eingeblendet, sofern Bildmedien vorhanden sind).
 - **Akzentfarbe** sowie einzelne Farbtoken (Kopfzeile Hintergrund/Schrift, Seiten- und Panelhintergrund) für ein einfaches Custom-Theming ohne CSS-Kenntnisse.
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
-- **Metadaten-Darstellung** auf Detailseiten: Label über Wert (Standard) oder "Label: Wert" nebeneinander.
+- **Metadaten-Darstellung** auf Detailseiten: Label über Wert (Standard) oder "Label: Wert" nebeneinander. Im Inline-Layout stehen die Label in einer festen Spalte (lange Label brechen um), die Werte beginnen bündig daneben.
+- **Feldbezeichnungen in Großbuchstaben** auf Detailseiten (Metadaten und Verknüpfungen), Standard: aus.
 
 :::note[Verfügbar ab Version 1.40.0]
-Umschalter für die Metadaten-Darstellung (Label über Wert / "Label: Wert").
+Umschalter für die Metadaten-Darstellung (Label über Wert / "Label: Wert") und für Feldbezeichnungen in Großbuchstaben.
 :::
 
 :::note[Verfügbar ab Version 1.36.0]

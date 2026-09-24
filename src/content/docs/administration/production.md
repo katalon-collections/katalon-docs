@@ -72,7 +72,7 @@ and is only suitable when intentionally resetting an entire instance.
 
 ## Voraussetzungen
 
-- Linux-Server (Debian/Ubuntu empfohlen), min. 4 GB RAM, 20 GB Disk
+- Linux-Server (Debian/Ubuntu empfohlen), 8 GB RAM als Richtwert. Speicherplatz nach Umfang der Medien, Datenbank, Suchindex und Backups bemessen.
 - Docker ≥ 24 und Docker Compose v2 installiert
 - Öffentliche IP-Adresse, DNS-Einträge für deine Domains gesetzt
 - TLS-Zertifikate (Let's Encrypt empfohlen)
