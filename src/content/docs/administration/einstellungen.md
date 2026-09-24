@@ -32,6 +32,11 @@ Branding und Grundkonfiguration des Public-Portals:
 - **IIIF-Manifest-Link** auf der Objekt-Detailseite ein-/ausblenden (Standard: eingeblendet, sofern Bildmedien vorhanden sind).
 - **Akzentfarbe** sowie einzelne Farbtoken (Kopfzeile Hintergrund/Schrift, Seiten- und Panelhintergrund) für ein einfaches Custom-Theming ohne CSS-Kenntnisse.
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
+- **Metadaten-Darstellung** auf Detailseiten: Label über Wert (Standard) oder "Label: Wert" nebeneinander.
+
+:::note[Verfügbar ab Version 1.40.0]
+Umschalter für die Metadaten-Darstellung (Label über Wert / "Label: Wert").
+:::
 
 :::note[Verfügbar ab Version 1.36.0]
 Site-Titel, Untertitel und Hero-Text sind pro Sprache konfigurierbar; das Portal zeigt den Text der aktiven Nutzersprache.

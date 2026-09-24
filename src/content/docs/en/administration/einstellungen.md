@@ -32,6 +32,11 @@ Branding and basic configuration of the public portal:
 - **IIIF manifest link** on the object detail page, shown or hidden (default: shown when image media is present).
 - **Accent color** as well as individual color tokens (header background/text, page and panel background) for simple custom theming without CSS knowledge.
 - **Position of the detail page sidebar** (left/right).
+- **Metadata display** on detail pages: label above value (default) or "label: value" inline.
+
+:::note[Available from version 1.40.0]
+Toggle for the metadata display (label above value / "label: value").
+:::
 
 :::note[Available from version 1.36.0]
 Site title, subtitle, and hero text are configurable per language; the portal shows the text for the active user language.
