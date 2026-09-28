@@ -51,6 +51,15 @@ Das Passwort wird nur ausgegeben und zusätzlich mit Dateirechten `0600` unter
 `/var/lib/katalon/reset-credentials.txt` abgelegt. Wie jedes Zugangsdatum muss es
 anschließend sicher behandelt und nach der Anmeldung geändert werden.
 
+Mit `--email` und `--password` lassen sich Zielkonto und neues Passwort direkt angeben,
+ohne interaktive Abfrage:
+
+```bash
+katalon-manage reset-admin --email admin@katalon.dev --password 1qayxsw2
+```
+
+Das Passwort muss mindestens acht Zeichen sowie Buchstaben und Ziffern enthalten.
+
 [~/Coding/Katalon Collections/katalon-docs/src/content/docs/en/administration/production.md#D648]
 
 ## The `katalon-manage` administration tool

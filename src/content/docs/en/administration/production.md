@@ -50,6 +50,15 @@ or superuser account. When more than one exists, it prompts for the target accou
 prints the password and also writes it with `0600` file permissions to
 `/var/lib/katalon/reset-credentials.txt`. Treat it as a secret and change it after login.
 
+Use `--email` and `--password` to specify the target account and new password directly,
+without the interactive prompt:
+
+```bash
+katalon-manage reset-admin --email admin@katalon.dev --password 1qayxsw2
+```
+
+The password must be at least eight characters and contain both letters and digits.
+
 ## Prerequisites
 
 - Linux server (Debian/Ubuntu recommended), 8 GB RAM as a guideline. Size disk space for the media, database, search index, and backups.

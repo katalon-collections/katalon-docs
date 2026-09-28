@@ -48,12 +48,7 @@ Beim ersten Start erzeugt Katalon automatisch einen Superuser-Account. Die Zugan
 ./first-run-credentials.txt
 ```
 
-Wenn der Stack ohne `install.sh` gestartet wurde:
-
-```bash
-docker compose exec api cat /var/lib/katalon/first-run-credentials.txt
-docker compose logs api | grep -A5 "KATALON FIRST RUN"
-```
+Bei Installation über `katalon-cli` zeigt `katalon start` den Admin-Login automatisch im Terminal an.
 
 ## Lokale URLs
 

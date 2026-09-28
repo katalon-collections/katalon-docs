@@ -48,12 +48,7 @@ On first start, Katalon automatically creates a superuser account. The credentia
 ./first-run-credentials.txt
 ```
 
-If the stack was started without `install.sh`:
-
-```bash
-docker compose exec api cat /var/lib/katalon/first-run-credentials.txt
-docker compose logs api | grep -A5 "KATALON FIRST RUN"
-```
+When installed via `katalon-cli`, `katalon start` displays the admin login automatically in the terminal.
 
 ## Local URLs
 
