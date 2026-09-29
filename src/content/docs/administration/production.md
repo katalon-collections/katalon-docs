@@ -127,7 +127,7 @@ Mindestens diese Werte anpassen:
 | `KATALON_BASE_URL` | Öffentliche Basis-URL der Instanz (z.B. `https://katalon.example.org`) |
 | `FIRST_RUN_CREDENTIALS_PATH` | Pfad im API-Container für die einmalig erzeugte Credentials-Datei (bei Bedarf auf ein persistentes Volume legen) |
 | `DEFAULT_ADMIN_EMAIL` | Fallback-E-Mail für lokale Entwicklung ohne `KATALON_BASE_URL` |
-| `DEFAULT_ADMIN_PASSWORD` | Fallback-Passwort für lokale Entwicklung ohne `KATALON_BASE_URL` |
+| `INITIAL_ADMIN_PASSWORD` | Optional: Passwort des ersten Admins, gilt nur beim ersten Start. Leer oder ein Standardwert (`admin`, `password`, `katalon`) ergibt ein Zufallspasswort. Ohne `KATALON_BASE_URL` das Fallback-Passwort. Früher `DEFAULT_ADMIN_PASSWORD` (wird ignoriert, Zeile kann entfernt werden) |
 | `CORS_ORIGINS` | Komma-separierte Liste erlaubter Frontends |
 | `OAI_ADMIN_EMAIL` | Erscheint im OAI-PMH Identify-Response |
 | `WIKIDATA_USER_AGENT` | Optionaler User-Agent für Wikidata. Leer = automatisch aus `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL`. |
@@ -374,7 +374,7 @@ curl -X POST https://deine-domain.de/v1/search/reindex/object
 Beim ersten API-Start ohne vorhandenen Admin/Superuser erzeugt Katalon automatisch:
 
 - E-Mail: `admin@<domain-aus-KATALON_BASE_URL>`
-- Passwort: kryptografisch zufällig (einmalig)
+- Passwort: kryptografisch zufällig (einmalig) oder der Wert von `INITIAL_ADMIN_PASSWORD`, falls gesetzt
 
 Die Zugangsdaten werden im API-Log mit dem Block `====== KATALON FIRST RUN ======` ausgegeben und zusätzlich in `./first-run-credentials.txt` abgelegt (über `install.sh` via `docker cp`).
 

@@ -48,7 +48,7 @@ Beim ersten Start erzeugt Katalon automatisch einen Superuser-Account. Die Zugan
 ./first-run-credentials.txt
 ```
 
-Bei Installation über `katalon-cli` zeigt `katalon start` den Admin-Login automatisch im Terminal an.
+Bei Installation über `katalon-cli` zeigt `katalon start` den Admin-Login einmalig im Terminal an. Das Passwort steht nicht in der `.env`: jetzt speichern und beim ersten Login ändern. Bei Verlust: `docker compose exec api katalon-manage reset-admin` im Instanzverzeichnis (siehe Produktionsbetrieb). Wer ein eigenes Startpasswort möchte, setzt `INITIAL_ADMIN_PASSWORD` in der `.env`, bevor der Stack zum ersten Mal startet.
 
 ## Lokale URLs
 

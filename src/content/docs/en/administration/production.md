@@ -107,7 +107,7 @@ Adjust at least these values:
 | `KATALON_BASE_URL` | Public base URL of the instance (e.g. `https://katalon.example.org`) |
 | `FIRST_RUN_CREDENTIALS_PATH` | Path inside the API container for the one-time generated credentials file (place on a persistent volume if needed) |
 | `DEFAULT_ADMIN_EMAIL` | Fallback email for local development without `KATALON_BASE_URL` |
-| `DEFAULT_ADMIN_PASSWORD` | Fallback password for local development without `KATALON_BASE_URL` |
+| `INITIAL_ADMIN_PASSWORD` | Optional: password of the first admin, applied on first start only. Empty or a well-known default (`admin`, `password`, `katalon`) results in a random password. Without `KATALON_BASE_URL` it is the fallback password. Formerly `DEFAULT_ADMIN_PASSWORD` (ignored now, the line can be removed) |
 | `CORS_ORIGINS` | Comma-separated list of allowed frontends |
 | `OAI_ADMIN_EMAIL` | Appears in the OAI-PMH Identify response |
 | `WIKIDATA_USER_AGENT` | Optional user agent for Wikidata. Empty = built automatically from `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL`. |

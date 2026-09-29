@@ -48,7 +48,7 @@ On first start, Katalon automatically creates a superuser account. The credentia
 ./first-run-credentials.txt
 ```
 
-When installed via `katalon-cli`, `katalon start` displays the admin login automatically in the terminal.
+When installed via `katalon-cli`, `katalon start` displays the admin login once in the terminal. The password is not stored in `.env`: save it now and change it at first login. If lost, run `docker compose exec api katalon-manage reset-admin` in the instance directory (see Production Operation). To choose your own initial password, set `INITIAL_ADMIN_PASSWORD` in `.env` before the stack starts for the first time.
 
 ## Local URLs
 
