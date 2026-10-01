@@ -5,7 +5,55 @@ description: Katalon lokal oder auf einem Server mit Docker Compose starten.
 
 Katalon ist Docker-first. Für einen normalen Start brauchst du Docker und Docker Compose v2.
 
-## Schnellstart mit Docker Compose
+## Schnellstart mit `katalon-cli`
+
+Der normale Weg ist das CLI-Tool [`katalon-cli`](https://github.com/katalon-collections/katalon-cli). Es nutzt gepinnte Release-Images und verwaltet die Konfiguration automatisiert:
+
+```bash
+# CLI installieren
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv tool install katalon-cli
+
+# Interaktiver Setup-Wizard (fragt Verzeichnis, Version, Domain, Ports und TLS ab)
+katalon install
+```
+
+Am Ende fragt der Wizard, ob der Stack direkt starten soll. Später starten und prüfen:
+
+```bash
+katalon start
+katalon status
+```
+
+### Installationsverzeichnis
+
+Der Standardpfad hängt vom Betriebssystem ab: unter Linux `/opt/katalon`, unter macOS `~/katalon`. `katalon install` ohne `--dir` fragt das Zielverzeichnis mit diesem Standard interaktiv ab.
+
+Unter Linux gehört `/opt` root, `katalon install` läuft aber ohne root-Rechte. Das Verzeichnis muss deshalb vorab existieren und dem eigenen Benutzer gehören:
+
+```bash
+sudo mkdir -p /opt/katalon && sudo chown $USER:$USER /opt/katalon
+```
+
+Liegt die Instanz nicht im Standardpfad, übergibst du `--dir` bei **jedem** Befehl, nicht nur bei `install`. Das CLI merkt sich den Pfad nicht und sucht sonst im Standardpfad:
+
+```bash
+katalon install --dir ~/katalon
+katalon start --dir ~/katalon
+katalon status --dir ~/katalon
+```
+
+### Weitere Befehle
+
+- `katalon doctor`: Prüft Docker-Daemon, verfügbaren Speicherplatz und Portbelegungen.
+- `katalon update`: Führt ein Release-Update mit automatischem Datenbank-Backup durch.
+- `katalon rollback`: Stellt den Zustand vor dem letzten Update wieder her.
+- `katalon backup`: Legt ein manuelles Backup an.
+- `katalon logs [service]`: Zeigt Container-Logs an.
+
+## Alternative: manuell mit Docker Compose
+
+Für Entwicklung oder wenn du das Repository direkt nutzen willst:
 
 ```bash
 git clone https://github.com/katalon-collections/katalon.git
@@ -14,31 +62,6 @@ cd Katalon
 ```
 
 Der Installer legt die `.env` an, startet die Container und zeigt die ersten Admin-Zugangsdaten an.
-
-## Alternative: Installation über `katalon-cli`
-
-Für Produktions- und Server-Instanzen steht das CLI-Tool [`katalon-cli`](https://github.com/katalon-collections/katalon-cli) zur Verfügung, das gepinnte Release-Images nutzt und Konfigurationen automatisiert verwaltet:
-
-```bash
-# CLI installieren
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv tool install katalon-cli
-
-# Interaktiver Setup-Wizard (fragt Version, Domain, Ports und TLS ab)
-katalon install --dir ~/katalon
-
-# Instanz starten, stoppen und Status prüfen
-katalon start --dir ~/katalon
-katalon status --dir ~/katalon
-```
-
-Standardmäßig verwendet `katalon-cli` das Verzeichnis `/opt/katalon`. Soll `/opt/katalon` genutzt werden, muss das Verzeichnis vorab angelegt und dem eigenen Benutzer übergeben werden (`sudo mkdir -p /opt/katalon && sudo chown $USER:$USER /opt/katalon`), da `katalon install` ohne root-Rechte ausgeführt wird.
-
-Weitere Befehle des CLI-Tools:
-- `katalon doctor`: Prüft Docker-Daemon, verfügbaren Speicherplatz und Portbelegungen.
-- `katalon update`: Führt ein Release-Update mit automatischem Datenbank-Backup durch.
-- `katalon rollback`: Stellt den Zustand vor dem letzten Update wieder her.
-- `katalon logs [service]`: Zeigt Container-Logs an.
 
 ## Erster Login
 

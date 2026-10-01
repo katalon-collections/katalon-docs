@@ -5,7 +5,55 @@ description: Start Katalon locally or on a server with Docker Compose.
 
 Katalon is Docker-first. For a normal start you need Docker and Docker Compose v2.
 
-## Quick Start with Docker Compose
+## Quick Start with `katalon-cli`
+
+The normal way is the [`katalon-cli`](https://github.com/katalon-collections/katalon-cli) CLI tool. It uses pinned release images and automates configuration management:
+
+```bash
+# Install the CLI
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv tool install katalon-cli
+
+# Interactive setup wizard (asks for directory, version, domain, ports, and TLS)
+katalon install
+```
+
+At the end the wizard asks whether to start the stack right away. To start and check later:
+
+```bash
+katalon start
+katalon status
+```
+
+### Installation directory
+
+The default path depends on the operating system: `/opt/katalon` on Linux, `~/katalon` on macOS. `katalon install` without `--dir` asks for the target directory interactively, offering this default.
+
+On Linux, `/opt` belongs to root, but `katalon install` runs without root privileges. The directory must therefore exist beforehand and belong to your own user:
+
+```bash
+sudo mkdir -p /opt/katalon && sudo chown $USER:$USER /opt/katalon
+```
+
+If the instance is not in the default path, pass `--dir` with **every** command, not only `install`. The CLI does not remember the path and otherwise looks in the default location:
+
+```bash
+katalon install --dir ~/katalon
+katalon start --dir ~/katalon
+katalon status --dir ~/katalon
+```
+
+### Additional commands
+
+- `katalon doctor`: Checks the Docker daemon, available disk space, and port usage.
+- `katalon update`: Performs a release update with an automatic database backup.
+- `katalon rollback`: Restores the state prior to the last update.
+- `katalon backup`: Creates a manual backup.
+- `katalon logs [service]`: Shows container logs.
+
+## Alternative: manual setup with Docker Compose
+
+For development, or if you want to use the repository directly:
 
 ```bash
 git clone https://github.com/katalon-collections/katalon.git
@@ -14,31 +62,6 @@ cd Katalon
 ```
 
 The installer creates the `.env` file, starts the containers, and displays the initial admin credentials.
-
-## Alternative: Installation via `katalon-cli`
-
-For production and server instances, the [`katalon-cli`](https://github.com/katalon-collections/katalon-cli) CLI tool is available, which uses pinned release images and automates configuration management:
-
-```bash
-# Install the CLI
-curl -LsSf https://astral.sh/uv/install.sh | sh
-uv tool install katalon-cli
-
-# Interactive setup wizard (asks for version, domain, ports, and TLS)
-katalon install --dir ~/katalon
-
-# Start, stop, and check the status of an instance
-katalon start --dir ~/katalon
-katalon status --dir ~/katalon
-```
-
-By default, `katalon-cli` uses the `/opt/katalon` directory. If `/opt/katalon` is to be used, the directory must be created beforehand and handed over to your own user (`sudo mkdir -p /opt/katalon && sudo chown $USER:$USER /opt/katalon`), since `katalon install` runs without root privileges.
-
-Additional CLI commands:
-- `katalon doctor`: Checks the Docker daemon, available disk space, and port usage.
-- `katalon update`: Performs a release update with an automatic database backup.
-- `katalon rollback`: Restores the state prior to the last update.
-- `katalon logs [service]`: Shows container logs.
 
 ## First Login
 
