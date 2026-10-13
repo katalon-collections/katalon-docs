@@ -34,6 +34,11 @@ Branding and basic configuration of the public portal:
 - **Position of the detail page sidebar** (left/right).
 - **Metadata display** on detail pages: label above value (default) or "label: value" inline. In the inline layout, labels sit in a fixed column (long labels wrap) and the values start aligned next to it.
 - **Field labels in uppercase** on detail pages (metadata and relations), default: off.
+- **Logo in the header:** when a logo is set, it also appears in the header. Optionally hide the title text next to it, and hide title and subtitle on the homepage if the logo already contains them.
+
+:::note[Available from version 1.42.0]
+Logo in the header and related options.
+:::
 
 :::note[Available from version 1.40.0]
 Toggle for the metadata display (label above value / "label: value") and for uppercase field labels.
@@ -60,9 +65,24 @@ Under **Settings → Homepage**, the public homepage can be assembled from an or
 - **Free text** — multilingual intro text (German/English), e.g. a welcome message or institutional context.
 - **Featured objects** — shows the Featured Objects maintained under **Portal & Institution**; here only the maximum number is configurable.
 - **Latest objects** — the most recently created objects, with a configurable count.
-- **Collections** — top-level collections, all collections, or a manually selected set by collection ID.
+- **Collections** — top-level collections, all collections, the largest collections (most public objects) or a custom selection. For a custom selection, collections are added by searching their title and ordered with the arrow buttons.
+
+:::note[Available from version 1.42.0]
+"Largest collections" mode and collection selection by search instead of collection ID. Text blocks are rendered as Markdown (headings, lists, links); single line breaks are kept. Object cards show the same subtitle line as the search result list.
+:::
 
 Each block can have its own multilingual heading. If a referenced collection is missing or the list of Featured Objects is empty, the block is simply skipped — the homepage remains usable.
+
+## Footer & Notice
+
+:::note[Available from version 1.42.0]
+:::
+
+Under **Settings → Footer & notice** you configure the portal footer and a usage notice.
+
+**Footer:** any number of columns of type **Text** (Markdown), **Links** or **Logos**, each with its own heading and reorderable. Links can point to external pages (`https://…`) or portal pages (`/page/impressum`); static pages placed in the "footer" can be appended automatically. Logos are uploaded directly (JPEG, PNG, WebP or GIF up to 5 MB) and need alt text. Below the columns is an optional **footer line** (Markdown), e.g. for copyright or funding notes. Without columns and footer text, the previous single-line footer remains.
+
+**Usage notice:** a dialog every visitor confirms once per browser before using the portal — for example a note on historical content. Heading, text (Markdown) and button label are configurable. **Show to everyone again** increments the version, so after saving the notice reappears even for visitors who already confirmed it.
 
 ## Terminology
 

@@ -34,6 +34,11 @@ Branding und Grundkonfiguration des Public-Portals:
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
 - **Metadaten-Darstellung** auf Detailseiten: Label über Wert (Standard) oder "Label: Wert" nebeneinander. Im Inline-Layout stehen die Label in einer festen Spalte (lange Label brechen um), die Werte beginnen bündig daneben.
 - **Feldbezeichnungen in Großbuchstaben** auf Detailseiten (Metadaten und Verknüpfungen), Standard: aus.
+- **Logo in der Kopfzeile:** Mit hinterlegtem Logo erscheint es auch in der Kopfzeile. Wahlweise lässt sich der Titeltext daneben ausblenden und auf der Startseite Titel und Untertitel ausblenden, wenn das Logo sie bereits enthält.
+
+:::note[Verfügbar ab Version 1.42.0]
+Logo in der Kopfzeile und zugehörige Optionen.
+:::
 
 :::note[Verfügbar ab Version 1.40.0]
 Umschalter für die Metadaten-Darstellung (Label über Wert / "Label: Wert") und für Feldbezeichnungen in Großbuchstaben.
@@ -60,9 +65,24 @@ Unter **Einstellungen → Startseite** lässt sich die öffentliche Startseite a
 - **Freier Text** — mehrsprachiger Einführungstext (Deutsch/Englisch), z. B. Begrüßung oder institutioneller Kontext.
 - **Ausgewählte Objekte** — zeigt die unter **Portal & Institution** gepflegten Hervorgehobenen Objekte; hier nur die maximale Anzahl konfigurierbar.
 - **Neueste Objekte** — die zuletzt angelegten Objekte, Anzahl konfigurierbar.
-- **Sammlungen** — oberste Sammlungen, alle Sammlungen, oder eine manuell gewählte Auswahl per Sammlungs-ID.
+- **Sammlungen** — oberste Sammlungen, alle Sammlungen, die größten Sammlungen (meiste öffentliche Objekte) oder eine eigene Auswahl. Für die eigene Auswahl werden Sammlungen per Suche nach Titel hinzugefügt und mit den Pfeil-Buttons sortiert.
+
+:::note[Verfügbar ab Version 1.42.0]
+Modus „Größte Sammlungen“ und Sammlungsauswahl per Suche statt Sammlungs-ID. Textblöcke werden als Markdown dargestellt (Überschriften, Listen, Links); einfache Zeilenumbrüche bleiben erhalten. Objektkarten zeigen dieselbe Unterzeile wie die Trefferliste der Suche.
+:::
 
 Jeder Block kann eine eigene, mehrsprachige Überschrift bekommen. Fehlt eine referenzierte Sammlung oder ist die Liste der Hervorgehobenen Objekte leer, wird der Block einfach übersprungen — die Startseite bleibt nutzbar.
+
+## Fußzeile & Hinweis
+
+:::note[Verfügbar ab Version 1.42.0]
+:::
+
+Unter **Einstellungen → Fußzeile & Hinweis** lassen sich Fußzeile und ein Nutzungshinweis des Portals konfigurieren.
+
+**Fußzeile:** beliebig viele Spalten vom Typ **Text** (Markdown), **Links** oder **Logos**, jeweils mit eigener Überschrift und sortierbar. Links können auf externe Seiten (`https://…`) oder Portalseiten (`/page/impressum`) zeigen; statische Seiten mit Platzierung „Fußzeile“ lassen sich automatisch anhängen. Logos werden direkt hochgeladen (JPEG, PNG, WebP oder GIF bis 5 MB) und brauchen einen Alternativtext. Darunter steht eine optionale **Fußzeilen-Zeile** (Markdown), etwa für Copyright oder Förderhinweise. Ohne Spalten und Fußzeilentext bleibt die bisherige einzeilige Fußzeile.
+
+**Nutzungshinweis:** ein Dialog, den jede Besucherin und jeder Besucher einmal pro Browser bestätigt, bevor das Portal genutzt wird — etwa für einen Hinweis zu historischen Inhalten. Überschrift, Text (Markdown) und Beschriftung der Schaltfläche sind frei wählbar. **Allen erneut anzeigen** erhöht die Version, sodass der Hinweis nach dem Speichern auch bei denen wieder erscheint, die ihn schon bestätigt haben.
 
 ## Terminologie
 

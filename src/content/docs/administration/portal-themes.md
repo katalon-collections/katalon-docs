@@ -76,7 +76,18 @@ curl http://localhost/v1/theme
 
 Mit `theme.json` und `custom.css` lassen sich Farben, Schriften, Favicon und viele Layoutdetails des bestehenden Portals anpassen, etwa Abstände, Karten, Kopf- und Fußbereich. Das ist der update-sichere Weg für ein institutionelles Erscheinungsbild.
 
-Ein optionales `custom.js` kann ergänzende, idempotente DOM-Anpassungen ausführen. Es muss als lokale Datei im Theme-Verzeichnis liegen und über eine eigene Portal-nginx-Konfiguration eingebunden werden. Das ist nur sinnvoll, wenn CSS nicht reicht; bei einem Theme-Wechsel müssen der `sub_filter`-Pfad in nginx und `PORTAL_THEME` denselben Namen verwenden.
+Ein optionales Skript kann ergänzende, idempotente DOM-Anpassungen ausführen. Es wird in `theme.json` angegeben und muss als `.js`-Datei im Theme-Verzeichnis liegen; das Portal lädt es einmal beim Start. Externe URLs und Pfade außerhalb des Themes werden ignoriert. Das ist nur sinnvoll, wenn CSS nicht reicht.
+
+```json
+{
+  "name": "Museum",
+  "script": "custom.js"
+}
+```
+
+:::note[Verfügbar ab Version 1.42.0]
+Angabe `"script"` in `theme.json`. Eine eigene nginx-Konfiguration mit `sub_filter` ist dafür nicht mehr nötig; bestehende `sub_filter`-Einbindungen sollten beim Umstieg entfernt werden, sonst wird das Skript doppelt geladen.
+:::
 
 Ein grundlegender Umbau, etwa eine neue Navigationsstruktur, eigene Seiten oder eine Sidebar anstelle der Kopf-Navigation, ist kein Template-Override: Das Portal ist eine React-Anwendung ohne serverseitige Templates. Solche Eingriffe erfolgen im Portal-Quellcode und benötigen ein eigenes Portal-Image. Sie bilden damit bewusst einen wartungsintensiveren, separaten Erweiterungsweg.
 

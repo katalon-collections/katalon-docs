@@ -76,7 +76,18 @@ curl http://localhost/v1/theme
 
 With `theme.json` and `custom.css`, you can customize colors, fonts, favicon, and many layout details of the existing portal, such as spacing, cards, header and footer areas. This is the update-safe way to achieve an institutional look and feel.
 
-An optional `custom.js` can perform supplementary, idempotent DOM adjustments. It must reside as a local file in the theme directory and be included via a dedicated portal nginx configuration. This only makes sense when CSS isn't enough; when switching themes, the `sub_filter` path in nginx and `PORTAL_THEME` must use the same name.
+An optional script can perform supplementary, idempotent DOM adjustments. It is declared in `theme.json` and must be a `.js` file inside the theme directory; the portal loads it once at startup. External URLs and paths outside the theme are ignored. This only makes sense when CSS isn't enough.
+
+```json
+{
+  "name": "Museum",
+  "script": "custom.js"
+}
+```
+
+:::note[Available from version 1.42.0]
+The `"script"` key in `theme.json`. A custom nginx configuration with `sub_filter` is no longer needed for this; remove existing `sub_filter` injections when switching, otherwise the script loads twice.
+:::
 
 A fundamental restructuring, such as a new navigation structure, custom pages, or a sidebar instead of header navigation, is not a template override: the portal is a React application without server-side templates. Such changes are made in the portal source code and require a dedicated portal image. They are therefore deliberately a more maintenance-intensive, separate extension path.
 

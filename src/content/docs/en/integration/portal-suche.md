@@ -24,10 +24,45 @@ The results list uses the same page as the quick search. The search definition i
 
 ## Setting up facets
 
-Which facets are offered in the portal is set per record type in the admin settings under **Facets**. This requires that the field is output publicly and appears in the detail view.
+Which facets are offered in the portal is set per record type in the admin settings under **Facets**. This requires that the field is output publicly. Whether it also appears in the detail view no longer matters.
 
 ![Configuration of search facets per record type in the admin settings](../../../../assets/screenshots/einstellungen/facetten-konfiguration.png)
 
 :::note[Available from version 1.26.0]
 Turning a facet on or off takes effect **immediately** — no rebuild of the search index is needed for that. Only when you change a field's visibility itself (**"Output publicly via APIs"** or detail view) does Katalon rebuild the search index in the background; for very large holdings this can take a few minutes (see [Managing Schemas](/katalon-docs/en/administration/schema/)).
 :::
+
+### Facet order
+
+:::note[Available from version 1.42.0]
+:::
+
+Under **Order in the portal**, all active facets of a record type appear in one shared list, whether field, date, hierarchy or relation facets. Change the order by dragging or with the arrow buttons (keyboard accessible); it applies directly to the portal search. Facets on sub-fields of a group appear as "Group › Field".
+
+### Date facets by decade, century or year
+
+:::note[Available from version 1.42.0]
+:::
+
+For date fields (including fields inside groups), the option **Grouping as portal facet** in the field form sets whether the facet groups by **decade**, **century** or **year**. Values are sorted chronologically. A range such as "1905/1912" counts in every decade it covers; very long ranges (over 50 years) only count at their start and end so they do not flood the facet. Implausible years are ignored. Changing the grouping rebuilds the search index in the background.
+
+### Hierarchical subject facets
+
+:::note[Available from version 1.42.0]
+:::
+
+Fields that reference a hierarchical vocabulary appear in the portal as an expandable tree with counts. Selecting a broader term filters to all records with that term or any of its narrower terms.
+
+### Relation facets
+
+:::note[Available from version 1.42.0]
+:::
+
+Relation facets filter by linked records, restricted to specific relation types — for example postcards by "composer", or by a place linked as sending or receiving location. Set them up under **Settings → Facets → Relation facets → Add relation facet**:
+
+- **Label** in German and English; a **key** used in search links is suggested from it.
+- **Linked type** (entity, place, occurrence, collection or object) and **direction** (this record → linked, the reverse, or both).
+- **Relation types** from the "relation_types" vocabulary; the types allowed for this combination of record types are offered. Several types can be combined into one facet.
+- Optionally **Only subtypes**, e.g. to include only persons of a certain subtype.
+
+The facet only shows public linked records. On portal detail pages, matching relations link directly to the filtered search. Adding or changing a relation facet rebuilds the search index of the record type in the background.
