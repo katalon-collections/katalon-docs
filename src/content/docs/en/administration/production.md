@@ -344,6 +344,44 @@ The credentials are printed in the API log within the `====== KATALON FIRST RUN 
 2. Log in with the first-run credentials
 3. Change the password immediately (Admin → Users → own account)
 
+## Image delivery and cache
+
+:::note[Available from version 1.42.0]
+:::
+
+Cantaloupe renders thumbnails and viewer tiles from the originals (from the pyramid version for TIFFs). The first request per image takes 0.1–1 seconds; from the cache the same image takes a few milliseconds. The portal loads thumbnails directly from `/iiif/3/…`, and every request is still checked against the media file's visibility.
+
+### Cache disk space
+
+The cache lives on disk and survives restarts: in the Docker Compose stack in the `cantaloupe_cache` volume, in instances installed with `katalon-cli` under `cantaloupe-cache/` in the instance directory. Set `CANTALOUPE_CACHE_DIR` in `.env` to use another directory.
+
+As a rule of thumb, plan about 25 KB per thumbnail at the default size (300 px high). The second size for high-density screens (600 px) takes several times that. Viewer tiles of detail pages that were actually opened come on top. For 50,000 images, plan a few gigabytes.
+
+Cantaloupe has no size limit. It deletes expired derivatives itself, by default after 30 days (`CANTALOUPE_CACHE_SERVER_DERIVATIVE_TTL_SECONDS`). If disk space must be capped, put `CANTALOUPE_CACHE_DIR` on a dedicated file system. On servers without spare disk space, `CANTALOUPE_FILESYSTEMCACHE_PATHNAME=/tmpfs/cache` keeps the cache in memory (`CANTALOUPE_CACHE_TMPFS_SIZE`, default `512m`); it is then empty after every restart.
+
+### Pre-rendering thumbnails
+
+Newly uploaded images are pre-rendered automatically after processing. For the existing holdings, after a bulk import, or after switching the cache:
+
+```bash
+katalon media warm-thumbnails            # instance installed with katalon-cli
+katalon-manage warm-thumbnails           # inside the api container
+```
+
+The run works in the background worker: primary images of all objects first, then the remaining images. `--primary-only` limits it to primary images, `--status` shows progress. An interrupted run resumes from where it stopped when started again; `--restart` starts over. At most `THUMBNAIL_WARM_CONCURRENCY` requests (default 3) hit Cantaloupe at once, so the run uses at most that many CPU cores. For about 50,000 images, expect a few hours.
+
+Without command-line access, an administrator starts the run via the API: `POST /v1/admin/thumbnails/warm`, progress via `GET` on the same address.
+
+### Reverse proxy and CDN in front of `/iiif/`
+
+Images of public media are served with `Cache-Control: public, max-age=2592000`. A CDN or reverse proxy may keep them for 30 days and so takes load off Cantaloupe. Images of internal media fetched by signed-in editors carry `private` and are only stored in that browser.
+
+If a media file is later set to "not public", Katalon refuses every new request. Copies already cached in browsers or the CDN stay valid until the 30 days expire, though. If an image has to disappear immediately, also purge it from the CDN cache manually.
+
+:::caution[Login proxy in front of the whole portal]
+A login proxy such as Authelia or oauth2-proxy in front of the entire portal checks every single image request on top. With result lists full of thumbnails this is noticeable. If the portal is public anyway, put the login proxy in front of the admin interface only.
+:::
+
 ## Access protection for public endpoints
 
 :::note[Available from version 1.19.7]

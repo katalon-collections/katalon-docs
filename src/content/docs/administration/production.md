@@ -382,6 +382,44 @@ Die Zugangsdaten werden im API-Log mit dem Block `====== KATALON FIRST RUN =====
 2. Login mit den First-Run-Zugangsdaten
 3. Sofort das Passwort ändern (Admin → Benutzer → eigenes Konto)
 
+## Bildauslieferung und Cache
+
+:::note[Verfügbar ab Version 1.42.0]
+:::
+
+Vorschaubilder und Kacheln der Bildbetrachter rechnet Cantaloupe aus den Originalen (bei TIFFs aus der Pyramidenfassung). Das dauert beim ersten Abruf je Bild 0,1–1 Sekunde; aus dem Cache kommt dasselbe Bild in wenigen Millisekunden. Das Portal lädt Vorschaubilder direkt von `/iiif/3/…`, jede Anfrage wird dabei weiterhin gegen die Sichtbarkeit des Mediums geprüft.
+
+### Platzbedarf des Caches
+
+Der Cache liegt auf Platte und übersteht Neustarts: im Docker-Compose-Stack im Volume `cantaloupe_cache`, in mit `katalon-cli` installierten Instanzen unter `cantaloupe-cache/` im Instanzverzeichnis. Ein anderes Verzeichnis lässt sich mit `CANTALOUPE_CACHE_DIR` in der `.env` festlegen.
+
+Als Richtwert gilt etwa 25 KB pro Vorschaubild in der Standardgröße (300 px hoch). Die zweite Stufe für hochauflösende Bildschirme (600 px) braucht ein Mehrfaches davon. Hinzu kommen die Kacheln der Detailansichten, die tatsächlich aufgerufen wurden. Für 50.000 Bilder sind damit einige Gigabyte einzuplanen.
+
+Cantaloupe kennt keine Größenbegrenzung. Abgelaufene Derivate löscht es selbst, Standard nach 30 Tagen (`CANTALOUPE_CACHE_SERVER_DERIVATIVE_TTL_SECONDS`). Wer den Platz hart begrenzen muss, legt `CANTALOUPE_CACHE_DIR` auf ein eigenes Dateisystem. Auf Servern ohne freien Plattenplatz hält `CANTALOUPE_FILESYSTEMCACHE_PATHNAME=/tmpfs/cache` den Cache im Arbeitsspeicher (`CANTALOUPE_CACHE_TMPFS_SIZE`, Standard `512m`); er ist dann nach jedem Neustart leer.
+
+### Vorschaubilder vorberechnen
+
+Neu hochgeladene Bilder werden nach der Verarbeitung automatisch vorberechnet. Für den vorhandenen Bestand, nach einem Massenimport oder nach dem Umstellen des Caches:
+
+```bash
+katalon media warm-thumbnails            # mit katalon-cli installierte Instanz
+katalon-manage warm-thumbnails           # im api-Container
+```
+
+Der Lauf arbeitet im Hintergrund-Worker: zuerst die Hauptbilder aller Objekte, dann die übrigen Bilder. Mit `--primary-only` beschränkt er sich auf die Hauptbilder, `--status` zeigt den Fortschritt. Wird der Lauf unterbrochen, setzt ein erneuter Aufruf beim letzten Stand fort; `--restart` beginnt von vorn. Gleichzeitig laufen höchstens `THUMBNAIL_WARM_CONCURRENCY` Anfragen an Cantaloupe (Standard 3), der Lauf belegt also höchstens so viele Prozessorkerne. Bei rund 50.000 Bildern ist mit einigen Stunden zu rechnen.
+
+Läuft die Instanz ohne die Kommandozeile, startet ein Administrator den Lauf über die API: `POST /v1/admin/thumbnails/warm`, Fortschritt per `GET` auf dieselbe Adresse.
+
+### Reverse-Proxy und CDN vor `/iiif/`
+
+Bilder öffentlicher Medien liefert Katalon mit `Cache-Control: public, max-age=2592000` aus. Ein CDN oder Reverse-Proxy darf sie 30 Tage lang zwischenspeichern und entlastet damit Cantaloupe. Bilder interner Medien, die angemeldete Redakteure abrufen, tragen `private` und werden nur im jeweiligen Browser gespeichert.
+
+Wird ein Medium nachträglich auf „nicht öffentlich" gestellt, weist Katalon jede neue Anfrage ab. Bereits zwischengespeicherte Kopien in Browsern oder im CDN bleiben aber bis zum Ablauf der 30 Tage gültig. Muss ein Bild sofort verschwinden, ist der CDN-Cache für dieses Bild zusätzlich manuell zu leeren.
+
+:::caution[Login-Proxy vor dem ganzen Portal]
+Steht ein Login-Proxy wie Authelia oder oauth2-proxy vor dem gesamten Portal, prüft er jede einzelne Bildanfrage zusätzlich. Bei Trefferlisten mit vielen Vorschaubildern ist das spürbar. Wenn das Portal ohnehin öffentlich ist, gehört der Login-Proxy nur vor die Admin-Oberfläche.
+:::
+
 ## Zugriffsschutz für öffentliche Endpunkte
 
 :::note[Verfügbar ab Version 1.19.7]
