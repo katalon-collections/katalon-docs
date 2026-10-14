@@ -43,6 +43,12 @@ themes/
 }
 ```
 
+Image viewer and media player sit on a dark stage. The `--viewer-bg` token sets its colour (default `#0f172a`). Frames and highlights in the image viewer, such as the navigator frame and the active page, follow `--accent` automatically. For a different colour there, set `--clover-color-accent` in the tokens.
+
+:::note[Available from version 1.42.0]
+Tokens `--viewer-bg` and `--clover-color-accent`. Overriding `--clover-viewer-background` with `!important` in `custom.css` is no longer needed.
+:::
+
 `custom.css` is loaded as a stylesheet. It can contain custom fonts via `@font-face` and CSS adjustments. All files must reside within the theme itself: the portal's security policy does not allow fonts, stylesheets, or scripts from external CDNs.
 
 ## Deploying the theme in the container

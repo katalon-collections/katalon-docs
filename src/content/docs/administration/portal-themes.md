@@ -43,6 +43,12 @@ themes/
 }
 ```
 
+Bildbetrachter und Medienplayer stehen auf einer dunklen Fläche. Ihre Farbe legt das Token `--viewer-bg` fest (Standard `#0f172a`). Rahmen und Markierungen im Bildbetrachter, etwa der Navigator-Rahmen und die aktive Seite, übernehmen automatisch `--accent`. Wer dort eine andere Farbe möchte, setzt `--clover-color-accent` in den Tokens.
+
+:::note[Verfügbar ab Version 1.42.0]
+Tokens `--viewer-bg` und `--clover-color-accent`. Überschreibungen von `--clover-viewer-background` mit `!important` in `custom.css` sind dafür nicht mehr nötig.
+:::
+
 `custom.css` wird als Stylesheet geladen. Es kann eigene Schriftarten mit `@font-face` und CSS-Anpassungen enthalten. Alle Dateien müssen im Theme selbst liegen: Die Sicherheitsrichtlinie des Portals erlaubt keine Schriften, Stylesheets oder Skripte von externen CDNs.
 
 ## Theme im Container bereitstellen
