@@ -11,6 +11,15 @@ description: Minimaler Weg vom leeren Katalon bis zum ersten öffentlichen Daten
 http://localhost/admin/
 ```
 
+## Übersicht nach der Anmeldung
+
+:::note[Verfügbar ab Version 1.42.0]
+:::
+
+Die **Übersicht** ist die neue Startansicht im Admin. Sie bündelt zuletzt bearbeitete Datensätze, eigene Bearbeitungssperren, Arbeitslisten, anstehende Vorgangsfristen und offene Entwürfe. Ein Klick führt zum jeweiligen Datensatz oder Arbeitsbereich; eigene Sperren können dort freigegeben werden. Welche Daten sichtbar sind, richtet sich nach deinen Berechtigungen.
+
+Administrator:innen sehen zusätzlich Team-Aktivität, aktive Sperren und den Systemzustand. Über das Einstellungsmenü der Übersicht lassen sich Bereiche ein- und ausblenden; diese Auswahl wird in diesem Browser gespeichert.
+
 ## 2. Schema anlegen
 
 Lege im Bereich **Schemata** zuerst Felder für einen Record-Typ an, zum Beispiel für `object`:

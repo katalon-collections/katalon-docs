@@ -29,7 +29,11 @@ Which facets are offered in the portal is set per record type in the admin setti
 ![Configuration of search facets per record type in the admin settings](../../../../assets/screenshots/einstellungen/facetten-konfiguration.png)
 
 :::note[Available from version 1.26.0]
-Turning a facet on or off takes effect **immediately** — no rebuild of the search index is needed for that. Only when you change a field's visibility itself (**"Output publicly via APIs"** or detail view) does Katalon rebuild the search index in the background; for very large holdings this can take a few minutes (see [Managing Schemas](/katalon-docs/en/administration/schema/)).
+Turning a facet on or off takes effect **immediately** — no rebuild of the search index is needed for that. Only when you change a field's visibility itself (**"Output publicly via APIs"**) does Katalon rebuild the search index in the background; for very large holdings this can take a few minutes (see [Managing Schemas](/katalon-docs/en/administration/schema/)).
+:::
+
+:::note[Available from version 1.42.0]
+Facets are independent of detail display. A public field can be a filter even when it is hidden on the detail page. Changing detail display alone does not trigger a search-index rebuild.
 :::
 
 ### Facet order
