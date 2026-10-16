@@ -79,6 +79,7 @@ export default defineConfig({
 						{ label: 'SPARQL-Endpoint (Oxigraph)', translations: { en: 'SPARQL Endpoint (Oxigraph)' }, slug: 'integration/sparql' },
 						{ label: 'OAI-PMH Schnittstelle', translations: { en: 'OAI-PMH Interface' }, slug: 'integration/oai-pmh' },
 						{ label: 'Export-Mappings', translations: { en: 'Export Mappings' }, slug: 'integration/export-mappings' },
+						{ label: 'LIDO für die DDB', translations: { en: 'LIDO for the DDB' }, slug: 'integration/lido-ddb' },
 						{ label: 'Langzeitarchivierung', translations: { en: 'Long-Term Preservation' }, slug: 'integration/preservation-export' },
 					],
 				},
