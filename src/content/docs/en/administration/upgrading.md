@@ -5,6 +5,15 @@ description: How Katalon is updated and what to watch out for across version jum
 
 This document explains how Katalon is updated, what happens to your data and customizations in the process, and what to watch out for with certain version jumps.
 
+## Updating to 1.42.0
+
+:::note[Available from version 1.42.0]
+:::
+
+CLI installations require **katalon-cli 0.3.0 or newer**. Upgrade the CLI first (`uv tool upgrade katalon-cli`), then run `katalon update` in the installation directory. The new Compose template stores Cantaloupe's cache on disk in `./cantaloupe-cache`. Allow additional disk space for it.
+
+After updating, start a full rebuild under **Settings → Search & Indexing**. It creates a fresh search index and switches only after the build; the old index stays available during that time. Both indices temporarily require disk space. The new index contains date, tree and relation facet values and direct thumbnail addresses.
+
 ## The basic principle: Docker-first
 
 Katalon runs entirely in Docker containers. What this means for updates is easiest to explain like this:

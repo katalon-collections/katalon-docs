@@ -11,6 +11,15 @@ Open the admin interface and sign in with the automatically created admin accoun
 http://localhost/admin/
 ```
 
+## Overview after signing in
+
+:::note[Available from version 1.42.0]
+:::
+
+**Overview** is the new admin start screen. It groups recently edited records, your editing locks, working sets, upcoming procedure deadlines and draft records. Links open the corresponding record or workspace; your own locks can be released here. Your permissions determine which data you can see.
+
+Administrators also see team activity, active locks and system health. The overview settings menu lets you show or hide sections; the choice is stored in this browser.
+
 ## 2. Create a Schema
 
 In the **Schemas** area, first create fields for a record type, for example for `object`:

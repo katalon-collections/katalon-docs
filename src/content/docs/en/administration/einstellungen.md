@@ -80,7 +80,7 @@ Each block can have its own multilingual heading. If a referenced collection is 
 
 Under **Settings → Footer & notice** you configure the portal footer and a usage notice.
 
-**Footer:** any number of columns of type **Text** (Markdown), **Links** or **Logos**, each with its own heading and reorderable. Links can point to external pages (`https://…`) or portal pages (`/page/impressum`); static pages placed in the "footer" can be appended automatically. Logos are uploaded directly (JPEG, PNG, WebP or GIF up to 5 MB) and need alt text. Below the columns is an optional **footer line** (Markdown), e.g. for copyright or funding notes. Without columns and footer text, the previous single-line footer remains.
+**Footer:** up to six columns of type **Text** (Markdown), **Links** or **Logos**, each with its own heading and reorderable. Links can point to external pages (`https://…`) or portal pages (`/page/impressum`); static pages placed in the "footer" can be appended automatically. Logos are uploaded directly (JPEG, PNG, WebP or GIF up to 5 MB) and need alt text. Below the columns is an optional **footer line** (Markdown), e.g. for copyright or funding notes. Without columns and footer text, the previous single-line footer remains.
 
 **Usage notice:** a dialog every visitor confirms once per browser before using the portal — for example a note on historical content. Heading, text (Markdown) and button label are configurable. **Show to everyone again** increments the version, so after saving the notice reappears even for visitors who already confirmed it.
 

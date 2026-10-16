@@ -29,7 +29,11 @@ Welche Facetten im Portal angeboten werden, legen Sie in den Admin-Einstellungen
 ![Konfiguration der Suchfacetten pro Datensatztyp in den Admin-Einstellungen](../../../assets/screenshots/einstellungen/facetten-konfiguration.png)
 
 :::note[Verfügbar ab Version 1.26.0]
-Das Ein- oder Ausschalten einer Facette wirkt **sofort** — ein Neuaufbau des Suchindex ist dafür nicht nötig. Nur wenn Sie die Sichtbarkeit eines Feldes selbst ändern (**„Öffentlich über APIs ausgeben“** oder Detailansicht), baut Katalon den Suchindex im Hintergrund neu auf; bei sehr großen Beständen kann das einige Minuten dauern (siehe [Schema verwalten](../../administration/schema)).
+Das Ein- oder Ausschalten einer Facette wirkt **sofort** — ein Neuaufbau des Suchindex ist dafür nicht nötig. Nur wenn Sie die Sichtbarkeit eines Feldes selbst ändern (**„Öffentlich über APIs ausgeben“**), baut Katalon den Suchindex im Hintergrund neu auf; bei sehr großen Beständen kann das einige Minuten dauern (siehe [Schema verwalten](../../administration/schema)).
+:::
+
+:::note[Verfügbar ab Version 1.42.0]
+Die Facette ist unabhängig von der Detailanzeige. Ein öffentliches Feld darf als Filter dienen, auch wenn es auf der Detailseite ausgeblendet ist. Eine Änderung der Detailanzeige allein löst keinen Neuaufbau des Suchindex aus.
 :::
 
 ### Reihenfolge der Facetten

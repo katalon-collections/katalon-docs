@@ -5,6 +5,15 @@ description: Wie Katalon aktualisiert wird und worauf bei Versionssprüngen zu a
 
 Dieses Dokument erklärt, wie Katalon aktualisiert wird, was dabei mit deinen Daten und Anpassungen passiert, und worauf du bei bestimmten Versionssprüngen achten musst.
 
+## Update auf 1.42.0
+
+:::note[Verfügbar ab Version 1.42.0]
+:::
+
+Für CLI-Installationen wird **katalon-cli 0.3.0 oder neuer** benötigt. Aktualisiere zuerst die CLI (`uv tool upgrade katalon-cli`) und führe dann `katalon update` im Installationsverzeichnis aus. Das neue Compose-Template hält den Cantaloupe-Cache in `./cantaloupe-cache` auf Platte. Plane dafür zusätzlichen Plattenplatz ein.
+
+Nach dem Update unter **Einstellungen → Suche & Indexierung** einen vollständigen Neuaufbau starten. Er erstellt einen frischen Suchindex und schaltet erst nach dem Aufbau um; währenddessen bleibt der alte Index verfügbar. Vorübergehend wird Platz für beide Indizes benötigt. Der neue Index enthält die Werte für Datums-, Baum- und Beziehungsfacetten sowie die direkten Vorschaubild-Adressen.
+
 ## Das Grundprinzip: Docker-first
 
 Katalon läuft vollständig in Docker-Containern. Was das für Updates bedeutet, lässt sich am einfachsten so erklären:
