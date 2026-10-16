@@ -1,41 +1,43 @@
 ---
 title: LIDO for the DDB
-description: Configure the LIDO export to meet the requirements of the Deutsche Digitale Bibliothek – DDB profile, check report and example mapping.
+description: Recipe – adapting the LIDO export to the requirements of the Deutsche Digitale Bibliothek through configuration, with checks, check report and example mapping.
 ---
 
 :::note[Available from version 1.42.0]
-DDB profile, `lido-report` check, one `resourceSet` per medium and the settings described below.
+Rights checks, `lido-report` check, one `resourceSet` per medium and the settings described below.
 :::
 
-The LIDO export can be adapted to the requirements of the Deutsche Digitale Bibliothek (DDB) entirely through the mapping set: rules, their settings and the institution details. Everything can be set in the mapping editor (**Export → Format mapping**, type *Objects*, format *LIDO*). If you maintain several instances, you can also export a finished mapping as YAML and import it elsewhere.
+Katalon does not know any particular aggregator. What a recipient requires is set in the mapping set: rules, their settings and the institution details. This page shows it for the Deutsche Digitale Bibliothek (DDB); other portals use the same settings with their own values. Everything can be set in the mapping editor (**Export → Format mapping**, type *Objects*, format *LIDO*). If you maintain several instances, you can also export a finished mapping as YAML and import it elsewhere.
 
 ## What Katalon handles automatically
 
 - **Terminology URIs instead of words** in attributes (e.g. preferred title `http://terminology.lido-schema.org/lido00169`, current repository `…/lido00475`).
 - **Clean text:** leading and trailing spaces and line breaks are removed, rich text HTML becomes plain text. Empty fields create no empty elements.
 - **No duplicates:** a place reached through two publishers appears only once.
-- **Authority URIs in the form the DDB resolves**, e.g. GeoNames always as `https://sws.geonames.org/2950159/` (with trailing slash).
+- **Authority URIs in Linked Data form**, e.g. GeoNames always as `https://sws.geonames.org/2950159/` (with trailing slash).
 - **The record's change date** in `recordMetadataDate` instead of the export time. Changing an image's license or credit line also marks the object as changed, so the next harvest picks it up.
 
-## Turning on the DDB profile
+## Checks and delivery details
 
-The mapping set's **institution details** contain the section **Delivery to aggregators (DDB)**:
+The mapping set's **institution details** contain the section **Checks and delivery details**:
 
-- **Check DDB profile:** turns on the checks below.
-- **Output images individually:** one `resourceSet` per public image (always on with the DDB profile).
+- **Require a license per image:** If a public image has no license (not even through the fallback), the record is not delivered ("Rechteangabe zum Digitalisat fehlt") and is reported as deleted via OAI-PMH. Once the image has a license, the record is delivered again.
+- **Allowed license URIs:** one URI per line. Licenses of images and of the metadata (`recordRights`) outside this list also lead to exclusion. Stored URIs are written in the list's spelling (http/https, trailing slash), because recipients usually compare literally. Without a list the stored spelling is kept.
+- **Output images individually:** one `resourceSet` per public image with image links (IIIF, full size and preview), type `image`, license, rights holder and credit line. The primary image comes first.
 - **Institution as rights holder of the metadata / of the object:** outputs ISIL and name in `recordRights` and `rightsWorkSet`.
 - **License if an image has none:** none, from an object field (e.g. *rights model*, whose vocabulary URI is used) or a fixed license URI.
 - **Authority fields for persons, organisations and places:** field names on the linked records whose GND, Wikidata, GeoNames etc. values appear as `actorID` or `placeID`.
 - **Person or organisation:** maps entity subtypes to the LIDO actor type.
 - **Authority IDs of the location** and **further inventory numbers** for `repositorySet`.
 
-With **Check DDB profile** the following also applies:
-
-- If a public image has no license (not even through the fallback), the record is not delivered: "Rechteangabe zum Digitalisat fehlt". OAI-PMH reports it as deleted so the DDB removes an earlier copy. Once the image has a license, the record is delivered again.
-- License URIs of images and metadata must be in the DDB license basket (exact spelling; Katalon rewrites known licenses into the usual form).
-- Every public image gets a `resourceSet` with image links (IIIF, full size and preview), type `image`, license, rights holder and credit line. The primary image comes first.
-
 Affected records are shown as warnings in the mapping preview.
+
+### Values for the DDB
+
+- Turn on **Require a license per image** and **Output images individually**.
+- **Allowed license URIs:** enter the DDB license basket. The example mapping (below) contains the list in the spelling of a legacy export the DDB accepted; compare it with the DDB's current list before the first delivery.
+- **Metadata rights:** CC0 1.0 (`https://creativecommons.org/publicdomain/zero/1.0/`), plus **Institution as rights holder of the metadata**.
+- `resourceType` is `image`; Katalon outputs that for images anyway.
 
 ## Credit line on images
 
@@ -86,8 +88,4 @@ In the rule editor: target *Production: place*, source *Relation*, relation type
   target_key: lido:events/production/place
 ```
 
-A complete example mapping for picture postcards is in the Katalon repository at `backend/tests/fixtures/lido_ddb_mapping.yaml`.
-
-:::caution[Check the license basket]
-Katalon's list of DDB license URIs follows a legacy export the DDB accepted. Compare it with the DDB's current list before the first delivery.
-:::
+A complete example mapping for picture postcards to the DDB is in the Katalon repository at `backend/tests/fixtures/lido_ddb_mapping.yaml` and can be taken over by YAML import.

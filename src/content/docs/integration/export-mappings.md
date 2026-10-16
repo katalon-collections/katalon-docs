@@ -80,7 +80,7 @@ LIDO (Lightweight Information Describing Objects) ist der primäre Standard für
   - Mindestens eine Objektart (`lido:objectClassificationWrap/.../lido:objectWorkType`).
   - Werden Ereignisfelder (Datum, Akteur, Ort) gemappt, verlangt das System zwingend auch einen gemappten Ereignistyp (`lido:eventWrap/.../lido:eventType/lido:term`).
 - **Pflichtfeldprüfung pro Datensatz:** Die Prüfung oben betrifft nur die Mapping-*Konfiguration*. Zusätzlich prüft Katalon bei jedem einzelnen Datensatz, ob Titel und Objektart tatsächlich einen Wert liefern (z. B. weil das gemappte Feld bei diesem Datensatz leer geblieben ist). Datensätze, bei denen das nicht der Fall ist, werden **nicht** mit leeren Pflichtelementen exportiert: der Einzelexport lehnt mit einer Fehlermeldung ab, ein Massenexport überspringt den Datensatz (mit Hinweis am Dateiende) und OAI-PMH liefert `cannotDisseminateFormat` bzw. lässt den Datensatz aus der Trefferliste weg.
-- **DDB-Profil:** Mit `profile: ddb` prüft Katalon zusätzlich Rechteangaben und Lizenz-URIs der Digitalisate und Metadaten, siehe [LIDO für die DDB](/katalon-docs/integration/lido-ddb/).
+- **Prüfregeln:** Optional prüft Katalon Rechteangaben und erlaubte Lizenz-URIs der Digitalisate und Metadaten; die Werte eines Empfängers werden im Mapping-Set eingestellt. Beispiel: [LIDO für die DDB](/katalon-docs/integration/lido-ddb/).
 - **Was nicht geprüft wird:** Weitere portalspezifische Regeln (z. B. Schematron-Regeln der Europeana zu Mindestauflösung von Digitalisaten oder kontrollierten Vokabularen).
 - **Empfohlene externe Validierung:** Über das [DDB-Validierungstool](https://validator.deutsche-digitale-bibliothek.de/) oder den [Europeana Schematron Validator](https://metis.europeana.eu/schematron-validator/).
 

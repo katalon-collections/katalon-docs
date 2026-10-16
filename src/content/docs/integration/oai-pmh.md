@@ -62,7 +62,7 @@ Die Schnittstelle meldet Datensätze, die nicht mehr ausgeliefert werden, mit `<
 Als gelöscht gemeldet werden:
 
 - Datensätze, die öffentlich waren und gelöscht oder auf *intern*/*Entwurf* gesetzt wurden. Der Datumsstempel ist der Zeitpunkt der Rücknahme; `from`/`until` beziehen sich darauf. Wird ein Datensatz wieder öffentlich, erscheint er wieder normal.
-- Öffentliche Datensätze, die im angefragten Format nicht ausgeliefert werden können, z. B. ohne Titel oder bei Fehlern im DDB-Profil (siehe [LIDO für die DDB](/katalon-docs/integration/lido-ddb/)). Auch `GetRecord` liefert dann nur den Kopf mit `status="deleted"`.
+- Öffentliche Datensätze, die im angefragten Format nicht ausgeliefert werden können, z. B. ohne Titel oder wenn konfigurierte Rechteprüfungen fehlschlagen (siehe [LIDO für die DDB](/katalon-docs/integration/lido-ddb/)). Auch `GetRecord` liefert dann nur den Kopf mit `status="deleted"`.
 
 Die Löschmeldungen folgen in `ListRecords`/`ListIdentifiers` nach den vorhandenen Datensätzen, über denselben `resumptionToken`. Sets, die nach Metadaten, Status oder Freitext filtern, enthalten keine Löschmeldungen, weil ein gelöschter Datensatz keinem solchen Set mehr zugeordnet werden kann; Sets nach Datensatztyp schon.
 

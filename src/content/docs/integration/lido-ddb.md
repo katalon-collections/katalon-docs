@@ -1,41 +1,43 @@
 ---
 title: LIDO für die DDB
-description: LIDO-Export so konfigurieren, dass er die Anforderungen der Deutschen Digitalen Bibliothek erfüllt – mit DDB-Profil, Prüfbericht und Beispiel-Mapping.
+description: Rezept – den LIDO-Export per Konfiguration an die Anforderungen der Deutschen Digitalen Bibliothek anpassen, mit Prüfregeln, Prüfbericht und Beispiel-Mapping.
 ---
 
 :::note[Verfügbar ab Version 1.42.0]
-DDB-Profil, Prüfbericht `lido-report`, `resourceSet` je Medium und die unten beschriebenen Einstellungen.
+Prüfregeln für Rechteangaben, Prüfbericht `lido-report`, `resourceSet` je Medium und die unten beschriebenen Einstellungen.
 :::
 
-Der LIDO-Export lässt sich vollständig über das Mapping-Set an die Anforderungen der Deutschen Digitalen Bibliothek (DDB) anpassen: Regeln, deren Einstellungen und die Institutionsangaben. Alles ist im Mapping-Editor einstellbar (**Export → Format-Mapping**, Typ *Objekte*, Format *LIDO*). Wer mehrere Instanzen pflegt, kann ein fertiges Mapping zusätzlich als YAML exportieren und importieren.
+Katalon kennt keinen bestimmten Aggregator. Was ein Empfänger verlangt, wird im Mapping-Set eingestellt: Regeln, deren Einstellungen und die Institutionsangaben. Diese Seite zeigt das am Beispiel der Deutschen Digitalen Bibliothek (DDB); für andere Portale gelten dieselben Einstellungen mit deren Werten. Alles ist im Mapping-Editor einstellbar (**Export → Format-Mapping**, Typ *Objekte*, Format *LIDO*). Wer mehrere Instanzen pflegt, kann ein fertiges Mapping zusätzlich als YAML exportieren und importieren.
 
 ## Was Katalon automatisch richtig macht
 
 - **Terminologie-URIs statt Wörtern** in Attributen (z. B. bevorzugter Titel `http://terminology.lido-schema.org/lido00169`, aktueller Standort `…/lido00475`).
 - **Bereinigte Texte:** Leerzeichen und Zeilenumbrüche am Anfang und Ende werden entfernt, HTML aus Richtext wird zu Klartext. Leere Felder erzeugen keine leeren Elemente.
 - **Keine Dubletten:** Kommt derselbe Ort über zwei Verlage zweimal vor, steht er nur einmal im Export.
-- **Normdaten-URIs in der Form, die die DDB auflöst**, z. B. GeoNames immer als `https://sws.geonames.org/2950159/` (mit Schrägstrich am Ende).
+- **Normdaten-URIs in Linked-Data-Form**, z. B. GeoNames immer als `https://sws.geonames.org/2950159/` (mit Schrägstrich am Ende).
 - **Änderungsdatum des Datensatzes** in `recordMetadataDate` statt des Exportzeitpunkts. Ändern Sie die Lizenz oder den Freigabehinweis eines Bildes, gilt auch das Objekt als geändert und wird beim nächsten Harvest neu abgeholt.
 
-## DDB-Profil einschalten
+## Prüfregeln und Lieferangaben
 
-In den **Institutionsangaben** des Mapping-Sets gibt es den Abschnitt **Lieferung an Aggregatoren (DDB)**:
+In den **Institutionsangaben** des Mapping-Sets gibt es den Abschnitt **Prüfregeln und Lieferangaben**:
 
-- **DDB-Profil prüfen:** schaltet die Prüfungen unten ein.
-- **Digitalisate einzeln ausgeben:** je öffentlichem Bild ein `resourceSet` (mit DDB-Profil immer an).
+- **Lizenz je Digitalisat verlangen:** Hat ein öffentliches Bild keine Lizenz (auch nicht über den Fallback), wird der Datensatz nicht ausgeliefert („Rechteangabe zum Digitalisat fehlt“) und per OAI-PMH als gelöscht gemeldet. Sobald das Bild eine Lizenz hat, wird er wieder geliefert.
+- **Erlaubte Lizenz-URIs:** eine URI pro Zeile. Lizenzen von Bildern und der Metadaten (`recordRights`) außerhalb dieser Liste führen ebenfalls zum Ausschluss. Gespeicherte URIs werden in der Schreibweise der Liste ausgegeben (http/https, Schrägstrich am Ende), weil Empfänger meist buchstabengenau vergleichen. Ohne Liste bleibt die gespeicherte Schreibweise.
+- **Digitalisate einzeln ausgeben:** je öffentlichem Bild ein `resourceSet` mit Bild-Link (IIIF, volle Größe und Vorschau), Typ `image`, Lizenz, Rechteinhaber und Freigabehinweis. Das Hauptbild steht zuerst.
 - **Institution als Rechteinhaberin der Metadaten / am Objekt:** gibt ISIL und Namen in `recordRights` bzw. `rightsWorkSet` aus.
 - **Lizenz, wenn ein Bild keine hat:** keine, aus einem Objektfeld (z. B. *Rechtemodell*, dessen Vokabular-URI verwendet wird) oder eine feste Lizenz-URI.
 - **Normdatenfelder für Personen, Körperschaften und Orte:** Feldnamen der verknüpften Datensätze, deren GND-, Wikidata-, GeoNames- usw. Werte als `actorID` bzw. `placeID` erscheinen.
 - **Person oder Körperschaft:** ordnet Entitäts-Subtypen der LIDO-Akteursart zu.
 - **Normdaten des Standorts** und **weitere Inventarnummern** für `repositorySet`.
 
-Mit **DDB-Profil prüfen** gilt zusätzlich:
-
-- Hat ein öffentliches Bild keine Lizenz (auch nicht über den Fallback), wird der Datensatz nicht ausgeliefert: „Rechteangabe zum Digitalisat fehlt“. Per OAI-PMH wird er als gelöscht gemeldet, damit die DDB eine ältere Fassung entfernt. Sobald das Bild eine Lizenz hat, wird er wieder geliefert.
-- Lizenz-URIs von Bildern und Metadaten müssen im DDB-Lizenzkorb stehen (exakte Schreibweise; Katalon schreibt bekannte Lizenzen automatisch in die übliche Form um).
-- Für jedes öffentliche Bild entsteht ein `resourceSet` mit Bild-Link (IIIF, volle Größe und Vorschau), Typ `image`, Lizenz, Rechteinhaber und Freigabehinweis. Das Hauptbild steht zuerst.
-
 Betroffene Datensätze erscheinen in der Mapping-Vorschau als Warnung.
+
+### Werte für die DDB
+
+- **Lizenz je Digitalisat verlangen** und **Digitalisate einzeln ausgeben** einschalten.
+- **Erlaubte Lizenz-URIs:** den DDB-Lizenzkorb eintragen. Das Beispiel-Mapping (unten) enthält die Liste in der Schreibweise eines von der DDB akzeptierten Altexports; vor der ersten Lieferung mit der aktuellen Liste der DDB abgleichen.
+- **Rechte der Metadaten:** CC0 1.0 (`https://creativecommons.org/publicdomain/zero/1.0/`), dazu **Institution als Rechteinhaberin der Metadaten**.
+- `resourceType` lautet `image`; das gibt Katalon für Bilder ohnehin aus.
 
 ## Freigabehinweis am Bild
 
@@ -86,8 +88,4 @@ Im Regel-Editor: Ziel *Herstellung: Ort*, Quelle *Beziehung*, Beziehungstyp *Urh
   target_key: lido:events/production/place
 ```
 
-Ein vollständiges Beispiel-Mapping für Bildpostkarten liegt im Katalon-Repository unter `backend/tests/fixtures/lido_ddb_mapping.yaml`.
-
-:::caution[Lizenzkorb prüfen]
-Die in Katalon hinterlegte Liste der DDB-Lizenz-URIs folgt einem von der DDB akzeptierten Altexport. Vergleichen Sie sie vor der ersten Lieferung mit der aktuellen Liste der DDB.
-:::
+Ein vollständiges Beispiel-Mapping für Bildpostkarten an die DDB liegt im Katalon-Repository unter `backend/tests/fixtures/lido_ddb_mapping.yaml` und lässt sich per YAML-Import übernehmen.
