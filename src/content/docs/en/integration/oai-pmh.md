@@ -52,6 +52,22 @@ See [Linked Data Export (JSON-LD & RDF)](/katalon-docs/en/integration/linked-dat
 
 ---
 
+## Deleted and withdrawn records
+
+:::note[Available from version 1.42.0]
+:::
+
+The interface reports records that are no longer delivered with `<header status="deleted">` (Identify: `deletedRecord` = `transient`). Harvesters with incremental harvesting, such as the DDB, then remove them from their portal instead of only noticing on a full harvest.
+
+Reported as deleted are:
+
+- Records that were public and were deleted or set to *internal*/*draft*. The datestamp is the time of withdrawal; `from`/`until` refer to it. If a record becomes public again, it appears normally again.
+- Public records that cannot be delivered in the requested format, e.g. without a title or with DDB profile errors (see [LIDO for the DDB](/katalon-docs/en/integration/lido-ddb/)). `GetRecord` then also returns only the header with `status="deleted"`.
+
+Deletions follow the existing records in `ListRecords`/`ListIdentifiers`, through the same `resumptionToken`. Sets that filter by metadata, status or free text contain no deletions, because a deleted record can no longer be assigned to such a set; sets by record type do.
+
+"Transient" means: records withdrawn before this feature was introduced are not covered.
+
 ## OAI sets and selective harvesting
 
 Records can be grouped into OAI sets in the Admin UI to offer external aggregators (e.g. Deutsche Digitale Bibliothek, subject portals) specific subsets of the holdings:

@@ -52,6 +52,22 @@ Details zur semantischen Abbildung siehe [Linked Data Export (JSON-LD & RDF)](/k
 
 ---
 
+## Gelöschte und zurückgezogene Datensätze
+
+:::note[Verfügbar ab Version 1.42.0]
+:::
+
+Die Schnittstelle meldet Datensätze, die nicht mehr ausgeliefert werden, mit `<header status="deleted">` (Identify: `deletedRecord` = `transient`). Harvester mit inkrementellem Abgleich, etwa die DDB, entfernen sie dann aus ihrem Portal, statt erst bei einer Vollernte davon zu erfahren.
+
+Als gelöscht gemeldet werden:
+
+- Datensätze, die öffentlich waren und gelöscht oder auf *intern*/*Entwurf* gesetzt wurden. Der Datumsstempel ist der Zeitpunkt der Rücknahme; `from`/`until` beziehen sich darauf. Wird ein Datensatz wieder öffentlich, erscheint er wieder normal.
+- Öffentliche Datensätze, die im angefragten Format nicht ausgeliefert werden können, z. B. ohne Titel oder bei Fehlern im DDB-Profil (siehe [LIDO für die DDB](/katalon-docs/integration/lido-ddb/)). Auch `GetRecord` liefert dann nur den Kopf mit `status="deleted"`.
+
+Die Löschmeldungen folgen in `ListRecords`/`ListIdentifiers` nach den vorhandenen Datensätzen, über denselben `resumptionToken`. Sets, die nach Metadaten, Status oder Freitext filtern, enthalten keine Löschmeldungen, weil ein gelöschter Datensatz keinem solchen Set mehr zugeordnet werden kann; Sets nach Datensatztyp schon.
+
+„Transient“ heißt: Datensätze, die vor Einführung dieser Funktion zurückgenommen wurden, sind nicht erfasst.
+
 ## OAI-Sets und Selektives Harvesting
 
 Über die Admin-UI können Datensätze in OAI-Sets gruppiert werden, um externen Aggregatoren (z. B. Deutsche Digitale Bibliothek, Fachportale) spezifische Teilbestände anzubieten:

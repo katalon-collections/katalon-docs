@@ -23,6 +23,9 @@ Ein Datensatz ohne konfigurierten Subtyp verwendet nur das Schema des Primärtyp
 5. Optional eine Beschreibung des institutionellen Einsatzes hinterlegen – hilfreich für andere Sachbearbeiter:innen, die später denselben Subtyp verwenden.
 6. Den vorgeschlagenen internen Namen bei Bedarf anpassen (z. B. `person`, `organisation`). Der interne Name ist ein Pflichtfeld und nach dem Speichern nicht mehr änderbar, da er als stabiler Schlüssel für Datensätze und Felddefinitionen dient.
 7. Optional: **Normdaten-Verknüpfung (AAT / GND / Wikidata)** wählen: Über den integrierten Normdaten-Lookup kann der Subtyp direkt mit einer Normdatei verknüpft werden (z. B. Getty AAT für Objekttypen oder GND für Entitäten).
+   Unter einer gesetzten Verknüpfung lassen sich **weitere Konzepte** ergänzen, z. B. AAT „postcards“ (Sprache `en`) zusätzlich zur GND „Postkarte“. Der LIDO-Export gibt das Hauptkonzept als bevorzugten und die weiteren als alternative Begriffe aus.
+   :::note[Verfügbar ab Version 1.42.0]
+   :::
 8. Optional als **Standard-Subtyp** markieren – dieser wird beim Anlegen neuer Datensätze und bei der Schnellerfassung vorausgewählt.
 9. Speichern.
 

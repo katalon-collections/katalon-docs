@@ -7,11 +7,7 @@ description: LIDO-Export so konfigurieren, dass er die Anforderungen der Deutsch
 DDB-Profil, Prüfbericht `lido-report`, `resourceSet` je Medium und die unten beschriebenen Einstellungen.
 :::
 
-Der LIDO-Export lässt sich vollständig über das Mapping-Set an die Anforderungen der Deutschen Digitalen Bibliothek (DDB) anpassen: Regeln, deren Einstellungen und die Institutionsangaben. Am einfachsten ist es, ein Mapping als YAML zu exportieren, zu ergänzen und wieder zu importieren (**Export → Format-Mapping → YAML exportieren / importieren**).
-
-:::caution[Einstellungen derzeit nur per YAML]
-Die neuen Regel-Einstellungen (z. B. `type`, `measurement_type`, `kind`, `via`) und die DDB-Institutionsangaben erscheinen noch nicht als eigene Eingabefelder im Mapping-Editor. Sie werden per YAML-Import gesetzt und bleiben beim Bearbeiten im Editor erhalten, solange die Quellenart der Regel nicht gewechselt wird.
-:::
+Der LIDO-Export lässt sich vollständig über das Mapping-Set an die Anforderungen der Deutschen Digitalen Bibliothek (DDB) anpassen: Regeln, deren Einstellungen und die Institutionsangaben. Alles ist im Mapping-Editor einstellbar (**Export → Format-Mapping**, Typ *Objekte*, Format *LIDO*). Wer mehrere Instanzen pflegt, kann ein fertiges Mapping zusätzlich als YAML exportieren und importieren.
 
 ## Was Katalon automatisch richtig macht
 
@@ -23,60 +19,64 @@ Die neuen Regel-Einstellungen (z. B. `type`, `measurement_type`, `kind`, `via`) 
 
 ## DDB-Profil einschalten
 
-In den Institutionsangaben des Mapping-Sets:
+In den **Institutionsangaben** des Mapping-Sets gibt es den Abschnitt **Lieferung an Aggregatoren (DDB)**:
 
-```yaml
-institution_config:
-  profile: ddb
-  isil: DE-3066
-  institution_name: Historische Bildpostkarten - Universität Osnabrück
-  website: https://bildpostkarten.uni-osnabrueck.de/
-  location: Osnabrück
-  location_place_ids:
-  - {source: geonames, id: '2856883'}
-  portal_host: https://bpk.katalon-collections.de
-  record_rights: https://creativecommons.org/publicdomain/zero/1.0/
-  record_rights_holder: true      # Institution als Rechteinhaber der Metadaten
-  rights_work_holder: true        # Institution als Rechteinhaber am Objekt
-  resource_rights_fallback: object_field:rights.rechtemodell
-```
+- **DDB-Profil prüfen:** schaltet die Prüfungen unten ein.
+- **Digitalisate einzeln ausgeben:** je öffentlichem Bild ein `resourceSet` (mit DDB-Profil immer an).
+- **Institution als Rechteinhaberin der Metadaten / am Objekt:** gibt ISIL und Namen in `recordRights` bzw. `rightsWorkSet` aus.
+- **Lizenz, wenn ein Bild keine hat:** keine, aus einem Objektfeld (z. B. *Rechtemodell*, dessen Vokabular-URI verwendet wird) oder eine feste Lizenz-URI.
+- **Normdatenfelder für Personen, Körperschaften und Orte:** Feldnamen der verknüpften Datensätze, deren GND-, Wikidata-, GeoNames- usw. Werte als `actorID` bzw. `placeID` erscheinen.
+- **Person oder Körperschaft:** ordnet Entitäts-Subtypen der LIDO-Akteursart zu.
+- **Normdaten des Standorts** und **weitere Inventarnummern** für `repositorySet`.
 
-Mit `profile: ddb` prüft Katalon jeden Datensatz zusätzlich:
+Mit **DDB-Profil prüfen** gilt zusätzlich:
 
-- Hat ein öffentliches Bild keine Lizenz (auch nicht über den Fallback), fehlt der Datensatz im OAI-Export: „Rechteangabe zum Digitalisat fehlt“.
+- Hat ein öffentliches Bild keine Lizenz (auch nicht über den Fallback), wird der Datensatz nicht ausgeliefert: „Rechteangabe zum Digitalisat fehlt“. Per OAI-PMH wird er als gelöscht gemeldet, damit die DDB eine ältere Fassung entfernt. Sobald das Bild eine Lizenz hat, wird er wieder geliefert.
 - Lizenz-URIs von Bildern und Metadaten müssen im DDB-Lizenzkorb stehen (exakte Schreibweise; Katalon schreibt bekannte Lizenzen automatisch in die übliche Form um).
-- Für jedes öffentliche Bild entsteht ein `resourceSet` mit Bild-Link (IIIF, volle Größe und Vorschau), Typ `image`, Lizenz, Rechteinhaber und Freigabehinweis (Credit Line des Mediums). Das Hauptbild steht zuerst.
+- Für jedes öffentliche Bild entsteht ein `resourceSet` mit Bild-Link (IIIF, volle Größe und Vorschau), Typ `image`, Lizenz, Rechteinhaber und Freigabehinweis. Das Hauptbild steht zuerst.
 
 Betroffene Datensätze erscheinen in der Mapping-Vorschau als Warnung.
 
+## Freigabehinweis am Bild
+
+Im Objektformular hat jedes Medium unter **Rechteangaben** neben Lizenz-URI und Rechteinhaber das Feld **Freigabehinweis / Credit Line**. Es nimmt Hinweise wie „Veröffentlichung genehmigt von …; jede weitere Verwendung bedarf der Genehmigung“ auf. Der Text erscheint im Portal unter den Rechteangaben des Bildes und im LIDO-Export in `rightsResource/creditLine`. Der Name des Rechteinhabers gehört weiterhin in das eigene Feld.
+
+## Objektart mit mehreren Normdaten
+
+Am Subtyp (**Einstellungen → Subtypen**) lassen sich unter der Normdaten-Verknüpfung **weitere Konzepte** hinzufügen, z. B. AAT „postcards“ zusätzlich zur GND „Postkarte“. Im Export steht das Hauptkonzept als bevorzugter Begriff, die weiteren als alternative Begriffe mit Sprachangabe.
+
 ## Prüfbericht vor der Lieferung
 
-Bevor die DDB harvestet, lässt sich auf dem Server prüfen, welche Datensätze ausgeschlossen würden:
+Bevor die DDB harvestet, lässt sich auf dem Server prüfen, welche Datensätze ausgeschlossen würden. Der Befehl läuft im API-Container:
 
 ```bash
-katalon-manage lido-report --mapping-set <ID des Mapping-Sets> --output lido-report.csv
+docker compose exec -T api katalon-manage lido-report --mapping-set <ID des Mapping-Sets> > lido-report.csv
 ```
 
-Die Ausgabe nennt die Anzahl betroffener Datensätze je Fehlerart; die CSV-Datei listet jeden Datensatz mit `lidoRecID` und Fehlertext.
+Die ID des Mapping-Sets liefert die API (`GET /v1/export-mapping-sets?format_key=lido`). Auf der Konsole erscheint die Anzahl betroffener Datensätze je Fehlerart; die CSV-Datei listet jeden Datensatz mit `lidoRecID` und Fehlertext.
 
 ## Wichtige Einstellungen je Regel
 
+Die folgenden Einstellungen erscheinen im Regel-Editor direkt unter der Quelle des jeweiligen Ziels:
+
 | Ziel | Einstellung | Wirkung |
 |---|---|---|
-| Objektart (`objectWorkType`) | `type` | z. B. `Kartentypus`; mehrere Regeln sind erlaubt (Subtyp-Normdaten und ein Feld). |
-| Klassifikation | `type` | Freier Begriff oder URI, z. B. `http://terminology.lido-schema.org/lido01135` für Sammlung. |
-| Inschrift | `description` | z. B. „gedruckt, Vorderseite“. Unterfelder einer Gruppe als `gruppe.unterfeld`. |
-| Beschreibung | `type` | z. B. `Beschreibung`. |
-| Maß (strukturiert) | `measurement_type`, `unit` | „9,2 cm“ wird zu Wert 9.2 und Einheit cm; dazu „9,2 × 13,9 cm“ als Anzeige. |
-| Ereignis: Akteur | `role`, `role_uri` | Rolle; Normdaten (GND, Wikidata …) kommen aus den Feldern der Person bzw. Körperschaft (`actor_id_fields`). |
-| Ereignis: Ort | `source_config.via` | Ort über eine zweite Beziehung, z. B. Sitz des Verlags. |
-| Ereignis: Datum | `label_field` | Datumsart als Beschriftung; „1905/“ wird zu „nach 1905“ und frühestem Datum 1905. |
-| Ereignis: Material/Technik | `kind` | `material` oder `technique`. |
+| Objektart (`objectWorkType`) | Typ | z. B. `Kartentypus`; mehrere Regeln sind erlaubt (Subtyp-Normdaten und ein Feld). |
+| Klassifikation | Typ | Freier Begriff oder URI, z. B. `http://terminology.lido-schema.org/lido01135` für Sammlung. |
+| Inschrift | Inschriftbeschreibung | z. B. „gedruckt, Vorderseite“. Unterfelder einer Gruppe sind in der Feldauswahl als „Gruppe › Unterfeld“ wählbar. |
+| Beschreibung | Typ | z. B. `Beschreibung`. |
+| Maß (strukturiert) | Maßart, Einheit | „9,2 cm“ wird zu Wert 9.2 und Einheit cm; dazu „9,2 × 13,9 cm“ als Anzeige. |
+| Ereignis: Akteur | Rolle, Rollen-URI | Normdaten (GND, Wikidata …) kommen aus den Normdatenfeldern der Person bzw. Körperschaft (siehe oben). |
+| Ereignis: Ort | Weiter über Beziehung | Ort über eine zweite Beziehung, z. B. Verlag → „ansässig in“ → Ort. |
+| Ereignis: Datum | Feld für Datumsart | Datumsart als Beschriftung; „1905/“ wird zu „nach 1905“ und frühestem Datum 1905. |
+| Ereignis: Material / Technik (Begriff) | Art | Material oder Technik; Vokabular-URIs werden mit ausgegeben. |
 | Ereignis: Beschreibung | – | z. B. Frankierung, Stempel. |
 
-Personen und Körperschaften unterscheidet `actor_types` anhand des Entitäts-Subtyps (`{ind: person, unternehmen: corporation}`).
+Neue Ereignisse (**Ereignis hinzufügen**) bringen die LIDO-Konzept-URI mit, z. B. *Geistige Schöpfung* (`lido00012`) oder *Gebrauch* (`lido00011`). Bei eigenen Ereignissen kann die URI beim Anlegen eingetragen werden.
 
 ## Beispiel: Ort der Herstellung = Sitz des Verlags
+
+Im Regel-Editor: Ziel *Herstellung: Ort*, Quelle *Beziehung*, Beziehungstyp *Urheber/Verlag*, **Weiter über Beziehung** *ansässig in*, Ziel der zweiten Beziehung *Orte*. Als YAML:
 
 ```yaml
 - source_kind: relation

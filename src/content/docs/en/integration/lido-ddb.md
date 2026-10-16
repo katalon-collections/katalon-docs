@@ -7,11 +7,7 @@ description: Configure the LIDO export to meet the requirements of the Deutsche 
 DDB profile, `lido-report` check, one `resourceSet` per medium and the settings described below.
 :::
 
-The LIDO export can be adapted to the requirements of the Deutsche Digitale Bibliothek (DDB) entirely through the mapping set: rules, their settings and the institution details. The simplest way is to export a mapping as YAML, extend it and import it again (**Export → Format mapping → Export / import YAML**).
-
-:::caution[Settings currently via YAML only]
-The new rule settings (e.g. `type`, `measurement_type`, `kind`, `via`) and the DDB institution details do not yet have their own input fields in the mapping editor. Set them via YAML import; they are kept when you edit the rule in the editor as long as you do not switch the rule's source type.
-:::
+The LIDO export can be adapted to the requirements of the Deutsche Digitale Bibliothek (DDB) entirely through the mapping set: rules, their settings and the institution details. Everything can be set in the mapping editor (**Export → Format mapping**, type *Objects*, format *LIDO*). If you maintain several instances, you can also export a finished mapping as YAML and import it elsewhere.
 
 ## What Katalon handles automatically
 
@@ -23,60 +19,64 @@ The new rule settings (e.g. `type`, `measurement_type`, `kind`, `via`) and the D
 
 ## Turning on the DDB profile
 
-In the mapping set's institution details:
+The mapping set's **institution details** contain the section **Delivery to aggregators (DDB)**:
 
-```yaml
-institution_config:
-  profile: ddb
-  isil: DE-3066
-  institution_name: Historische Bildpostkarten - Universität Osnabrück
-  website: https://bildpostkarten.uni-osnabrueck.de/
-  location: Osnabrück
-  location_place_ids:
-  - {source: geonames, id: '2856883'}
-  portal_host: https://bpk.katalon-collections.de
-  record_rights: https://creativecommons.org/publicdomain/zero/1.0/
-  record_rights_holder: true      # institution as rights holder of the metadata
-  rights_work_holder: true        # institution as rights holder of the object
-  resource_rights_fallback: object_field:rights.rechtemodell
-```
+- **Check DDB profile:** turns on the checks below.
+- **Output images individually:** one `resourceSet` per public image (always on with the DDB profile).
+- **Institution as rights holder of the metadata / of the object:** outputs ISIL and name in `recordRights` and `rightsWorkSet`.
+- **License if an image has none:** none, from an object field (e.g. *rights model*, whose vocabulary URI is used) or a fixed license URI.
+- **Authority fields for persons, organisations and places:** field names on the linked records whose GND, Wikidata, GeoNames etc. values appear as `actorID` or `placeID`.
+- **Person or organisation:** maps entity subtypes to the LIDO actor type.
+- **Authority IDs of the location** and **further inventory numbers** for `repositorySet`.
 
-With `profile: ddb`, Katalon checks every record in addition:
+With **Check DDB profile** the following also applies:
 
-- If a public image has no license (not even through the fallback), the record is left out of the OAI export: "Rechteangabe zum Digitalisat fehlt".
+- If a public image has no license (not even through the fallback), the record is not delivered: "Rechteangabe zum Digitalisat fehlt". OAI-PMH reports it as deleted so the DDB removes an earlier copy. Once the image has a license, the record is delivered again.
 - License URIs of images and metadata must be in the DDB license basket (exact spelling; Katalon rewrites known licenses into the usual form).
-- Every public image gets a `resourceSet` with image links (IIIF, full size and preview), type `image`, license, rights holder and credit line of the medium. The primary image comes first.
+- Every public image gets a `resourceSet` with image links (IIIF, full size and preview), type `image`, license, rights holder and credit line. The primary image comes first.
 
 Affected records are shown as warnings in the mapping preview.
 
+## Credit line on images
+
+In the record form, each medium has the field **Permission note / credit line** under **Rights**, next to license URI and rights holder. It takes notes such as "Published with permission of …; any further use requires permission". The text appears in the portal below the image's rights and in the LIDO export as `rightsResource/creditLine`. The rights holder's name still belongs in its own field.
+
+## Object type with several authority concepts
+
+On the subtype (**Settings → Subtypes**) you can add **further concepts** below the authority link, e.g. AAT "postcards" in addition to GND "Postkarte". The export lists the main concept as preferred term and the others as alternative terms with language.
+
 ## Check report before delivery
 
-Before the DDB harvests, check on the server which records would be left out:
+Before the DDB harvests, check on the server which records would be left out. The command runs in the API container:
 
 ```bash
-katalon-manage lido-report --mapping-set <mapping set ID> --output lido-report.csv
+docker compose exec -T api katalon-manage lido-report --mapping-set <mapping set ID> > lido-report.csv
 ```
 
-The output gives the number of affected records per problem; the CSV file lists each record with its `lidoRecID` and message.
+The API returns the mapping set ID (`GET /v1/export-mapping-sets?format_key=lido`). The console shows the number of affected records per problem; the CSV file lists each record with its `lidoRecID` and message.
 
 ## Key settings per rule
 
+These settings appear in the rule editor directly below the source of each target:
+
 | Target | Setting | Effect |
 |---|---|---|
-| Object type (`objectWorkType`) | `type` | e.g. `Kartentypus`; several rules are allowed (subtype authority data and a field). |
-| Classification | `type` | Free term or URI, e.g. `http://terminology.lido-schema.org/lido01135` for collection. |
-| Inscription | `description` | e.g. "printed, front". Group sub-fields as `group.subfield`. |
-| Description | `type` | e.g. `Beschreibung`. |
-| Measurement (structured) | `measurement_type`, `unit` | "9,2 cm" becomes value 9.2 and unit cm, plus "9,2 × 13,9 cm" for display. |
-| Event: actor | `role`, `role_uri` | Role; authority IDs (GND, Wikidata …) come from the person's or organisation's fields (`actor_id_fields`). |
-| Event: place | `source_config.via` | Place through a second relation, e.g. the publisher's seat. |
-| Event: date | `label_field` | Date type as label; "1905/" becomes "nach 1905" and earliest date 1905. |
-| Event: material/technique | `kind` | `material` or `technique`. |
+| Object type (`objectWorkType`) | Type | e.g. `Kartentypus`; several rules are allowed (subtype authority data and a field). |
+| Classification | Type | Free term or URI, e.g. `http://terminology.lido-schema.org/lido01135` for collection. |
+| Inscription | Inscription description | e.g. "printed, front". Group sub-fields can be picked as "Group › Sub-field". |
+| Description | Type | e.g. `Beschreibung`. |
+| Measurement (structured) | Measurement type, unit | "9,2 cm" becomes value 9.2 and unit cm, plus "9,2 × 13,9 cm" for display. |
+| Event: actor | Role, role URI | Authority IDs (GND, Wikidata …) come from the authority fields of the person or organisation (see above). |
+| Event: place | Continue via relation | Place through a second relation, e.g. publisher → "based in" → place. |
+| Event: date | Date type field | Date type as label; "1905/" becomes "nach 1905" and earliest date 1905. |
+| Event: material / technique (term) | Kind | Material or technique; vocabulary URIs are included. |
 | Event: description | – | e.g. postage, postmark. |
 
-`actor_types` tells persons from organisations by the entity subtype (`{ind: person, unternehmen: corporation}`).
+New events (**Add event**) carry their LIDO concept URI, e.g. *Creation (intellectual)* (`lido00012`) or *Use* (`lido00011`). For custom events you can enter the URI when adding them.
 
 ## Example: place of production = publisher's seat
+
+In the rule editor: target *Production: place*, source *Relation*, relation type *creator/publisher*, **Continue via relation** *based in*, target of the second relation *Places*. As YAML:
 
 ```yaml
 - source_kind: relation
