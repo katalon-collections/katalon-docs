@@ -109,7 +109,8 @@ Adjust at least these values:
 | `DEFAULT_ADMIN_EMAIL` | Fallback email for local development without `KATALON_BASE_URL` |
 | `INITIAL_ADMIN_PASSWORD` | Optional: password of the first admin, applied on first start only. Empty or a well-known default (`admin`, `password`, `katalon`) results in a random password. Without `KATALON_BASE_URL` it is the fallback password. Formerly `DEFAULT_ADMIN_PASSWORD` (ignored now, the line can be removed) |
 | `CORS_ORIGINS` | Comma-separated list of allowed frontends |
-| `OAI_ADMIN_EMAIL` | Appears in the OAI-PMH Identify response |
+| `OAI_ADMIN_EMAIL` | Appears in the OAI-PMH Identify response (`adminEmail`). Set it to a real contact address |
+| `OAI_BASE_URL` | Public URL of the OAI endpoint, e.g. `https://katalon.example.org/oai`. Empty = derived from the request, see [Opening OAI-PMH](#opening-oai-pmh) |
 | `WIKIDATA_USER_AGENT` | Optional user agent for Wikidata. Empty = built automatically from `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL`. |
 | `SMTP_*` | Optional external SMTP relay for transactional emails. Set the password only as an operator secret. |
 | `RATE_LIMIT_*` | Rate limits for public endpoints (portal search, OAI-PMH, JSON-LD/Turtle export, authority proxy, global default) — see [Access protection for public endpoints](#access-protection-for-public-endpoints) below. |
@@ -674,6 +675,16 @@ docker compose logs api        # API logs
 docker compose logs worker     # Celery worker logs
 docker compose logs nginx      # access log
 ```
+
+### Opening OAI-PMH
+
+:::note[Available from version 1.44.0]
+`OAI_BASE_URL` and the startup warning for `OAI_ADMIN_EMAIL`.
+:::
+
+- **Contact address:** set `OAI_ADMIN_EMAIL` to a real address. While the placeholder `admin@katalon.dev` is in effect, the API logs a warning at startup.
+- **`baseURL`:** without `OAI_BASE_URL`, Katalon builds the `baseURL` from the `Host` header and `X-Forwarded-Proto`. The bundled nginx sets both. Another proxy in front (TLS termination, load balancer) must pass `Host` through unchanged and set `X-Forwarded-Proto: https`, otherwise Identify reports `http://…` or an internal host name. Katalon does not evaluate `X-Forwarded-Host`. Setting `OAI_BASE_URL` is the simplest option.
+- **Open IIIF as well:** if you expose `/oai` (firewall, allowlist, upstream proxy), `/iiif/` must be reachable without login too. LIDO records link to IIIF images, and harvesters such as the DDB fetch them directly.
 
 ### Testing the OAI-PMH endpoint
 

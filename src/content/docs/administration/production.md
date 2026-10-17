@@ -129,7 +129,8 @@ Mindestens diese Werte anpassen:
 | `DEFAULT_ADMIN_EMAIL` | Fallback-E-Mail für lokale Entwicklung ohne `KATALON_BASE_URL` |
 | `INITIAL_ADMIN_PASSWORD` | Optional: Passwort des ersten Admins, gilt nur beim ersten Start. Leer oder ein Standardwert (`admin`, `password`, `katalon`) ergibt ein Zufallspasswort. Ohne `KATALON_BASE_URL` das Fallback-Passwort. Früher `DEFAULT_ADMIN_PASSWORD` (wird ignoriert, Zeile kann entfernt werden) |
 | `CORS_ORIGINS` | Komma-separierte Liste erlaubter Frontends |
-| `OAI_ADMIN_EMAIL` | Erscheint im OAI-PMH Identify-Response |
+| `OAI_ADMIN_EMAIL` | Erscheint im OAI-PMH Identify-Response (`adminEmail`). Auf eine echte Kontaktadresse setzen |
+| `OAI_BASE_URL` | Öffentliche URL des OAI-Endpunkts, z. B. `https://katalon.example.org/oai`. Leer = aus der Anfrage abgeleitet, siehe [OAI-PMH freigeben](#oai-pmh-freigeben) |
 | `WIKIDATA_USER_AGENT` | Optionaler User-Agent für Wikidata. Leer = automatisch aus `KATALON_BASE_URL` + `OAI_ADMIN_EMAIL`. |
 | `SMTP_*` | Optionaler externer SMTP-Relay für transaktionale E-Mails. Passwort nur als Betreiber-Secret setzen. |
 | `RATE_LIMIT_*` | Rate-Limits für öffentliche Endpunkte (Portal-Suche, OAI-PMH, JSON-LD/Turtle-Export, Authority-Proxy, globaler Default) — siehe [Zugriffsschutz für öffentliche Endpunkte](#zugriffsschutz-für-öffentliche-endpunkte) unten. |
@@ -749,6 +750,16 @@ docker compose logs api        # API-Logs
 docker compose logs worker     # Celery-Worker-Logs
 docker compose logs nginx      # Zugriffslog
 ```
+
+### OAI-PMH freigeben
+
+:::note[Verfügbar ab Version 1.44.0]
+`OAI_BASE_URL` und die Startwarnung zu `OAI_ADMIN_EMAIL`.
+:::
+
+- **Kontaktadresse:** `OAI_ADMIN_EMAIL` auf eine echte Adresse setzen. Solange der Platzhalter `admin@katalon.dev` gilt, schreibt die API beim Start eine Warnung ins Log.
+- **`baseURL`:** Ohne `OAI_BASE_URL` setzt Katalon die `baseURL` aus dem `Host`-Header und `X-Forwarded-Proto` zusammen. Das mitgelieferte nginx setzt beide. Ein weiterer Proxy davor (TLS-Terminierung, Load Balancer) muss `Host` unverändert weitergeben und `X-Forwarded-Proto: https` setzen, sonst meldet Identify `http://…` oder einen internen Hostnamen. `X-Forwarded-Host` wertet Katalon nicht aus. Am einfachsten ist es, `OAI_BASE_URL` zu setzen.
+- **IIIF mit freigeben:** Wer `/oai` nach außen öffnet (Firewall, Allowlist, vorgelagerter Proxy), muss `/iiif/` ebenso ohne Anmeldung erreichbar machen. LIDO-Datensätze verlinken auf IIIF-Bilder, und Harvester wie die DDB laden diese direkt.
 
 ### OAI-PMH-Endpunkt testen
 
