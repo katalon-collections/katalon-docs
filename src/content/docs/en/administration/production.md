@@ -688,7 +688,7 @@ curl "https://your-domain.com/oai?verb=ListSets"
 curl "https://your-domain.com/oai?verb=ListRecords&metadataPrefix=oai_dc"
 ```
 
-## Resource recommendations
+## Resource recommendations and scaling
 
 | Service | Minimum | Recommended |
 |---|---|---|
@@ -697,9 +697,17 @@ curl "https://your-domain.com/oai?verb=ListRecords&metadataPrefix=oai_dc"
 | elasticsearch | 1 GB | 2 GB |
 | api | 256 MB | 512 MB |
 | worker (Celery) | 256 MB | 512 MB |
-| cantaloupe | 256 MB | 512 MB |
+| cantaloupe | 512 MB | 1.5 GB |
 | nginx | 32 MB | 64 MB |
-| **Total** | **~2.1 GB** | **~4 GB** |
+| **Total** | **~2.4 GB** | **~5 GB** |
+
+:::note[Available from version 1.45.0]
+Worker processes, database pools, and container memory limits can be tuned via `.env` without modifying Compose files:
+- **API & database pool:** `WEB_CONCURRENCY` (Uvicorn worker processes, default `1`), `DATABASE_POOL_SIZE` (default `10`), and `DATABASE_MAX_OVERFLOW` (default `10` per process).
+- **Background worker:** `CELERY_CONCURRENCY` (concurrent threads in the Celery worker, default `4`).
+- **Elasticsearch:** `ES_HEAP_SIZE` (default `512m`), `ES_MEMORY_LIMIT` (default `1g`), and `ES_MEMORY_LOCK` (default `true`).
+- **Cantaloupe (IIIF):** `CANTALOUPE_MEMORY_LIMIT` (default `1536m`, JVM heap `256m`–`1g`) and `CANTALOUPE_LOG_LEVEL` (default `info`).
+:::
 
 ## Common problems
 
@@ -738,19 +746,9 @@ New subdirectories (`_batch_imports`, `logos`, `themes`) automatically and corre
 
 ### Large IIIF images stay empty, even though thumbnails work
 
-Cantaloupe can serve `info.json` and small thumbnails even though the writable derivative cache was not set up correctly. Large image requests may then return HTTP 200 with empty content. The compose stack now uses a `tmpfs` for the disposable derivative cache; existing installations with the former named volume need to recreate the service once.
+Cantaloupe can serve `info.json` and small thumbnails even though the writable derivative cache was not set up correctly. Large image requests may then return HTTP 200 with empty content. Since version 1.42.0, the Compose stack uses a persistent disk volume (`cantaloupe_cache` or `./cantaloupe-cache` in CLI installs) instead of a RAM-backed `tmpfs` so that the derivative cache does not consume host memory.
 
-```bash
-docker compose up -d --force-recreate cantaloupe
-```
-
-This does not delete any database or media volume.
-
-### Multiple instances on one host: tmpfs size of the Cantaloupe cache
-
-The Cantaloupe derivative cache runs as `tmpfs`, limited via `CANTALOUPE_CACHE_TMPFS_SIZE` (default `512m`, see `.env.example`). Without this limit, Docker would allow up to 50% of host RAM per mount. If more than one Katalon-like instance runs on the same host, deliberately choose `CANTALOUPE_CACHE_TMPFS_SIZE` per instance so that the sum across all instances, together with Elasticsearch's and Postgres's memory needs, does not exceed the available host RAM.
-
-For an older stack still using the former named volume, the cache can alternatively be repaired:
+If permissions inside the cache volume are inconsistent after an older upgrade, the cache can be repaired inside the running container:
 
 ```bash
 docker compose logs cantaloupe --tail=100 | grep -E "AccessDeniedException|FilesystemCache"

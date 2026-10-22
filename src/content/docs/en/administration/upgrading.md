@@ -5,6 +5,13 @@ description: How Katalon is updated and what to watch out for across version jum
 
 This document explains how Katalon is updated, what happens to your data and customizations in the process, and what to watch out for with certain version jumps.
 
+## Updating to 1.45.0
+
+:::note[Available from version 1.45.0]
+:::
+
+After updating to 1.45.0, start a search index rebuild under **Settings → Search & Indexing** (the admin UI also highlights this automatically after the version jump). The rebuilt index includes the extended relation entries for free relation types in Advanced Search and stores only outgoing relations per document, significantly speeding up indexing for records with many incoming links.
+
 ## Updating to 1.42.0
 
 :::note[Available from version 1.42.0]

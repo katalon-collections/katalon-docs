@@ -15,12 +15,16 @@ https://katalon.example.org/oai
 
 Die Schnittstelle unterstützt alle sechs Standardverben des OAI-PMH-Protokolls:
 
-- `Identify`: Informationen zur Instanz, Kontaktadresse (`OAI_ADMIN_EMAIL`) und Basisrichtlinien.
-- `ListMetadataFormats`: Unterstützte Metadatenformate (u. a. `oai_dc` und `json_ld`).
+- `Identify`: Informationen zur Instanz, Basis-URL (`OAI_BASE_URL`), Kontaktadresse (`OAI_ADMIN_EMAIL`, fällt automatisch auf `DEFAULT_ADMIN_EMAIL` zurück) und Basisrichtlinien.
+- `ListMetadataFormats`: Unterstützte Metadatenformate (`oai_dc`, `lido`, `mets_mods`, `json_ld` — sofern für mindestens einen öffentlichen Typ ein Mapping veröffentlicht ist).
 - `ListSets`: Liste der kuratorischen OAI-Sets zur thematischen Eingrenzung.
 - `ListIdentifiers`: Schnelle Abfrage von Identifikatoren und Datumsstempeln.
 - `ListRecords`: Abfrage vollständiger Metadatensätze (mit Paginierung über `resumptionToken`).
 - `GetRecord`: Abruf eines einzelnen Datensatzes über seine eindeutige OAI-Kennung.
+
+:::note[Verfügbar ab Version 1.43.1]
+Über die Umgebungsvariable `OAI_BASE_URL` (z. B. `https://sammlung.example.org/oai`) lässt sich die in `<baseURL>` und `<request>` ausgegebene Adresse explizit festlegen, falls ein vorgeschalteter Reverse Proxy Host oder Schema nicht unverändert durchreicht. Ist `OAI_ADMIN_EMAIL` nicht gesetzt, verwendet `Identify` automatisch `DEFAULT_ADMIN_EMAIL`.
+:::
 
 Beispiel Identify-Request:
 ```text

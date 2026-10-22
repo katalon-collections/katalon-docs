@@ -135,7 +135,11 @@ Beispiel:
 
 ### `richtext` – Mehrzeiliger formatierbarer Text
 
-Für längere Beschreibungen mit einfacher Formatierung (Fett, Kursiv, Listen). Der Wert wird als HTML gespeichert.
+Für längere Beschreibungen mit einfacher Formatierung (Überschriften, Fett, Kursiv, Listen, Links).
+
+:::note[Verfügbar ab Version 1.44.0]
+Die Eingabe erfolgt im WYSIWYG-Editor; gespeichert wird sauberes Markdown. In XML-Exporten (LIDO, METS/MODS, `oai_dc`) wird Markdown automatisch in Fließtext ohne Auszeichnungszeichen umgewandelt.
+:::
 
 Beispiele:
 - Beschreibungstext
@@ -285,19 +289,34 @@ Formularfeld bearbeitbar, während zusätzliche Graph-Beziehungen weiterhin
 möglich sind.
 
 Für die Portalsuche kann ein Relationsfeld ausgewählte Felder seines Zieltyps
-in den Suchindex übernehmen. Ein fester Relationstyp beschränkt diese Werte auf
+(`inherited_fields`, Option **Felder des Zieldatensatzes mit anzeigen**) in den
+Suchindex übernehmen und auf der Detailseite direkt unter dem verknüpften
+Eintrag einblenden. Ein fester Relationstyp beschränkt diese Werte im Index auf
 die entsprechende Beziehung; ohne festen Typ werden Werte aller Beziehungen
 zum gewählten Zieltyp übernommen.
+
+:::note[Verfügbar ab Version 1.45.0]
+Zeigt ein Relationsfeld auf den Zieltyp **Ort (`place`)**, kann zusätzlich die Option **Karte des verknüpften Ortes auf der Detailseite anzeigen** (`show_place_map`) aktiviert werden. Besitzt der verknüpfte Ort Stammkoordinaten (`lat`/`lon`), blendet das Portal direkt unter dem Beziehungsfeld eine interaktive Karte ein; bei fiktiven Orten oder Orten ohne Koordinaten entfällt die Karte automatisch.
+:::
 
 ---
 
 ### `geo` – Geografische Koordinaten
 
-Speichert einen geografischen Punkt (Längen- und Breitengrad). Für Ortstypen wird der Ort außerdem als PostGIS-Geometrie gespeichert.
+Speichert einen geografischen Punkt (`lat`, `lon`) und optional einen Unschärferadius in Metern (`accuracy_m`, z. B. für ungefähre Fundorte). Für Datensätze vom Typ Ort (`place`) werden die Stammkoordinaten außerdem als PostGIS-Geometrie gespeichert.
+
+:::note[Verfügbar ab Version 1.44.0]
+Im Erfassungsformular (sowohl in `geo`-Schemafeldern als auch ab Version 1.45.0 in den Stammkoordinaten von Orten) lässt sich eine interaktive Karte mit Ortssuche (OpenStreetMap Nominatim) aufklappen: Ein Klick in die Karte oder auf einen Suchtreffer übernimmt Breiten- und Längengrad. Im Portal wird der Punkt auf einer Karte dargestellt, bei gesetztem `accuracy_m` inklusive Unschärfekreis. `geo` kann auch als Subfeld innerhalb einer Feldgruppe (`group`) verwendet werden.
+:::
+
+Beispiel für den gespeicherten Wert:
+```json
+{"lat": 52.520008, "lon": 13.404954, "accuracy_m": 250}
+```
 
 Beispiele:
 - Exakter Aufnahmestandort einer Fotografie
-- Fundort eines Objekts
+- Ungefährer Fundort eines Objekts mit Unschärferadius
 
 ---
 
@@ -375,7 +394,11 @@ Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld inner
 
 ### `group` – Feldgruppe
 
-Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`.
+Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo` und `url`.
+
+:::note[Verfügbar ab Version 1.44.0]
+Neben den bisherigen Feldtypen sind auch `richtext`, `geo` und `url` als Sub-Felder in Feldgruppen verfügbar. Kurze Sub-Felder werden im Erfassungsformular automatisch in einem kompakten, mehrspaltigen Raster angeordnet, während `richtext` und `geo` die volle Breite einnehmen.
+:::
 
 ![Anlegen einer Feldgruppe im Schema-Editor mit Subfeldern und Mehrsprachigkeit](../../../assets/screenshots/schema/feldgruppe-editor.png)
 

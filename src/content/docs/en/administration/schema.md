@@ -135,7 +135,11 @@ Example:
 
 ### `richtext` – Multi-line formattable text
 
-For longer descriptions with simple formatting (bold, italic, lists). The value is stored as HTML.
+For longer descriptions with simple formatting (headings, bold, italic, lists, links).
+
+:::note[Available from version 1.44.0]
+Input uses a WYSIWYG editor and is stored as clean Markdown. In XML exports (LIDO, METS/MODS, `oai_dc`), Markdown is automatically converted to plain text without markup characters.
+:::
 
 Examples:
 - Description text
@@ -285,19 +289,34 @@ relationship remains editable in its associated form field, while additional
 graph relationships remain possible as well.
 
 For portal search, a relation field can pull selected fields of its target
-type into the search index. A fixed relation type restricts these values to
-the corresponding relationship; without a fixed type, values from all
+type (`inherited_fields`, option **Also display fields of the target record**)
+into the search index and display them directly below the linked entry on the
+detail page. A fixed relation type restricts these values in the index to the
+corresponding relationship; without a fixed type, values from all
 relationships to the chosen target type are pulled in.
+
+:::note[Available from version 1.45.0]
+When a relation field targets **Place (`place`)**, you can also enable **Show map of the linked place on the detail page** (`show_place_map`). If the linked place has base coordinates (`lat`/`lon`), the portal renders an interactive map directly below the relation field; for fictional places or places without coordinates, the map is omitted automatically.
+:::
 
 ---
 
 ### `geo` – Geographic coordinates
 
-Stores a geographic point (longitude and latitude). For place types, the location is additionally stored as PostGIS geometry.
+Stores a geographic point (`lat`, `lon`) and optionally an uncertainty radius in meters (`accuracy_m`, e.g. for approximate find spots). For Place (`place`) records, base coordinates are additionally stored as PostGIS geometry.
+
+:::note[Available from version 1.44.0]
+In the data-entry form (both in `geo` schema fields and, since version 1.45.0, in the base coordinates of Place records), an interactive map with place search (OpenStreetMap Nominatim) can be opened: clicking the map or selecting a search result populates latitude and longitude. In the portal, the point is shown on a map, including an uncertainty circle when `accuracy_m` is set. `geo` can also be used as a sub-field inside a field group (`group`).
+:::
+
+Example of the stored value:
+```json
+{"lat": 52.520008, "lon": 13.404954, "accuracy_m": 250}
+```
 
 Examples:
 - Exact place of capture of a photograph
-- Find location of an object
+- Approximate find location of an object with uncertainty radius
 
 ---
 
@@ -375,7 +394,11 @@ The `authority` field can be used both as a standalone schema field and as a sub
 
 ### `group` – Field group
 
-Combines several sub-fields into a repeatable unit (e.g. for structured information consisting of several values). Sub-fields are created directly below the group after it is created; allowed types are `text`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`.
+Combines several sub-fields into a repeatable unit (e.g. for structured information consisting of several values). Sub-fields are created directly below the group after it is created; allowed types are `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo`, and `url`.
+
+:::note[Available from version 1.44.0]
+In addition to the previously supported field types, `richtext`, `geo`, and `url` are now also available as sub-fields in field groups. Short sub-fields are automatically arranged in a compact multi-column grid in the data-entry form, while `richtext` and `geo` span the full width.
+:::
 
 ![Creating a field group in the schema editor with sub-fields and multilingual support](../../../../assets/screenshots/schema/feldgruppe-editor.png)
 

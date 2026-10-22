@@ -5,6 +5,13 @@ description: Wie Katalon aktualisiert wird und worauf bei Versionssprüngen zu a
 
 Dieses Dokument erklärt, wie Katalon aktualisiert wird, was dabei mit deinen Daten und Anpassungen passiert, und worauf du bei bestimmten Versionssprüngen achten musst.
 
+## Update auf 1.45.0
+
+:::note[Verfügbar ab Version 1.45.0]
+:::
+
+Nach dem Update auf 1.45.0 unter **Einstellungen → Suche & Indexierung** einen Neuaufbau des Suchindex starten (die Oberfläche weist nach dem Versionssprung auch automatisch darauf hin). Der neu aufgebaute Index enthält die erweiterten Beziehungsdaten für freie Beziehungstypen in der Erweiterten Suche und speichert nur noch ausgehende Relationen pro Dokument, was die Indexierung von Datensätzen mit sehr vielen eingehenden Verknüpfungen deutlich beschleunigt.
+
 ## Update auf 1.42.0
 
 :::note[Verfügbar ab Version 1.42.0]

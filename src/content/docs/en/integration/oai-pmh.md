@@ -15,12 +15,16 @@ https://katalon.example.org/oai
 
 The interface supports all six standard verbs of the OAI-PMH protocol:
 
-- `Identify`: Information about the instance, contact address (`OAI_ADMIN_EMAIL`), and base policies.
-- `ListMetadataFormats`: Supported metadata formats (including `oai_dc` and `json_ld`).
+- `Identify`: Information about the instance, base URL (`OAI_BASE_URL`), contact address (`OAI_ADMIN_EMAIL`, automatically falls back to `DEFAULT_ADMIN_EMAIL`), and base policies.
+- `ListMetadataFormats`: Supported metadata formats (`oai_dc`, `lido`, `mets_mods`, `json_ld` — whenever a mapping is published for at least one public record type).
 - `ListSets`: List of curatorial OAI sets for thematic scoping.
 - `ListIdentifiers`: Fast retrieval of identifiers and datestamps.
 - `ListRecords`: Retrieval of complete metadata records (with pagination via `resumptionToken`).
 - `GetRecord`: Retrieval of a single record via its unique OAI identifier.
+
+:::note[Available from version 1.43.1]
+The environment variable `OAI_BASE_URL` (e.g. `https://collection.example.org/oai`) lets you explicitly set the address reported in `<baseURL>` and `<request>` when an upstream reverse proxy does not forward host or scheme headers unchanged. If `OAI_ADMIN_EMAIL` is not set, `Identify` automatically falls back to `DEFAULT_ADMIN_EMAIL`.
+:::
 
 Example Identify request:
 ```text

@@ -61,6 +61,15 @@ LIDO (Lightweight Information Describing Objects) is usable as a target format f
 
 Katalon checks two things before a LIDO record leaves the system: the mapping *configuration* must include a title and an object-type target (`validate_mapping`), and each individual *record* must actually resolve a non-empty value for both. A record whose mapped title field happens to be empty is not exported with an empty `<lido:appellationValue/>` — single-record export rejects it with an error, a batch export skips it (noting the skip at the end of the file), and OAI-PMH returns `cannotDisseminateFormat` or drops it from the result list.
 
+### METS/MODS (`mets_mods`) – digitized library materials
+
+:::note[Available from version 1.44.0]
+The METS/MODS export generates DFG-Viewer-compatible METS containers including physical structure maps (`structMap TYPE="PHYSICAL"`), `structLink`, `amdSec` with `dv:rights` and `dv:links`, and IIIF file groups (`DEFAULT` and `THUMBS`). In the mapping set you can configure the logical structure type (`mets_logical_type`, e.g. `monograph`, `manuscript`, `volume`), map entity subtypes to `mods:name/@type` (`actor_types`), and specify authority fields for `valueURI` (`actor_id_fields`). Each rule also supports `limit` (e.g. `limit: 1`) to cap repeated values.
+:::
+
+- **Internal validation:** The core profile (`mets_mods_core`, version 3.8) validates XML conformance and requires the main title element (`mods:titleInfo/mods:title`).
+- **Available target paths:** Title (`mods:titleInfo/mods:title`), creator/contributor (`mods:name`, including MARC relator `role_code` and `valueURI`), publisher (`mods:originInfo/mods:publisher`), place of publication (`mods:originInfo/mods:place`), date created (`mods:originInfo/mods:dateCreated`), resource type (`mods:typeOfResource`), form/genre (`mods:genre`), topical subject (`mods:subject/mods:topic`), geographic subject (`mods:subject/mods:geographic`), abstract (`mods:abstract`), access condition (`mods:accessCondition`), identifiers (`mods:identifier`), location/shelfmark (`mods:location`), and language (`mods:language/mods:languageTerm`).
+
 ### Other standard formats in the GLAM sector
 
 Depending on the sector, aggregators and portals require different data formats:

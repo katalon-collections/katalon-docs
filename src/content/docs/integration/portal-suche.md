@@ -12,13 +12,22 @@ Einheitliche Subtyp-Kennzeichnung auf Trefferkarten.
 
 Zahlenfelder, die als Facette eingerichtet sind, werden als Bereich gefiltert. Geben Sie bei **Von** und **Bis** einen genauen Wert ein oder verschieben Sie die beiden Regler. Eine der beiden Grenzen kann leer bleiben; **Alle** entfernt den Zahlenbereich wieder.
 
-Unter **Erweiterte Suche** wird zuerst der gewünschte Ergebnistyp gewählt. Danach lassen sich öffentliche Suchfelder mit **alle** oder **mindestens eine** kombinieren. Bei Relationsfeldern können Bedingungen für verknüpfte Datensätze ergänzt werden. Bis zu zwei Verknüpfungsschritte sind möglich, zum Beispiel:
+:::note[Verfügbar ab Version 1.43.0]
+Aktive Filter (Typ, Status, Subtyp, Metadaten, Beziehungen und Zahlenbereiche) erscheinen direkt unter der Trefferanzahl als einzeln abwählbare Filter-Chips. In der seitenweisen Darstellung steht neben den Seitenzahlen ein Eingabefeld bereit, um direkt zu einer gewünschten Seite zu springen.
+:::
+
+Unter **Erweiterte Suche** wird zuerst der gewünschte Ergebnistyp gewählt. Danach lassen sich öffentliche Suchfelder mit **alle** oder **mindestens eine** kombinieren. Bei Relationsfeldern sowie freien Beziehungen können Bedingungen für verknüpfte Datensätze ergänzt werden. Bis zu zwei Verknüpfungsschritte sind möglich, zum Beispiel:
 
 > Objekte, deren Fotograf vor 1950 geboren wurde und dessen Geburtsort Bremen ist.
 
 ![Erweiterte Suche im Portal mit Bedingungen für verknüpfte Datensätze](../../../assets/screenshots/portal/erweiterte-suche.png)
 
 Bei festen Vokabularfeldern werden die zulässigen Begriffe zur Auswahl angeboten. Freie Vokabularfelder schlagen konfigurierte Begriffe vor, erlauben aber weiterhin einen eigenen Wert.
+
+:::note[Verfügbar ab Version 1.45.0]
+- **Freie Beziehungstypen:** Neben im Schema angelegten Relationsfeldern bietet die Feld-Auswahl der Erweiterten Suche unter **Verknüpfungen** auch alle frei vergebenen Beziehungstypen an, die für den gewählten Datensatztyp in öffentlichen Datensätzen vorkommen.
+- **Mehrfachauswahl („ist eines von“ / „ist keines von“):** Für Vokabular-, Normdaten-, PID- und URL-Felder lassen sich bis zu 50 Werte in einer einzigen Bedingung sammeln (ODER- bzw. WEDER-NOCH-Verknüpfung).
+:::
 
 Die Ergebnisliste verwendet dieselbe Seite wie die Schnellsuche. Die Suchdefinition bleibt in der URL erhalten und kann daher als Lesezeichen gespeichert oder weitergegeben werden. Bei sehr breiten Relationsbedingungen fordert das Portal dazu auf, die Suche weiter einzugrenzen.
 
@@ -36,12 +45,16 @@ Das Ein- oder Ausschalten einer Facette wirkt **sofort** — ein Neuaufbau des S
 Die Facette ist unabhängig von der Detailanzeige. Ein öffentliches Feld darf als Filter dienen, auch wenn es auf der Detailseite ausgeblendet ist. Eine Änderung der Detailanzeige allein löst keinen Neuaufbau des Suchindex aus.
 :::
 
-### Reihenfolge der Facetten
+### Reihenfolge und Sortierung der Facetten
 
 :::note[Verfügbar ab Version 1.42.0]
 :::
 
 Unter **Reihenfolge im Portal** stehen alle aktiven Facetten eines Typs in einer gemeinsamen Liste, gleich ob Feld-, Datums-, Hierarchie- oder Beziehungsfacette. Die Reihenfolge lässt sich per Ziehen oder mit den Pfeil-Buttons ändern (auch per Tastatur bedienbar) und gilt direkt für die Portalsuche. Facetten von Unterfeldern einer Gruppe erscheinen als „Gruppe › Feld“.
+
+:::note[Verfügbar ab Version 1.45.0]
+Für jede kategoriale bzw. Text-Facette (Text-, Vokabular-, Normdaten-, vererbte und Beziehungsfacetten) lässt sich in dieser Liste individuell festlegen, ob ihre Werte **nach Häufigkeit** oder **alphabetisch (A–Z)** sortiert werden, oder ob die globale Standardeinstellung unter **Anzeige → Sortierung der Facettenwerte** greift. Für Zahlen-, Datums-, Ja/Nein- und Hierarchie-Facetten wird keine abweichende Sortierung angeboten.
+:::
 
 ### Datumsfacetten nach Dekade, Jahrhundert oder Jahr
 
