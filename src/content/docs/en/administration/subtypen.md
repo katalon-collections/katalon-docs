@@ -10,7 +10,13 @@ Only users with the `admin` or `superuser` role see this menu item and can creat
 
 Subtypes exist for Objects, Entities, Places, Occurrences, Procedures, Collections, and Storage Locations. For Objects, Entities, Places, Occurrences, Collections, and Storage Locations, no subtype is pre-configured – institutions create them as needed. For Procedures, six types already exist: `loan_out` (outgoing loan), `loan_in` (incoming loan), `acquisition`, `conservation`, `object_entry` (incoming inspection), and `deaccession`.
 
-A record without a configured subtype uses only the primary type's schema. As soon as subtypes exist for a primary type, a new record (except in draft status) must select one of them.
+A record without a configured subtype uses only the primary type's schema.
+
+:::note[Available from version 1.44.1]
+When creating a record in the admin interface, a single subtype is selected automatically and shown in the form. With multiple subtypes, the configured default is selected; if there is no default, select a subtype. This selection is also required when saving a new draft. A subtype specified by quick entry is preserved.
+
+Existing records are not assigned a subtype retroactively. API imports retain their existing validation rules, including the draft exception.
+:::
 
 ---
 

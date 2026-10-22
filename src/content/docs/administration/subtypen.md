@@ -10,7 +10,13 @@ Nur Benutzer mit der Rolle `admin` oder `superuser` sehen diesen Menüpunkt und 
 
 Subtypen gibt es für Objekte, Entitäten, Orte, Occurrences, Vorgänge, Sammlungen und Lagerorte. Für Objekte, Entitäten, Orte, Occurrences, Sammlungen und Lagerorte ist kein Subtyp vorkonfiguriert – Institutionen legen sie nach Bedarf selbst an. Bei Vorgängen sind sechs Typen bereits vorhanden: `loan_out` (Leihgabe ausgehend), `loan_in` (Leihgabe eingehend), `acquisition` (Erwerbung), `conservation` (Restaurierung/Konservierung), `object_entry` (Eingangsprüfung) und `deaccession` (Deakzession).
 
-Ein Datensatz ohne konfigurierten Subtyp verwendet nur das Schema des Primärtyps. Sobald für einen Primärtyp Subtypen existieren, muss ein neuer Datensatz (außer im Entwurfsstatus) einen davon auswählen.
+Ein Datensatz ohne konfigurierten Subtyp verwendet nur das Schema des Primärtyps.
+
+:::note[Verfügbar ab Version 1.44.1]
+Beim Anlegen in der Admin-Oberfläche wird ein einzelner Subtyp automatisch vorausgewählt und im Formular angezeigt. Bei mehreren Subtypen gilt der konfigurierte Standard; ohne Standard wählen Sie einen Subtyp aus. Die Auswahl ist auch beim Speichern eines neuen Entwurfs erforderlich. Ein durch die Schnellerfassung vorgegebener Subtyp bleibt erhalten.
+
+Bestehende Datensätze werden dadurch nicht nachträglich einem Subtyp zugeordnet. Für API-Importe gelten weiterhin die jeweiligen Validierungsregeln, einschließlich der Ausnahme für Entwürfe.
+:::
 
 ---
 
