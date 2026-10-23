@@ -53,7 +53,7 @@ Die Facette ist unabhängig von der Detailanzeige. Ein öffentliches Feld darf a
 Unter **Reihenfolge im Portal** stehen alle aktiven Facetten eines Typs in einer gemeinsamen Liste, gleich ob Feld-, Datums-, Hierarchie- oder Beziehungsfacette. Die Reihenfolge lässt sich per Ziehen oder mit den Pfeil-Buttons ändern (auch per Tastatur bedienbar) und gilt direkt für die Portalsuche. Facetten von Unterfeldern einer Gruppe erscheinen als „Gruppe › Feld“.
 
 :::note[Verfügbar ab Version 1.46.0]
-Für jede kategoriale bzw. Text-Facette (Text-, Vokabular-, Normdaten-, vererbte und Beziehungsfacetten) lässt sich in dieser Liste individuell festlegen, ob ihre Werte **nach Häufigkeit** oder **alphabetisch (A–Z)** sortiert werden, oder ob die globale Standardeinstellung unter **Anzeige → Sortierung der Facettenwerte** greift. Für Zahlen-, Datums-, Ja/Nein- und Hierarchie-Facetten wird keine abweichende Sortierung angeboten.
+Für jede aktivierte Text-, Vokabular-, Normdaten-, vererbte oder Beziehungsfacette lässt sich direkt beim Aktivieren der Facette (bzw. bei der jeweiligen Beziehungsfacette) festlegen, ob ihre Werte **nach Trefferanzahl** oder **alphabetisch (A–Z)** sortiert werden. Für Zahlen-, Datums-, Ja/Nein- und Hierarchie-Facetten wird keine abweichende Sortierung angeboten.
 :::
 
 ### Datumsfacetten nach Dekade, Jahrhundert oder Jahr
