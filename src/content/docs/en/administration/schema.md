@@ -295,7 +295,7 @@ detail page. A fixed relation type restricts these values in the index to the
 corresponding relationship; without a fixed type, values from all
 relationships to the chosen target type are pulled in.
 
-:::note[Available from version 1.45.0]
+:::note[Available from version 1.46.0]
 When a relation field targets **Place (`place`)**, you can also enable **Show map of the linked place on the detail page** (`show_place_map`). If the linked place has base coordinates (`lat`/`lon`), the portal renders an interactive map directly below the relation field; for fictional places or places without coordinates, the map is omitted automatically.
 :::
 
@@ -306,7 +306,7 @@ When a relation field targets **Place (`place`)**, you can also enable **Show ma
 Stores a geographic point (`lat`, `lon`) and optionally an uncertainty radius in meters (`accuracy_m`, e.g. for approximate find spots). For Place (`place`) records, base coordinates are additionally stored as PostGIS geometry.
 
 :::note[Available from version 1.44.0]
-In the data-entry form (both in `geo` schema fields and, since version 1.45.0, in the base coordinates of Place records), an interactive map with place search (OpenStreetMap Nominatim) can be opened: clicking the map or selecting a search result populates latitude and longitude. In the portal, the point is shown on a map, including an uncertainty circle when `accuracy_m` is set. `geo` can also be used as a sub-field inside a field group (`group`).
+In the data-entry form (both in `geo` schema fields and, since version 1.46.0, in the base coordinates of Place records), an interactive map with place search (OpenStreetMap Nominatim) can be opened: clicking the map or selecting a search result populates latitude and longitude. In the portal, the point is shown on a map, including an uncertainty circle when `accuracy_m` is set. `geo` can also be used as a sub-field inside a field group (`group`).
 :::
 
 Example of the stored value:

@@ -52,7 +52,7 @@ Facets are independent of detail display. A public field can be a filter even wh
 
 Under **Order in the portal**, all active facets of a record type appear in one shared list, whether field, date, hierarchy or relation facets. Change the order by dragging or with the arrow buttons (keyboard accessible); it applies directly to the portal search. Facets on sub-fields of a group appear as "Group › Field".
 
-:::note[Available from version 1.45.0]
+:::note[Available from version 1.46.0]
 For every categorical or text facet (text, vocabulary, authority, inherited, and relation facets), you can individually choose in this list whether its values are sorted **by count** or **alphabetically (A–Z)**, or whether it follows the global default under **Display → Facet value sort order**. Numeric, date, boolean, and hierarchical tree facets do not offer an alphabetical sort override.
 :::
 

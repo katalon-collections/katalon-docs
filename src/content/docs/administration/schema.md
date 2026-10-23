@@ -295,7 +295,7 @@ Eintrag einblenden. Ein fester Relationstyp beschränkt diese Werte im Index auf
 die entsprechende Beziehung; ohne festen Typ werden Werte aller Beziehungen
 zum gewählten Zieltyp übernommen.
 
-:::note[Verfügbar ab Version 1.45.0]
+:::note[Verfügbar ab Version 1.46.0]
 Zeigt ein Relationsfeld auf den Zieltyp **Ort (`place`)**, kann zusätzlich die Option **Karte des verknüpften Ortes auf der Detailseite anzeigen** (`show_place_map`) aktiviert werden. Besitzt der verknüpfte Ort Stammkoordinaten (`lat`/`lon`), blendet das Portal direkt unter dem Beziehungsfeld eine interaktive Karte ein; bei fiktiven Orten oder Orten ohne Koordinaten entfällt die Karte automatisch.
 :::
 
@@ -306,7 +306,7 @@ Zeigt ein Relationsfeld auf den Zieltyp **Ort (`place`)**, kann zusätzlich die 
 Speichert einen geografischen Punkt (`lat`, `lon`) und optional einen Unschärferadius in Metern (`accuracy_m`, z. B. für ungefähre Fundorte). Für Datensätze vom Typ Ort (`place`) werden die Stammkoordinaten außerdem als PostGIS-Geometrie gespeichert.
 
 :::note[Verfügbar ab Version 1.44.0]
-Im Erfassungsformular (sowohl in `geo`-Schemafeldern als auch ab Version 1.45.0 in den Stammkoordinaten von Orten) lässt sich eine interaktive Karte mit Ortssuche (OpenStreetMap Nominatim) aufklappen: Ein Klick in die Karte oder auf einen Suchtreffer übernimmt Breiten- und Längengrad. Im Portal wird der Punkt auf einer Karte dargestellt, bei gesetztem `accuracy_m` inklusive Unschärfekreis. `geo` kann auch als Subfeld innerhalb einer Feldgruppe (`group`) verwendet werden.
+Im Erfassungsformular (sowohl in `geo`-Schemafeldern als auch ab Version 1.46.0 in den Stammkoordinaten von Orten) lässt sich eine interaktive Karte mit Ortssuche (OpenStreetMap Nominatim) aufklappen: Ein Klick in die Karte oder auf einen Suchtreffer übernimmt Breiten- und Längengrad. Im Portal wird der Punkt auf einer Karte dargestellt, bei gesetztem `accuracy_m` inklusive Unschärfekreis. `geo` kann auch als Subfeld innerhalb einer Feldgruppe (`group`) verwendet werden.
 :::
 
 Beispiel für den gespeicherten Wert:
