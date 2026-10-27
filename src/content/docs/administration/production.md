@@ -456,6 +456,17 @@ curl https://deine-domain.de/llms.txt
 
 `docker/nginx.prod.conf` routet beide Pfade auf der Portal-Domain zur API; die Admin-Subdomain bekommt stattdessen ein statisches `Disallow: /`, damit die Admin-UI nie indexiert wird. Bei einer eigenen nginx-Config diese Routen entsprechend nachziehen.
 
+### Link-Vorschauen, Suchmaschinen und Sitemap
+
+:::note[Verfügbar ab Version 1.47.0]
+Das Portal ist eine Single-Page-Anwendung; Crawler und Link-Vorschau-Dienste führen kein JavaScript aus und sähen nur eine leere HTML-Hülle. Deshalb leitet nginx bekannte Bots (Facebook, X/Twitter, LinkedIn, Slack, WhatsApp, Telegram, Discord, Mastodon, Bluesky und gängige Suchmaschinen) beim Aufruf einer Datensatz-URL (`/objects/<id>` usw.) auf `/portal/v1/seo/<typ>/<id>` um. Die API liefert dort eine kleine HTML-Seite mit Titel, Beschreibung, `canonical`-Link, Open-Graph- und Twitter-Tags sowie schema.org-JSON-LD, gebildet aus der öffentlichen Projektion des Datensatzes (nicht öffentliche Felder erscheinen nicht). Normale Besucher bekommen weiterhin das Portal.
+:::
+
+- `/sitemap.xml` listet alle öffentlich sichtbaren Datensätze der fünf öffentlichen Typen mit Änderungsdatum; ab 50 000 Einträgen teilt Katalon sie in mehrere Seiten auf. `/robots.txt` verweist darauf, sobald `KATALON_BASE_URL` gesetzt ist.
+- Setze `KATALON_BASE_URL` auf die öffentliche Adresse des Portals, damit `canonical`, Sitemap und Vorschaubild-URLs absolute, korrekte Adressen tragen.
+- Die Bot-Liste steht in `docker/nginx.prod.conf` (`map $http_user_agent $seo_bot`) und lässt sich dort erweitern.
+- Bei einer eigenen nginx-Config die `map`, die `if ($seo_bot = 1)`-Weiche im Datensatz-`location` und die Route `/sitemap.xml` aus `docker/nginx.prod.conf` übernehmen.
+
 ## Custom-Betrieb ohne öffentliches Portal
 
 :::note[Verfügbar ab Version 1.32.0]

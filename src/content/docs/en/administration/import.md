@@ -96,6 +96,24 @@ The preview in the transformation dialog shows the first three values after each
 
 Expressions run server-side during import. The name template expects exactly one comma; values without a comma remain unchanged.
 
+#### Importing several columns into one field
+
+:::note[Available since version 1.47.0]
+Several columns can be mapped to the same **repeatable** field, for example `Genre1`, `Genre2` and `Genre3` to a field `Genre`. The values are merged in column order; empty cells are skipped, and a value that appears more than once in the same row is kept only once.
+:::
+
+For fields that are not repeatable, a target stays reserved for a single column: the dropdown shows it as "(already assigned)" for other columns, and a new assignment replaces the previous one. Container fields behave like repeatable fields: the values of several columns become several entries.
+
+For such a field the dry run counts empty values per row, not per column. It only reports the field as empty when all columns mapped to it are empty in that row.
+
+#### Creating new fields during import
+
+**+ Field** next to a column creates a missing field directly; it is created during the import. If you choose the field type **Vocabulary**, Katalon creates a vocabulary with the same name (or reuses an existing one with that name) and links the field to it. The column values are created as terms; spellings that differ only in case or whitespace count as the same term.
+
+:::note[Available since version 1.47.0]
+Previously the field was created without a vocabulary, and every row with a value was rejected with "Vocabulary value must be an object {id, label}". A field created that way can be linked to a vocabulary afterwards in the schema editor; then repeat the import with the upsert strategy `skip` so only the missing records are created.
+:::
+
 #### Importing container fields
 
 Container fields consist of repeatable entries with subfields. In the mapping dropdown, they appear as `Container → Subfield`, for example `Person → First name` and `Person → Last name`.
@@ -237,4 +255,5 @@ Columns mapped to an empty string, or not appearing in the mapping, are ignored.
 | Image files in a separate step | The assignment can be prepared during metadata import; the files are then uploaded in the Media tab. |
 | Existing records | `skip`, `merge`, and `replace` are supported. With `skip`, media references can be added without changing metadata. |
 | Status is always `draft` | New records start as `draft` by default, but can be published via `auto_publish`. |
+| Relation fields | The importer does not create links from plain text (for example a person's name) and does not create records for them. Set links after the import in the form or with batch editing. |
 | No character encoding conversion | The file must be in UTF-8. Latin-1 or Windows-1252 can cause character errors. |

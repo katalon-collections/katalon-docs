@@ -96,6 +96,24 @@ Die Vorschau im Transformationsdialog zeigt die ersten drei Werte nach jedem ges
 
 Expressions laufen beim Import serverseitig. Die Vorlage für Namen erwartet genau ein Komma; Werte ohne Komma bleiben unverändert.
 
+#### Mehrere Spalten in ein Feld importieren
+
+:::note[Verfügbar ab Version 1.47.0]
+Mehrere Spalten dürfen demselben **wiederholbaren** Feld zugeordnet werden, zum Beispiel `Genre1`, `Genre2` und `Genre3` einem Feld `Genre`. Die Werte werden in der Reihenfolge der Spalten zusammengeführt; leere Zellen bleiben unberücksichtigt, und ein Wert, der in derselben Zeile mehrfach vorkommt, wird nur einmal übernommen.
+:::
+
+Bei Feldern, die nicht wiederholbar sind, bleibt ein Ziel dagegen nur einer Spalte vorbehalten: Die Auswahlliste zeigt es für weitere Spalten als „(bereits zugewiesen)“ an, und eine neue Zuordnung löst die vorherige ab. Containerfelder verhalten sich wie wiederholbare Felder: Die Werte mehrerer Spalten ergeben mehrere Einträge.
+
+Der Probelauf zählt leere Werte bei so einem Feld pro Zeile, nicht pro Spalte. Er meldet ein Feld erst dann als leer, wenn alle zugeordneten Spalten der Zeile leer sind.
+
+#### Neue Felder beim Import anlegen
+
+Über **+ Feld** neben einer Spalte lässt sich ein fehlendes Feld direkt anlegen; es entsteht beim Import. Wird dabei der Feldtyp **Vokabular** gewählt, legt Katalon ein gleichnamiges Vokabular an (oder nutzt ein vorhandenes mit diesem Namen) und verknüpft das Feld damit. Die Werte der Spalte werden als Begriffe angelegt; Schreibweisen, die sich nur in Groß-/Kleinschreibung oder Leerzeichen unterscheiden, gelten als derselbe Begriff.
+
+:::note[Verfügbar ab Version 1.47.0]
+Vorher entstand das Feld ohne Vokabular, und jede Zeile mit Wert wurde mit „Vokabularwert muss ein Objekt {id, label} sein“ abgelehnt. Ein auf diese Weise bereits angelegtes Feld lässt sich im Schema-Editor nachträglich mit einem Vokabular verknüpfen; danach den Import mit der Upsert-Strategie `skip` wiederholen, damit nur die fehlenden Datensätze angelegt werden.
+:::
+
 #### Containerfelder importieren
 
 Containerfelder bestehen aus wiederholbaren Einträgen mit Subfeldern. Im Mapping-Dropdown stehen sie als `Container → Subfeld`, zum Beispiel `Person → Vorname` und `Person → Nachname`.
@@ -237,4 +255,5 @@ Spalten, die auf den leeren String gemappt sind oder nicht im Mapping erscheinen
 | Bilddateien in separatem Schritt | Die Zuordnung kann im Metadatenimport vorbereitet werden; die Dateien werden danach im Medien-Tab hochgeladen. |
 | Bestehende Datensätze | `skip`, `merge` und `replace` werden unterstützt. Bei `skip` können Medienreferenzen ergänzt werden, ohne Metadaten zu ändern. |
 | Status immer `draft` | Neue Datensätze starten standardmäßig als `draft`, können aber per `auto_publish` veröffentlicht werden. |
+| Relationsfelder | Der Importer legt keine Verknüpfungen aus Klartext (zum Beispiel einem Personennamen) an und legt dafür auch keine Datensätze an. Verknüpfungen werden nach dem Import im Formular oder per Batch-Bearbeitung gesetzt. |
 | Keine Zeichenkodierungskonvertierung | Die Datei muss in UTF-8 vorliegen. Latin-1 oder Windows-1252 kann zu Zeichenfehlern führen. |

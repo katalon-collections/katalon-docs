@@ -136,3 +136,9 @@ Irreversible Aktion — vor der Nutzung unbedingt den Bestätigungstext lesen.
 ::::
 
 Blendet für einen gewählten Primärtyp (optional eingeschränkt auf einen Subtyp) alle nicht-systemischen Felddefinitionen aus dem Schema aus. **Datensätze und deren gespeicherte Metadatenwerte werden dabei nicht gelöscht** — sie bleiben in der Datenbank erhalten und werden wieder sichtbar, sobald ein Feld mit demselben technischen Namen erneut im Schema-Editor angelegt wird. Die Systemfelder `label` und `idno` bleiben immer erhalten. Zur Bestätigung muss die Bezeichnung des betroffenen Schemas (Groß­schreibung) exakt eingetippt werden.
+
+### Vokabular zurücksetzen / löschen
+
+:::note[Verfügbar ab Version 1.47.0]
+Eine zweite Karte im Gefahrenbereich löscht entweder alle Begriffe eines Vokabulars oder das gesamte Vokabular. Zur Bestätigung muss der Name des Vokabulars in Großbuchstaben eingetippt werden. Einzelheiten stehen unter [Vokabulare → Vokabular leeren oder löschen](vokabulare#vokabular-leeren-oder-löschen).
+:::

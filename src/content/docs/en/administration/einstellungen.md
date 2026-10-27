@@ -136,3 +136,9 @@ Irreversible action — be sure to read the confirmation text before use.
 ::::
 
 Hides all non-system field definitions from the schema for a chosen primary type (optionally restricted to a subtype). **Records and their stored metadata values are not deleted in the process** — they remain in the database and become visible again as soon as a field with the same technical name is created again in the schema editor. The system fields `label` and `idno` are always preserved. To confirm, the label of the affected schema must be typed exactly (case-sensitive).
+
+### Reset / delete vocabulary
+
+:::note[Available since version 1.47.0]
+A second card in the Danger Zone deletes either all terms of a vocabulary or the whole vocabulary. To confirm, type the vocabulary name in capital letters. Details are under [Vocabularies → Emptying or deleting a vocabulary](vokabulare#emptying-or-deleting-a-vocabulary).
+:::

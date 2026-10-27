@@ -418,6 +418,17 @@ curl https://your-domain.com/llms.txt
 
 `docker/nginx.prod.conf` routes both paths to the API on the portal domain; the admin subdomain instead gets a static `Disallow: /`, so the admin UI is never indexed. For a custom nginx config, replicate these routes accordingly.
 
+### Link previews, search engines and sitemap
+
+:::note[Available since version 1.47.0]
+The portal is a single-page application; crawlers and link-preview services do not run JavaScript and would only see an empty HTML shell. nginx therefore redirects known bots (Facebook, X/Twitter, LinkedIn, Slack, WhatsApp, Telegram, Discord, Mastodon, Bluesky and common search engines) requesting a record URL (`/objects/<id>` etc.) to `/portal/v1/seo/<type>/<id>`. The API returns a small HTML page there with title, description, a `canonical` link, Open Graph and Twitter tags and schema.org JSON-LD, built from the record's public projection (non-public fields do not appear). Regular visitors still get the portal.
+:::
+
+- `/sitemap.xml` lists all publicly visible records of the five public types with their modification date; above 50,000 entries Katalon splits it into several pages. `/robots.txt` points to it once `KATALON_BASE_URL` is set.
+- Set `KATALON_BASE_URL` to the portal's public address so that `canonical`, the sitemap and preview image URLs carry correct absolute addresses.
+- The bot list lives in `docker/nginx.prod.conf` (`map $http_user_agent $seo_bot`) and can be extended there.
+- With a custom nginx config, copy the `map`, the `if ($seo_bot = 1)` switch in the record `location` and the `/sitemap.xml` route from `docker/nginx.prod.conf`.
+
 ---
 
 ## Optional RDF projection & SPARQL interface (Oxigraph)

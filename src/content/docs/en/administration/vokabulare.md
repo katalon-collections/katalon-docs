@@ -63,3 +63,17 @@ When deleting individual terms, Katalon automatically checks whether the term is
   1. **Reassign (choose a replacement term):** All occurrences in existing records are automatically migrated to another term of the same vocabulary, which you select.
   2. **Delete anyway (force):** The term is removed from the vocabulary. In existing records, the stored value (`{id, label}`) is kept as a historical entry. In the data-entry form, the value is marked with a **"Term deleted"** badge. Such records can still be opened and saved without validation errors.
 :::
+
+---
+
+## Emptying or deleting a vocabulary
+
+:::note[Available since version 1.47.0]
+Under **Settings → Danger Zone** there is the card **Reset / delete vocabulary** (administrators only). After you pick a vocabulary, it shows how many terms it contains and how many active schema fields refer to it.
+:::
+
+- **Delete all terms:** The vocabulary and the schema field bindings stay; only the terms are removed. Useful to refill a vocabulary, for example by import.
+- **Delete the whole vocabulary:** Removes the vocabulary and its terms. While active schema fields refer to it, Katalon blocks the deletion. With **Force**, those fields are hidden from the schema; the values stored in records are kept.
+- The system vocabularies `relation_types` and `media_types` can be emptied but not deleted.
+
+To confirm, type the vocabulary name in capital letters. Affected records are reindexed afterwards.

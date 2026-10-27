@@ -64,3 +64,16 @@ Beim Löschen einzelner Begriffe (Terme) prüft Katalon automatisch, ob der Begr
   2. **Trotzdem löschen (Erzwingen):** Der Begriff wird aus dem Vokabular entfernt. In bestehenden Datensätzen bleibt der gespeicherte Wert (`{id, label}`) als historischer Eintrag erhalten. Im Erfassungsformular wird der Wert mit einem Badge **„Term gelöscht“** gekennzeichnet. Solche Datensätze können weiterhin ohne Validierungsfehler geöffnet und gespeichert werden.
 :::
 
+---
+
+## Vokabular leeren oder löschen
+
+:::note[Verfügbar ab Version 1.47.0]
+Unter **Einstellungen → Gefahrenbereich** gibt es die Karte **Vokabular zurücksetzen / löschen** (nur für Administratoren). Nach der Wahl des Vokabulars zeigt sie, wie viele Begriffe es enthält und wie viele aktive Schemafelder darauf verweisen.
+:::
+
+- **Alle Begriffe löschen:** Das Vokabular und die Bindungen der Schemafelder bleiben bestehen, nur die Begriffe werden entfernt. Geeignet, um ein Vokabular neu zu befüllen, etwa per Import.
+- **Gesamtes Vokabular löschen:** Entfernt Vokabular und Begriffe. Solange aktive Schemafelder darauf verweisen, blockiert Katalon das Löschen. Mit **Erzwingen** werden diese Felder aus dem Schema ausgeblendet; die in Datensätzen gespeicherten Werte bleiben erhalten.
+- Die Systemvokabulare `relation_types` und `media_types` lassen sich leeren, aber nicht löschen.
+
+Zur Bestätigung muss der Name des Vokabulars in Großbuchstaben eingetippt werden. Betroffene Datensätze werden anschließend neu indexiert.
