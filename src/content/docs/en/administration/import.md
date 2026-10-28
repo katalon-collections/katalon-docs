@@ -255,5 +255,5 @@ Columns mapped to an empty string, or not appearing in the mapping, are ignored.
 | Image files in a separate step | The assignment can be prepared during metadata import; the files are then uploaded in the Media tab. |
 | Existing records | `skip`, `merge`, and `replace` are supported. With `skip`, media references can be added without changing metadata. |
 | Status is always `draft` | New records start as `draft` by default, but can be published via `auto_publish`. |
-| Relation fields | The importer does not create links from plain text (for example a person's name) and does not create records for them. Set links after the import in the form or with batch editing. |
+| Relation fields | The importer does not create links from plain text (for example a person's name) and does not create records for them. Set links after the import in the form, or with batch editing for all selected records that share the same target. |
 | No character encoding conversion | The file must be in UTF-8. Latin-1 or Windows-1252 can cause character errors. |

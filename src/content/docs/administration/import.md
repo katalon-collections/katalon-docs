@@ -255,5 +255,5 @@ Spalten, die auf den leeren String gemappt sind oder nicht im Mapping erscheinen
 | Bilddateien in separatem Schritt | Die Zuordnung kann im Metadatenimport vorbereitet werden; die Dateien werden danach im Medien-Tab hochgeladen. |
 | Bestehende Datensätze | `skip`, `merge` und `replace` werden unterstützt. Bei `skip` können Medienreferenzen ergänzt werden, ohne Metadaten zu ändern. |
 | Status immer `draft` | Neue Datensätze starten standardmäßig als `draft`, können aber per `auto_publish` veröffentlicht werden. |
-| Relationsfelder | Der Importer legt keine Verknüpfungen aus Klartext (zum Beispiel einem Personennamen) an und legt dafür auch keine Datensätze an. Verknüpfungen werden nach dem Import im Formular oder per Batch-Bearbeitung gesetzt. |
+| Relationsfelder | Der Importer legt keine Verknüpfungen aus Klartext (zum Beispiel einem Personennamen) an und legt dafür auch keine Datensätze an. Verknüpfungen werden nach dem Import im Formular gesetzt, oder per Batch-Bearbeitung für alle ausgewählten Datensätze mit demselben Ziel. |
 | Keine Zeichenkodierungskonvertierung | Die Datei muss in UTF-8 vorliegen. Latin-1 oder Windows-1252 kann zu Zeichenfehlern führen. |
