@@ -43,6 +43,14 @@ Die Trennzeichenerkennung analysiert die ersten 4 KB der Datei und wählt das h�
 2. Die Datei per Drag & Drop in den Upload-Bereich ziehen oder durch Klick auswählen.
 3. Nach dem Upload zeigt der Importer: Anzahl der erkannten Zeilen, Liste der Spaltenköpfe, Vorschau der ersten fünf Zeilen.
 
+#### Neuen Import beginnen
+
+Der Importer merkt sich Mapping, Optionen und neu anzulegende Felder im Browser, auch nach dem Neuladen. Über **Neuer Import** neben der Schrittanzeige lässt sich dieser Stand verwerfen. Ab Schritt 2 fragt Katalon vorher nach, weil Mapping und neu anzulegende Felder verloren gehen.
+
+:::note[Verfügbar ab Version 1.47.0]
+Zuvor gab es den Knopf nur nach abgeschlossenem Import. Außerdem erschien ein neu anzulegendes Feld nach mehrfachem Anwenden einer Mapping-Datei oder nach dem Neuladen mehrfach im Mapping-Dropdown; es steht dort jetzt nur noch einmal, und „(neu)“ trägt nur ein noch nicht angelegtes Feld.
+:::
+
 Wenn der Upload fehlschlägt:
 - Datei oder Summe der gemeinsam gewählten Dateien ist größer als 500 MB → Upload aufteilen
 - Dateiformat nicht unterstützt → CSV, TSV, Excel oder XML verwenden

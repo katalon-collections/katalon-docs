@@ -43,6 +43,14 @@ Delimiter detection analyzes the first 4 KB of the file and picks the most frequ
 2. Drag and drop the file into the upload area, or click to select it.
 3. After upload, the importer shows: the number of detected rows, a list of column headers, and a preview of the first five rows.
 
+#### Starting a new import
+
+The importer remembers the mapping, options and fields to be created in the browser, even after a reload. **New import** next to the step indicator discards that state. From step 2 onward Katalon asks first, because the mapping and fields to be created are lost.
+
+:::note[Available since version 1.47.0]
+Previously the button only appeared after a finished import. Also, a field to be created could show up several times in the mapping dropdown after applying a mapping file repeatedly or after a reload; it now appears once, and "(new)" is shown only for a field that does not exist yet.
+:::
+
 If the upload fails:
 - The file, or the combined size of the jointly selected files, exceeds 500 MB → split the upload
 - Unsupported file format → use CSV, TSV, Excel, or XML
