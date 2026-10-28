@@ -122,6 +122,12 @@ Der Probelauf zählt leere Werte bei so einem Feld pro Zeile, nicht pro Spalte. 
 Vorher entstand das Feld ohne Vokabular, und jede Zeile mit Wert wurde mit „Vokabularwert muss ein Objekt {id, label} sein“ abgelehnt. Ein auf diese Weise bereits angelegtes Feld lässt sich im Schema-Editor nachträglich mit einem Vokabular verknüpfen; danach den Import mit der Upsert-Strategie `skip` wiederholen, damit nur die fehlenden Datensätze angelegt werden.
 :::
 
+Im Dialog stehen die Feldtypen Text, Zahl, Datum, Boolean, Vokabular, Relation, URL, Rich Text, Freies Vokabular und Geo zur Auswahl. Eine Geo-Spalte erwartet Koordinaten im Format `Breite, Länge` mit Dezimalpunkt (z. B. `52.52, 13.405`). Ungültige Werte werden nicht übernommen und im Probelauf als Warnung gemeldet. Persistente Identifikatoren (PID), Normdaten und Gruppen lassen sich hier nicht anlegen: PIDs vergibt das System, Gruppen und Normdatenfelder entstehen im Schema-Editor.
+
+:::note[Verfügbar ab Version 1.47.0]
+Die Typen URL, Rich Text, Freies Vokabular und Geo.
+:::
+
 #### Containerfelder importieren
 
 Containerfelder bestehen aus wiederholbaren Einträgen mit Subfeldern. Im Mapping-Dropdown stehen sie als `Container → Subfeld`, zum Beispiel `Person → Vorname` und `Person → Nachname`.

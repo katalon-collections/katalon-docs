@@ -122,6 +122,12 @@ For such a field the dry run counts empty values per row, not per column. It onl
 Previously the field was created without a vocabulary, and every row with a value was rejected with "Vocabulary value must be an object {id, label}". A field created that way can be linked to a vocabulary afterwards in the schema editor; then repeat the import with the upsert strategy `skip` so only the missing records are created.
 :::
 
+The dialog offers the field types Text, Number, Date, Boolean, Vocabulary, Relation, URL, Rich text, Free vocabulary and Geo. A Geo column expects coordinates as `latitude, longitude` with a decimal point (e.g. `52.52, 13.405`). Invalid values are not imported and are reported as a warning in the dry run. Persistent identifiers (PID), authority data and groups cannot be created here: the system assigns PIDs, and groups and authority fields are created in the schema editor.
+
+:::note[Available from version 1.47.0]
+The types URL, Rich text, Free vocabulary and Geo.
+:::
+
 #### Importing container fields
 
 Container fields consist of repeatable entries with subfields. In the mapping dropdown, they appear as `Container → Subfield`, for example `Person → First name` and `Person → Last name`.
