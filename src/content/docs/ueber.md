@@ -20,7 +20,7 @@ Sammlungsverantwortliche müssen unterschiedliche Bestände mit jeweils passende
 - Etablierte Technologien sollen Installation und Betrieb überschaubar halten. Ein öffentliches Portal gehört zur Anwendung.
 - Katalon ist Open Source, ohne Lizenzkosten und selbst betreibbar. Institutionen mit kleinem Budget können ihre Bestände selbst importieren; der Smart Importer bietet dafür eine Dry-Run-Vorschau.
 - Eine dokumentierte REST-API mit OpenAPI-Spec, OAI-PMH und ein offengelegtes Datenmodell ermöglichen es Einrichtungen, ihre Daten mitzunehmen.
-- Katalon nutzt GLAM-Standards wie IIIF und Dublin Core sowie Normdaten. LIDO und EAD sind perspektivisch vorgesehen.
+- Katalon nutzt GLAM-Standards wie IIIF, Dublin Core, LIDO und METS/MODS sowie Normdaten. EAD ist perspektivisch vorgesehen.
 - Das öffentliche Portal soll für alle Nutzer:innen barrierefrei zugänglich sein.
 - Die Anwendung soll bei Bedarf für Speziallösungen oder ein eigenes Portal anpassbar sein.
 
@@ -58,7 +58,7 @@ Gleichzeitig gibt es etablierte Systeme, die leistungsfähig sind, deren Archite
 
 Mit Katalon möchte ich auf Basis einer modernen Webarchitektur Datenmodelle frei konfigurierbar machen und möglichst viele der sonst nötigen technischen Anpassungen in die Benutzeroberfläche verlagern.
 
-Datenmodelle, Beziehungen, Vokabulare, Workflows und Präsentation sollen sich an unterschiedliche Sammlungen und Einrichtungen anpassen lassen, ohne für jeden Anwendungsfall eine eigene Software entwickeln zu müssen. Die Software soll außerdem skalierbar sein und quasi "KI-ready" sein auf beiden Seiten: für die Einrichtung, die ihre Daten pflegt, und im Sinne eines performanten, barrierefreien Portals für die Öffentlichkeit dass mit den Anfragen von KI Crawlern umgehen kann.
+Datenmodelle, Beziehungen, Vokabulare, Workflows und Präsentation sollen sich an unterschiedliche Sammlungen und Einrichtungen anpassen lassen, ohne für jeden Anwendungsfall eine eigene Software entwickeln zu müssen. Die Software soll außerdem skalierbar sein und quasi "KI-ready" sein auf beiden Seiten: für die Einrichtung, die ihre Daten pflegt, und im Sinne eines performanten, barrierefreien Portals für die Öffentlichkeit, das mit den Anfragen von KI Crawlern umgehen kann.
 
 ### Standards statt Insellösung
 

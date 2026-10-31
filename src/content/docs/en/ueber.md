@@ -20,7 +20,7 @@ Collection managers face the challenge of recording, linking, and publishing het
 - **A modern, established tech stack**, manageable to install and operate; a portal view is included from the start.
 - **Free and self-hostable.** Katalon is open source, with no license costs. Institutions with small budgets can import their holdings themselves (Smart Importer with dry-run preview), instead of necessarily hiring a service provider.
 - **No lock-in.** Documented REST API with OpenAPI spec, OAI-PMH, and a simple, disclosed data model — institutions can take their data with them at any time.
-- **Standards compliance.** Connection to GLAM standards (IIIF, Dublin Core, LIDO/EAD in the future) instead of proprietary formats, with authority-data integration.
+- **Standards compliance.** Connection to GLAM standards (IIIF, Dublin Core, LIDO, METS/MODS; EAD in the future) instead of proprietary formats, with authority-data integration.
 - **Accessibility** of the public portal for all users.
 - **Adaptability**, in case a custom solution or a dedicated portal is needed after all.
 
