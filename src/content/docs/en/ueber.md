@@ -9,7 +9,7 @@ Katalon Collections is an open-source collections management system for gallerie
 
 The domain data lives in seven core types: objects, entities (people/organizations), places, occurrences (works, events, concepts), collections, storage locations, and procedures (loans, acquisitions, conservation). Fields, forms, and controlled vocabularies with authority-data integration (GND, GeoNames, VIAF, Wikidata, Getty TGN, ICONCLASS) can be fully configured through the interface, without touching code or configuration files.
 
-Katalon is independent and not affiliated with [katalon.com](https://katalon.com/) (test automation). To tell them apart, the project is called "Katalon Collections" externally.
+Katalon is independent and not affiliated with [katalon.com](https://katalon.com/) (test automation). To tell them apart, the project is called “Katalon Collections” externally.
 
 ## Why Katalon Collections?
 
@@ -46,7 +46,7 @@ From 2018 I worked at the Lower Saxony State and University Library Göttingen, 
 
 Since 2023, I've worked at the University and State Library Münster as a software developer in research data management. One focus is the university's institutional research data repository and publication server, built on [InvenioRDM](https://inveniosoftware.org/products/rdm/). Since 2025, my work has increasingly included IT project management as well.
 
-Alongside that, I've maintained or developed smaller projects, including the picture-postcard database, work around the "International Computer Game Collection," and open-source tools such as <https://oaiexplorer.de/>.
+Alongside that, I've maintained or developed smaller projects, including the picture-postcard database, work around the “International Computer Game Collection,” and open-source tools such as <https://oaiexplorer.de/>.
 
 ### Why Another Piece of Software?
 
@@ -58,7 +58,7 @@ At the same time, established systems exist that are powerful, but whose archite
 
 With Katalon, I want to make data models freely configurable on a modern web architecture and move as many of the otherwise necessary technical adjustments as possible into the user interface.
 
-Data models, relationships, vocabularies, workflows, and presentation should be adaptable to different collections and institutions, without developing separate software for every use case. The software should also be scalable and, so to speak, "AI-ready" on both sides: for the institution maintaining its data, and in the sense of a performant, accessible public portal that can handle requests from AI crawlers.
+Data models, relationships, vocabularies, workflows, and presentation should be adaptable to different collections and institutions, without developing separate software for every use case. The software should also be scalable and, so to speak, “AI-ready” on both sides: for the institution maintaining its data, and in the sense of a performant, accessible public portal that can handle requests from AI crawlers.
 
 ### Standards Instead of a Silo
 

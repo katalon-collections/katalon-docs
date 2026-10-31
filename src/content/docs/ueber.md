@@ -58,7 +58,7 @@ Gleichzeitig gibt es etablierte Systeme, die leistungsfähig sind, deren Archite
 
 Mit Katalon möchte ich auf Basis einer modernen Webarchitektur Datenmodelle frei konfigurierbar machen und möglichst viele der sonst nötigen technischen Anpassungen in die Benutzeroberfläche verlagern.
 
-Datenmodelle, Beziehungen, Vokabulare, Workflows und Präsentation sollen sich an unterschiedliche Sammlungen und Einrichtungen anpassen lassen, ohne für jeden Anwendungsfall eine eigene Software entwickeln zu müssen. Die Software soll außerdem skalierbar sein und quasi "KI-ready" sein auf beiden Seiten: für die Einrichtung, die ihre Daten pflegt, und im Sinne eines performanten, barrierefreien Portals für die Öffentlichkeit, das mit den Anfragen von KI Crawlern umgehen kann.
+Datenmodelle, Beziehungen, Vokabulare, Workflows und Präsentation sollen sich an unterschiedliche Sammlungen und Einrichtungen anpassen lassen, ohne für jeden Anwendungsfall eine eigene Software entwickeln zu müssen. Die Software soll außerdem skalierbar und quasi „KI-ready“ sein, und zwar auf beiden Seiten: für die Einrichtung, die ihre Daten pflegt, und im Sinne eines performanten, barrierefreien Portals für die Öffentlichkeit, das mit den Anfragen von KI-Crawlern umgehen kann.
 
 ### Standards statt Insellösung
 
