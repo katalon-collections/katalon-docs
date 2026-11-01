@@ -549,6 +549,56 @@ A field's `name` cannot be changed after creation — it serves as the identific
 
 ---
 
+## AI assistance
+
+The following features only appear when the AI connection is enabled under [Settings → AI](/katalon-docs/en/administration/einstellungen/#ai) and fully set up with base URL, model, and API key. Every request counts against the token limits configured there and is logged in the [Audit Log](/katalon-docs/en/administration/audit-log/).
+
+### AI schema assistant
+
+:::note[Available since version 1.1.0]
+:::
+
+**AI Assistant** in the header of the field overview opens a chat in which you describe what should be recorded, e.g. “I want to catalog historical postcards: cards have a sender and recipient location, dates, are stamped or unstamped, and need an image description.” The assistant works on the currently selected record type and, if set, the subtype.
+
+- The assistant asks follow-up questions if needed and then proposes **new** fields, including field groups with sub-fields. It never changes existing fields.
+- If a proposed vocabulary field needs a vocabulary that doesn't exist yet, it proposes that too, marked as a new vocabulary.
+- Individual fields can be deselected in the proposal. Applying the proposal creates only the selected fields (and the vocabularies they need); deselected fields are skipped. The result is shown per field.
+- Administrators only; not available for vocabulary terms (`vocabulary_term`).
+
+The created fields are ordinary field definitions and should be reviewed before production use, in particular field types, required settings, and portal visibility.
+
+### Setting up AI suggestions for a field
+
+:::note[Available since version 0.3.3]
+For sub-fields of field groups since version 0.7.4.
+:::
+
+For fields of type `text`, `richtext`, `vocab_free`, `date`, `number`, and `boolean`, the field form offers **Enable AI assistant for this field**. Sub-fields of a field group offer the same option (without `richtext`). The following settings are then available:
+
+| Setting | Meaning |
+|---|---|
+| **Mode** | **Text context only** or **Image + text context**. In image mode, the record's primary medium is sent along, scaled down to at most 1024 pixels on the longest side. Without a primary medium, the request fails with an error. |
+| **Prompt** | Instruction for the model, e.g. “Describe the image in 2–3 sentences.” Required once AI is enabled for the field. |
+| **Additional fields as context** | Values of other fields of the same record that are sent along. For sub-fields, the other values of the same group instance are sent automatically. |
+| **Send existing field value as context** | Sends the current field value, e.g. to have an existing text revised. |
+
+This configuration determines what is sent to the AI provider: prompt, field description, the selected context fields, and the image if applicable. For internal or confidential information, check which fields are selected as context.
+
+### Using AI suggestions in the form
+
+:::note[Available since version 1.39.0]
+Review dialog before applying.
+:::
+
+For configured fields, the edit form shows an **AI suggestion** button. The record must have been saved at least once.
+
+- The suggestion opens in a dialog next to the current value. It can be edited there; **Apply** puts it into the field, **Discard** leaves the field unchanged. Nothing is stored until the record is saved.
+- If the model reports uncertainty, a notice appears above the form.
+- Applied values are marked as AI-generated, see [Marking AI-generated field values](/katalon-docs/en/administration/audit-log/#marking-ai-generated-field-values).
+- Catalogers, editors, and administrators can create AI suggestions; viewers cannot.
+
+---
+
 ## Validation regex for text fields
 
 For fields of type `text`, a regular expression can be set as a validation rule. On data entry, the entered value is checked against this expression.

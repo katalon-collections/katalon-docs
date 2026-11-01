@@ -253,6 +253,24 @@ CONSTRUCT {
 
 ---
 
+## SPARQL Query Builder in der Admin-UI
+
+:::note[Verfügbar ab Version 1.19.22]
+:::
+
+Unter **Konfiguration → SPARQL Query Builder** lassen sich Abfragen direkt in der Admin-UI schreiben und ausführen. Der Menüpunkt erscheint nur für Administratoren und nur, wenn die Oxigraph-Integration aktiv ist.
+
+- **SPARQL-Editor:** Abfrage eingeben und mit **Ausführen** (oder ⌘/Strg + Enter) starten. **Limit** begrenzt die Ergebniszahl, **Standard-Präfixe einfügen** ergänzt die unten aufgeführten Präfixe.
+- **Vorlagen:** Fertige Beispielabfragen, u. a. Objekte mit Kennung und Titel, Personen mit verknüpften Objekten, Orte mit Geokoordinaten und die Verteilung nach CIDOC-CRM/LRMoo-Klassen.
+- **Ergebnisse:** Anzeige als Tabelle oder als Rohdaten (JSON), Download als CSV oder JSON. Verweise auf Katalon-Datensätze in der Tabelle öffnen den jeweiligen Datensatz im Formular.
+- **Gespeicherte Abfragen:** Abfragen mit Titel, Beschreibung und Tags speichern, später laden, bearbeiten oder löschen. Gespeicherte Abfragen sind für alle Administratoren sichtbar; die Option **Für alle Kuratoren teilen** wirkt sich derzeit nicht auf die Sichtbarkeit aus.
+
+### KI-Abfrageassistent
+
+Ist unter [Einstellungen → KI](/katalon-docs/administration/einstellungen/#ki) eine KI-Anbindung aktiv, öffnet **KI-Abfrageassistent** ein Eingabefeld für eine Frage in natürlicher Sprache, z. B. „Zeige alle Personen, die in Berlin geboren wurden und als Urheber von Objekten vorkommen“. **SPARQL generieren** erzeugt daraus eine schreibgeschützte `SELECT`- oder `ASK`-Abfrage auf Basis der hier beschriebenen RDF-Projektion, zusammen mit einer kurzen Erklärung. **In Editor übernehmen** setzt die Abfrage in den Editor; ausgeführt wird sie erst mit **Ausführen**.
+
+Die erzeugte Abfrage sollte vor der Auswertung geprüft werden: Das Modell kennt die Projektionskonventionen, aber nicht die konkreten Felder und Daten der eigenen Instanz. Jede Generierung zählt gegen die Token-Limits und wird im [Audit-Log](/katalon-docs/administration/audit-log/) protokolliert.
+
 ## Verwaltung im Admin-Bereich
 
 In der Admin-Oberfläche steht Administratoren unter **Einstellungen** die Sektion **Linked Data & SPARQL** zur Verfügung:

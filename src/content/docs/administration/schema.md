@@ -549,6 +549,56 @@ Der `name` eines Feldes kann nach dem Anlegen nicht mehr geändert werden — er
 
 ---
 
+## KI-Unterstützung
+
+Die folgenden Funktionen erscheinen nur, wenn unter [Einstellungen → KI](/katalon-docs/administration/einstellungen/#ki) die KI-Anbindung aktiviert und mit Base URL, Modell und API-Key vollständig eingerichtet ist. Jede Anfrage zählt gegen die dort festgelegten Token-Limits und wird im [Audit-Log](/katalon-docs/administration/audit-log/) protokolliert.
+
+### KI-Schema-Assistent
+
+:::note[Verfügbar ab Version 1.1.0]
+:::
+
+Über **KI-Assistent** in der Kopfzeile der Feldübersicht öffnet sich ein Chat, in dem sich beschreiben lässt, was erfasst werden soll, z. B. „Ich will historische Postkarten erfassen: Karten haben Absende- und Empfangsort, Datierungen, sind frankiert/unfrankiert und brauchen eine Bildbeschreibung.“ Der Assistent bezieht sich auf den gerade gewählten Datensatztyp und gegebenenfalls den Subtyp.
+
+- Der Assistent fragt bei Bedarf nach und schlägt dann **neue** Felder vor, einschließlich Feldgruppen mit Unterfeldern. Bestehende Felder ändert er nie.
+- Benötigt ein vorgeschlagenes Vokabularfeld ein Vokabular, das es noch nicht gibt, schlägt er es mit vor (Kennzeichnung **Neues Vokabular**).
+- Im Vorschlag lassen sich einzelne Felder abwählen. **Übernehmen** legt nur die ausgewählten Felder an (und die dafür nötigen Vokabulare); nicht ausgewählte Felder werden übersprungen. Das Ergebnis wird pro Feld angezeigt.
+- Nur für Administratoren; für Vokabularbegriffe (`vocabulary_term`) steht der Assistent nicht zur Verfügung.
+
+Die angelegten Felder sind normale Felddefinitionen und sollten vor dem produktiven Einsatz geprüft werden, insbesondere Feldtypen, Pflichtfeld-Einstellungen und die Sichtbarkeit im Portal.
+
+### KI-Vorschläge für ein Feld einrichten
+
+:::note[Verfügbar ab Version 0.3.3]
+Für Unterfelder von Feldgruppen ab Version 0.7.4.
+:::
+
+Für Felder der Typen `text`, `richtext`, `vocab_free`, `date`, `number` und `boolean` lässt sich im Feldformular **KI-Assistent für dieses Feld aktivieren** setzen. Unterfelder einer Feldgruppe bieten dieselbe Option (ohne `richtext`). Dann stehen folgende Einstellungen zur Verfügung:
+
+| Einstellung | Bedeutung |
+|---|---|
+| **Modus** | **Nur Textkontext** oder **Bild + Textkontext**. Im Bildmodus wird das Primärmedium des Datensatzes mitgeschickt, verkleinert auf höchstens 1024 Pixel Kantenlänge. Ohne Primärmedium bricht die Anfrage mit einer Fehlermeldung ab. |
+| **Prompt** | Anweisung an das Modell, z. B. „Beschreibe das Bild in 2–3 Sätzen auf Deutsch.“ Pflicht, sobald die KI für das Feld aktiv ist. |
+| **Weitere Felder als Kontext** | Werte weiterer Felder desselben Datensatzes, die mitgeschickt werden. Bei Unterfeldern werden die übrigen Werte derselben Gruppeninstanz automatisch mitgesendet. |
+| **Vorhandenen Feldwert als Kontext mitsenden** | Schickt den aktuellen Feldwert mit, etwa um einen bestehenden Text überarbeiten zu lassen. |
+
+Was an den KI-Anbieter geht, legt diese Konfiguration fest: Prompt, Feldbeschreibung, die ausgewählten Kontextfelder und gegebenenfalls das Bild. Für interne oder vertrauliche Angaben sollte daher geprüft werden, welche Felder als Kontext ausgewählt sind.
+
+### KI-Vorschläge im Formular verwenden
+
+:::note[Verfügbar ab Version 1.39.0]
+Prüfdialog vor dem Übernehmen.
+:::
+
+Bei eingerichteten Feldern erscheint im Bearbeitungsformular die Schaltfläche **KI-Vorschlag**. Der Datensatz muss dafür bereits einmal gespeichert sein.
+
+- Der Vorschlag öffnet sich in einem Dialog neben dem aktuellen Wert. Er lässt sich dort bearbeiten, **Übernehmen** setzt ihn ins Feld, **Verwerfen** lässt das Feld unverändert. Gespeichert wird erst mit dem Speichern des Datensatzes.
+- Meldet das Modell Unsicherheit, erscheint ein Hinweis („KI-Hinweis für …“) über dem Formular.
+- Übernommene Werte werden als KI-generiert markiert, siehe [KI-generierte Feldwerte kennzeichnen](/katalon-docs/administration/audit-log/#ki-generierte-feldwerte-kennzeichnen).
+- KI-Vorschläge können Katalogisierer, Redakteure und Administratoren erstellen, Betrachter nicht.
+
+---
+
 ## Validierungs-Regex für Text-Felder
 
 Für Felder vom Typ `text` kann ein regulärer Ausdruck als Validierungsregel hinterlegt werden. Bei der Dateneingabe wird der eingegebene Wert gegen diesen Ausdruck geprüft.

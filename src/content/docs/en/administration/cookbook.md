@@ -24,7 +24,7 @@ Display on a portal detail page is not an access control mechanism. The public-o
 
 The date field stores concrete ISO values such as `1923`, `1923-05`, or `1923-05-14`. For "around 1920" or a range, don't invent a free-text date. Create a `dating` field group containing a date field and a vocabulary field `type` with values such as `exact`, `circa`, `before`, `after`, and `undated`. For a range, two date fields `from` and `to` are clearer.
 
-The full configuration, including for BCE dates, is documented in [Schema Management](/katalon-docs/en/administration/schema#cookbook-datierungstyp-unscharfequalifizierte-datierung).
+The full configuration, including for BCE dates, is documented in [Schema Management](/katalon-docs/en/administration/schema/#cookbook-dating-type-uncertainqualified-dating).
 
 ## Acquisition and conservation as procedures
 

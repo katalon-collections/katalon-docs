@@ -253,6 +253,24 @@ CONSTRUCT {
 
 ---
 
+## SPARQL Query Builder in the admin UI
+
+:::note[Available since version 1.19.22]
+:::
+
+Under **Configuration → SPARQL Query Builder**, queries can be written and run directly in the admin UI. The menu item only appears for administrators and only when the Oxigraph integration is active.
+
+- **SPARQL editor:** Enter a query and start it with **Run** (or ⌘/Ctrl + Enter). **Limit** caps the number of results; **Insert standard prefixes** adds the prefixes listed below.
+- **Templates:** Ready-made example queries, including objects with identifier and title, persons with linked objects, places with coordinates, and the distribution by CIDOC-CRM/LRMoo classes.
+- **Results:** Shown as a table or as raw data (JSON), downloadable as CSV or JSON. References to Katalon records in the table open the respective record in the form.
+- **Saved queries:** Save queries with title, description, and tags, then load, edit, or delete them later. Saved queries are visible to all administrators; the **Share with all curators** option currently has no effect on visibility.
+
+### AI query assistant
+
+If an AI connection is active under [Settings → AI](/katalon-docs/en/administration/einstellungen/#ai), **AI Query Assistant** opens an input for a question in natural language, e.g. “Show all persons born in Berlin who created objects”. **Generate SPARQL** turns it into a read-only `SELECT` or `ASK` query based on the RDF projection described here, along with a short explanation. **Apply to Editor** puts the query into the editor; it only runs once you click **Run**.
+
+Review the generated query before relying on the results: the model knows the projection conventions, but not the specific fields and data of your instance. Every generation counts against the token limits and is logged in the [Audit Log](/katalon-docs/en/administration/audit-log/).
+
 ## Management in the admin area
 
 In the Admin UI, administrators have access to the **Linked Data & SPARQL** section under **Settings**:

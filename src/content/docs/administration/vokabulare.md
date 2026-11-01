@@ -3,7 +3,7 @@ title: Vokabulare verwalten
 description: Kontrollierte Vokabulare, hierarchische Begriffslisten und Relationstyp-Vokabulare anlegen und pflegen.
 ---
 
-Kontrollierte Vokabulare sind wiederverwendbare Begriffslisten, die an Schemafeldern vom Typ `vocab`/`vocab_free` referenziert werden (siehe [Schema verwalten](schema#vocab--vokabularfeld)) oder — als Sonderfall — die zulässigen Relationstypen zwischen Datensätzen definieren.
+Kontrollierte Vokabulare sind wiederverwendbare Begriffslisten, die an Schemafeldern vom Typ `vocab`/`vocab_free` referenziert werden (siehe [Schema verwalten](/katalon-docs/administration/schema/#vocab--vokabularfeld)) oder — als Sonderfall — die zulässigen Relationstypen zwischen Datensätzen definieren.
 
 Die Verwaltung erfolgt in der Admin-UI unter **Konfiguration → Vokabulare**.
 
@@ -36,7 +36,7 @@ Pro Begriff (Term) lassen sich erfassen:
 | **Cross-Konkordanzen (exactMatch)** | Liste externer Match-URIs (z. B. Wikidata- und GND-URIs für denselben Begriff), kommagetrennt oder je Zeile. |
 | **Eigene Felder** | Falls unter **Konfiguration → Schemata** Felder für den Zieltyp `vocabulary_term` dieses Vokabulars definiert wurden, erscheinen sie zusätzlich im Termformular. |
 
-Begriffe lassen sich einzeln über **Neuer Begriff** anlegen sowie per CSV/TSV/JSON oder SKOS (Turtle, RDF/XML, JSON-LD, N-Triples) im Reiter **Import** in Serie einspielen — siehe [Normdaten & Linked Data](normdaten#vokabulare--skos-linked-data) für den SKOS-Import und Details zu URIs und Cross-Konkordanzen.
+Begriffe lassen sich einzeln über **Neuer Begriff** anlegen sowie per CSV/TSV/JSON oder SKOS (Turtle, RDF/XML, JSON-LD, N-Triples) im Reiter **Import** in Serie einspielen — siehe [Normdaten & Linked Data](/katalon-docs/administration/normdaten/#vokabulare--skos-linked-data) für den SKOS-Import und Details zu URIs und Cross-Konkordanzen.
 
 ---
 
@@ -47,7 +47,7 @@ Beim Relationstyp-Vokabular (`relation_types`) bekommt jeder Begriff zusätzlich
 - **Gegenrichtung (Inverse Label)** — die Bezeichnung aus der umgekehrten Blickrichtung (z. B. „Autor:in von" ↔ „verfasst von").
 - **Zieltypen (applies_from / applies_to)** — welche Primärtypen als Quelle bzw. Ziel der Beziehung erlaubt sind (z. B. nur Entität → Objekt).
 
-Diese Begriffe stehen anschließend an Relationsfeldern (Feldtyp `relation`) im Schema-Editor zur Auswahl — siehe [Beziehungen → verknüpfung-zu-einem-anderen-datensatz](schema).
+Diese Begriffe stehen anschließend an Relationsfeldern (Feldtyp `relation`) im Schema-Editor zur Auswahl — siehe [Beziehungen → verknüpfung-zu-einem-anderen-datensatz](/katalon-docs/administration/schema/).
 
 ---
 

@@ -8,9 +8,9 @@ Settings bundle global, non-schema-related system configuration. In the admin UI
 Some sections are documented in detail on their own pages and are only linked here:
 
 - **Facets** → [Setting up facets](../integration/portal-suche#facetten-einrichten)
-- **Languages** → [Multilingual Support](mehrsprachigkeit)
-- **Authority data sources** → [Authority Data & Linked Data](normdaten)
-- **Edit lock** → [Locking a Record](datensatz-sperren)
+- **Languages** → [Multilingual Support](/katalon-docs/en/administration/mehrsprachigkeit/)
+- **Authority data sources** → [Authority Data & Linked Data](/katalon-docs/en/administration/normdaten/)
+- **Edit lock** → [Locking a Record](/katalon-docs/en/administration/datensatz-sperren/)
 - **Linked Data & SPARQL** → [SPARQL Endpoint (Oxigraph)](../integration/sparql)
 
 The remaining sections are described below.
@@ -109,13 +109,13 @@ In addition, a **validation pattern** (regex) can be set per type, against which
 
 ## AI
 
-Global connection to an LLM (OpenAI-compatible API, e.g. OpenAI or OpenRouter) for field-related AI suggestions in the editor:
+Global connection to an LLM (OpenAI-compatible API, e.g. OpenAI or OpenRouter). It is required for all AI features: [AI suggestions for fields](/katalon-docs/en/administration/schema/#setting-up-ai-suggestions-for-a-field), [AI-assisted translation](/katalon-docs/en/administration/mehrsprachigkeit/#ai-assisted-translation), the [AI schema assistant](/katalon-docs/en/administration/schema/#ai-schema-assistant), and the [AI query assistant for SPARQL](/katalon-docs/en/integration/sparql/#ai-query-assistant).
 
 - **Base URL** and **model** (e.g. `https://api.openai.com/v1`, `gpt-4.1-mini`).
 - The **API key** is stored encrypted in the database and is never returned in plain text after being set; **Test connection** checks the configuration without reference to a record.
 - **Token limits**: maximum input/output tokens per request, as well as a **daily limit per user** and a **global monthly limit**, with a display of current consumption.
 
-Every AI completion used is logged in the [Audit Log](audit-log) with the model and token consumption.
+The token limits apply to all AI features together. Once a limit is reached, Katalon rejects further requests until the next day or month. Every AI request is logged in the [Audit Log](/katalon-docs/en/administration/audit-log/) with the model and token consumption.
 
 ## Media Rights
 
@@ -140,5 +140,5 @@ Hides all non-system field definitions from the schema for a chosen primary type
 ### Reset / delete vocabulary
 
 :::note[Available since version 1.47.0]
-A second card in the Danger Zone deletes either all terms of a vocabulary or the whole vocabulary. To confirm, type the vocabulary name in capital letters. Details are under [Vocabularies → Emptying or deleting a vocabulary](vokabulare#emptying-or-deleting-a-vocabulary).
+A second card in the Danger Zone deletes either all terms of a vocabulary or the whole vocabulary. To confirm, type the vocabulary name in capital letters. Details are under [Vocabularies → Emptying or deleting a vocabulary](/katalon-docs/en/administration/vokabulare/#emptying-or-deleting-a-vocabulary).
 :::

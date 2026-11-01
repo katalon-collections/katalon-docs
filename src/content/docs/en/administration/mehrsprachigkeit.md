@@ -73,7 +73,7 @@ When AI assistance is enabled, Katalon can generate a translation proposal for a
 - In the schema editor, in addition to **"Multilingual"**, the field must also have **"Enable AI-assisted translation"** turned on — configurable per field.
 - In the form, the translate trigger next to the respective language opens a dialog showing the current source-language value and the AI suggestion side by side. The suggestion can be freely edited before it is applied.
 - Requirement: AI assistance is enabled globally, and both source and target language are among the instance's configured languages.
-- Every applied AI translation is logged in the audit log (see [Audit Log](audit-log)).
+- Every generated translation proposal is logged in the [Audit Log](/katalon-docs/en/administration/audit-log/), even if it is discarded afterwards.
 
 :::note[Available from version 1.36.0]
 :::

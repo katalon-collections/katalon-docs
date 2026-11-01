@@ -3,7 +3,7 @@ title: Managing Vocabularies
 description: Create and maintain controlled vocabularies, hierarchical term lists, and relation-type vocabularies.
 ---
 
-Controlled vocabularies are reusable term lists referenced by schema fields of type `vocab`/`vocab_free` (see [Managing Schemas](schema#vocab--vocabulary-field)) or, as a special case, that define the allowed relation types between records.
+Controlled vocabularies are reusable term lists referenced by schema fields of type `vocab`/`vocab_free` (see [Managing Schemas](/katalon-docs/en/administration/schema/#vocab--vocabulary-field)) or, as a special case, that define the allowed relation types between records.
 
 Management happens in the admin UI under **Configuration → Vocabularies**.
 
@@ -36,7 +36,7 @@ Per term, the following can be captured:
 | **Cross-concordances (exactMatch)** | List of external match URIs (e.g. Wikidata and GND URIs for the same term), comma-separated or one per line. |
 | **Custom fields** | If fields for this vocabulary's `vocabulary_term` target type were defined under **Configuration → Schemas**, they additionally appear in the term form. |
 
-Terms can be created individually via **New term**, or imported in bulk via CSV/TSV/JSON or SKOS (Turtle, RDF/XML, JSON-LD, N-Triples) in the **Import** tab — see [Authority Data & Linked Data](normdaten#vocabularies--skos-linked-data) for the SKOS import and details on URIs and cross-concordances.
+Terms can be created individually via **New term**, or imported in bulk via CSV/TSV/JSON or SKOS (Turtle, RDF/XML, JSON-LD, N-Triples) in the **Import** tab — see [Authority Data & Linked Data](/katalon-docs/en/administration/normdaten/#vocabularies--skos-linked-data) for the SKOS import and details on URIs and cross-concordances.
 
 ---
 
@@ -47,7 +47,7 @@ For the relation-type vocabulary (`relation_types`), each term additionally gets
 - **Inverse direction (inverse label)** — the designation from the reverse perspective (e.g. "Author of" ↔ "Written by").
 - **Target types (applies_from / applies_to)** — which primary types are allowed as the source or target of the relationship (e.g. only Entity → Object).
 
-These terms are then available for selection on relation fields (field type `relation`) in the schema editor — see [Relations → link to another record](schema).
+These terms are then available for selection on relation fields (field type `relation`) in the schema editor — see [Relations → link to another record](/katalon-docs/en/administration/schema/).
 
 ---
 

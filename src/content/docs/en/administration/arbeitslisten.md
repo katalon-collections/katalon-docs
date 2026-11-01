@@ -30,4 +30,4 @@ They are managed in the admin UI under **Work Lists**.
 
 ## Batch editing from a work list
 
-The **Batch Editing** button applies the same bulk editing available in the regular list views to all records in a work list (set status, set/append/clear field, add/remove relation) — see [Batch Editing](batch-bearbeitung). This is especially useful when the affected records were gathered from several separate searches or filters and can't be captured by a single list filter.
+The **Batch Editing** button applies the same bulk editing available in the regular list views to all records in a work list (set status, set/append/clear field, add/remove relation) — see [Batch Editing](/katalon-docs/en/administration/batch-bearbeitung/). This is especially useful when the affected records were gathered from several separate searches or filters and can't be captured by a single list filter.

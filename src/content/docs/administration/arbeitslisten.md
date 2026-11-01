@@ -30,4 +30,4 @@ Die Verwaltung erfolgt in der Admin-UI unter **Arbeitslisten**.
 
 ## Batch-Bearbeitung aus der Arbeitsliste
 
-Über den Button **Batch-Bearbeitung** lässt sich dieselbe Massenbearbeitung wie in den regulären Listenansichten auf alle Datensätze einer Arbeitsliste anwenden (Status setzen, Feld setzen/anhängen/leeren, Relation hinzufügen/entfernen) — siehe [Massenbearbeitung](batch-bearbeitung). Das ist besonders nützlich, wenn die betroffenen Datensätze aus mehreren separaten Suchen oder Filtern zusammengetragen wurden und sich nicht über eine einzelne Listenfilterung erfassen lassen.
+Über den Button **Batch-Bearbeitung** lässt sich dieselbe Massenbearbeitung wie in den regulären Listenansichten auf alle Datensätze einer Arbeitsliste anwenden (Status setzen, Feld setzen/anhängen/leeren, Relation hinzufügen/entfernen) — siehe [Massenbearbeitung](/katalon-docs/administration/batch-bearbeitung/). Das ist besonders nützlich, wenn die betroffenen Datensätze aus mehreren separaten Suchen oder Filtern zusammengetragen wurden und sich nicht über eine einzelne Listenfilterung erfassen lassen.
