@@ -73,7 +73,7 @@ Bei aktivierter KI-Unterstützung kann Katalon für ein einzelnes übersetzbares
 - Im Schema-Editor muss beim Feld zusätzlich zu **„Mehrsprachig"** die Option **„KI-gestützte Übersetzung aktivieren"** gesetzt sein — pro Feld einzeln konfigurierbar.
 - Im Formular öffnet der Übersetzen-Auslöser neben der jeweiligen Sprache einen Dialog mit dem aktuellen Wert der Quellsprache und dem KI-Vorschlag nebeneinander. Der Vorschlag lässt sich vor dem Übernehmen frei bearbeiten.
 - Voraussetzung: KI-Assistenz ist global aktiviert und Quell- sowie Zielsprache sind unter den konfigurierten Sprachen der Instanz vorhanden.
-- Jede übernommene KI-Übersetzung wird im Audit-Log protokolliert (siehe [Audit-Log](audit-log)).
+- Jeder erstellte Übersetzungsvorschlag wird im [Audit-Log](/katalon-docs/administration/audit-log/) protokolliert, auch wenn er anschließend verworfen wird.
 
 :::note[Verfügbar ab Version 1.36.0]
 :::

@@ -8,9 +8,9 @@ Die Einstellungen bündeln globale, nicht schemabezogene Systemkonfiguration. Si
 Einige Abschnitte sind ausführlich auf eigenen Seiten dokumentiert und werden hier nur verlinkt:
 
 - **Facetten** → [Facetten einrichten](../integration/portal-suche#facetten-einrichten)
-- **Sprachen** → [Mehrsprachigkeit](mehrsprachigkeit)
-- **Normdatenquellen** → [Normdaten & Linked Data](normdaten)
-- **Bearbeitungssperre** → [Datensatz sperren](datensatz-sperren)
+- **Sprachen** → [Mehrsprachigkeit](/katalon-docs/administration/mehrsprachigkeit/)
+- **Normdatenquellen** → [Normdaten & Linked Data](/katalon-docs/administration/normdaten/)
+- **Bearbeitungssperre** → [Datensatz sperren](/katalon-docs/administration/datensatz-sperren/)
 - **Linked Data & SPARQL** → [SPARQL-Endpoint (Oxigraph)](../integration/sparql)
 
 Die übrigen Abschnitte sind unten beschrieben.
@@ -109,13 +109,13 @@ Zusätzlich kann pro Typ ein **Validierungs-Muster** (Regex) hinterlegt werden, 
 
 ## KI
 
-Globale Anbindung eines LLM (OpenAI-kompatible API, z. B. OpenAI oder OpenRouter) für feldbezogene KI-Vorschläge im Editor:
+Globale Anbindung eines LLM (OpenAI-kompatible API, z. B. OpenAI oder OpenRouter). Sie ist Voraussetzung für alle KI-Funktionen: [KI-Vorschläge für Felder](/katalon-docs/administration/schema/#ki-vorschläge-für-ein-feld-einrichten), [KI-gestützte Übersetzung](/katalon-docs/administration/mehrsprachigkeit/#ki-gestützte-übersetzung), den [KI-Schema-Assistenten](/katalon-docs/administration/schema/#ki-schema-assistent) und den [KI-Abfrageassistenten für SPARQL](/katalon-docs/integration/sparql/#ki-abfrageassistent).
 
 - **Base URL** und **Modell** (z. B. `https://api.openai.com/v1`, `gpt-4.1-mini`).
 - **API-Key** wird verschlüsselt in der Datenbank gespeichert und nach dem Setzen nie im Klartext zurückgegeben; **Verbindung testen** prüft die Konfiguration ohne Datensatzbezug.
 - **Token-Limits**: maximale Input-/Output-Tokens pro Anfrage sowie ein **Tageslimit pro Benutzer** und ein **Monatslimit global**, mit Anzeige des jeweils aktuellen Verbrauchs.
 
-Jede genutzte KI-Vervollständigung wird mit Modell und Token-Verbrauch im [Audit-Log](audit-log) protokolliert.
+Die Token-Limits gelten für alle KI-Funktionen gemeinsam. Ist ein Limit erreicht, lehnt Katalon weitere Anfragen bis zum nächsten Tag bzw. Monat ab. Jede KI-Anfrage wird mit Modell und Token-Verbrauch im [Audit-Log](/katalon-docs/administration/audit-log/) protokolliert.
 
 ## Medienrechte
 
@@ -140,5 +140,5 @@ Blendet für einen gewählten Primärtyp (optional eingeschränkt auf einen Subt
 ### Vokabular zurücksetzen / löschen
 
 :::note[Verfügbar ab Version 1.47.0]
-Eine zweite Karte im Gefahrenbereich löscht entweder alle Begriffe eines Vokabulars oder das gesamte Vokabular. Zur Bestätigung muss der Name des Vokabulars in Großbuchstaben eingetippt werden. Einzelheiten stehen unter [Vokabulare → Vokabular leeren oder löschen](vokabulare#vokabular-leeren-oder-löschen).
+Eine zweite Karte im Gefahrenbereich löscht entweder alle Begriffe eines Vokabulars oder das gesamte Vokabular. Zur Bestätigung muss der Name des Vokabulars in Großbuchstaben eingetippt werden. Einzelheiten stehen unter [Vokabulare → Vokabular leeren oder löschen](/katalon-docs/administration/vokabulare/#vokabular-leeren-oder-löschen).
 :::
