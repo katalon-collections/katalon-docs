@@ -25,7 +25,7 @@ Für kontrollierte Vokabulare im Importer den Reiter **Vokabulare** öffnen. Zue
 | Eigenschaft | Details |
 |---|---|
 | Dateiformate | CSV, TSV, Excel (.xlsx), XML |
-| Zeichenkodierung | UTF-8 (mit oder ohne BOM); Windows-1252 wird automatisch erkannt |
+| Zeichenkodierung | UTF-8 (mit oder ohne BOM); Windows-1252 und ISO-8859-1 werden erkannt, im Mapping-Schritt anzeigbar und umstellbar |
 | Trennzeichen | Automatische Erkennung: Komma (`,`), Semikolon (`;`), Tabulator (`\t`), Pipe (`\|`) |
 | Kopfzeile | Pflicht — erste Zeile wird als Spaltennamen interpretiert |
 | Maximale Gesamtgröße | 500 MB pro Upload-Anfrage (Betreiber-Konfiguration `importer_max_upload_size_mb`); bei mehreren XML-Dateien zählt ihre Summe |
@@ -54,9 +54,13 @@ Zuvor gab es den Knopf nur nach abgeschlossenem Import. Außerdem erschien ein n
 Wenn der Upload fehlschlägt:
 - Datei oder Summe der gemeinsam gewählten Dateien ist größer als 500 MB → Upload aufteilen
 - Dateiformat nicht unterstützt → CSV, TSV, Excel oder XML verwenden
-- Kodierungsfehler → Datei als UTF-8 speichern (ältere Excel-Dateien in Windows-1252 werden automatisch gelesen)
+- Umlaute falsch → im Mapping-Schritt unter **Zeichenkodierung** die richtige Kodierung wählen oder die Datei als UTF-8 speichern
 
 ### Schritt 2: Mapping
+
+:::note[Verfügbar ab Version 1.49.0]
+Bei CSV- und TSV-Dateien zeigt der Mapping-Schritt oben die **Zeichenkodierung** (UTF-8, Windows-1252 oder ISO-8859-1) und ob sie automatisch erkannt oder von Hand geändert wurde. Sehen Umlaute falsch aus, stellen Sie die Kodierung um: Katalon liest die Datei neu und setzt die Zuordnung zurück, weil sich die Spaltennamen ändern. Der Probelauf warnt, wenn Ersatzzeichen (�) in den Daten stehen.
+:::
 
 Das Mapping bestimmt, welcher Quell-Selector welchem Katalon-Feld entspricht. Bei CSV und Excel ist der Selector eine Spalte, bei XML ein Elementpfad.
 

@@ -25,7 +25,7 @@ For controlled vocabularies, open the **Vocabularies** tab in the importer. Firs
 | Property | Details |
 |---|---|
 | File formats | CSV, TSV, Excel (.xlsx), XML |
-| Character encoding | UTF-8 (with or without BOM); Windows-1252 is detected automatically |
+| Character encoding | UTF-8 (with or without BOM); Windows-1252 and ISO-8859-1 are detected, shown in the mapping step, and can be switched |
 | Delimiter | Automatic detection: comma (`,`), semicolon (`;`), tab (`\t`), pipe (`\|`) |
 | Header row | Required — the first row is interpreted as column names |
 | Maximum total size | 500 MB per upload request (operator configuration `importer_max_upload_size_mb`); for multiple XML files, their sum counts |
@@ -54,9 +54,13 @@ Previously the button only appeared after a finished import. Also, a field to be
 If the upload fails:
 - The file, or the combined size of the jointly selected files, exceeds 500 MB → split the upload
 - Unsupported file format → use CSV, TSV, Excel, or XML
-- Encoding error → save the file as UTF-8 (older Excel files in Windows-1252 are read automatically)
+- Umlauts look wrong → pick the right encoding under **Character encoding** in the mapping step, or save the file as UTF-8
 
 ### Step 2: Mapping
+
+:::note[Available from version 1.49.0]
+For CSV and TSV files the mapping step shows the **Character encoding** (UTF-8, Windows-1252 or ISO-8859-1) at the top, and whether it was detected automatically or changed by hand. If umlauts look wrong, switch the encoding: Katalon re-reads the file and resets the mapping, because the column names change. The dry run warns if replacement characters (�) remain in the data.
+:::
 
 Mapping determines which source selector corresponds to which Katalon field. For CSV and Excel, the selector is a column; for XML, it's an element path.
 
