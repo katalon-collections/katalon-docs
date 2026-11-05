@@ -25,7 +25,7 @@ Für kontrollierte Vokabulare im Importer den Reiter **Vokabulare** öffnen. Zue
 | Eigenschaft | Details |
 |---|---|
 | Dateiformate | CSV, TSV, Excel (.xlsx), XML |
-| Zeichenkodierung | UTF-8 (mit oder ohne BOM) |
+| Zeichenkodierung | UTF-8 (mit oder ohne BOM); Windows-1252 wird automatisch erkannt |
 | Trennzeichen | Automatische Erkennung: Komma (`,`), Semikolon (`;`), Tabulator (`\t`), Pipe (`\|`) |
 | Kopfzeile | Pflicht — erste Zeile wird als Spaltennamen interpretiert |
 | Maximale Gesamtgröße | 500 MB pro Upload-Anfrage (Betreiber-Konfiguration `importer_max_upload_size_mb`); bei mehreren XML-Dateien zählt ihre Summe |
@@ -54,7 +54,7 @@ Zuvor gab es den Knopf nur nach abgeschlossenem Import. Außerdem erschien ein n
 Wenn der Upload fehlschlägt:
 - Datei oder Summe der gemeinsam gewählten Dateien ist größer als 500 MB → Upload aufteilen
 - Dateiformat nicht unterstützt → CSV, TSV, Excel oder XML verwenden
-- Kodierungsfehler → Datei als UTF-8 speichern
+- Kodierungsfehler → Datei als UTF-8 speichern (ältere Excel-Dateien in Windows-1252 werden automatisch gelesen)
 
 ### Schritt 2: Mapping
 
@@ -103,6 +103,23 @@ Die Vorschau im Transformationsdialog zeigt die ersten drei Werte nach jedem ges
 | Schreibweise vereinheitlichen | `vocab_map` | `DE` → `Deutsch` |
 
 Expressions laufen beim Import serverseitig. Die Vorlage für Namen erwartet genau ein Komma; Werte ohne Komma bleiben unverändert.
+
+#### Beziehungsfelder und Vokabulare aus Text auflösen
+
+:::note[Verfügbar ab Version 1.49.0]
+Texte in Spalten, die auf ein Beziehungsfeld zeigen, werden mit vorhandenen Datensätzen verknüpft.
+:::
+
+Sobald eine Spalte einem **Beziehungsfeld** zugeordnet ist, erscheint über der Mapping-Tabelle die Karte **Beziehungsfelder**. Für jedes Feld gibt es zwei Einstellungen:
+
+- **Zuordnung**: *Über ID-Nummer* (Standard) sucht den Zieldatensatz anhand seiner ID-Nummer, zum Beispiel `vgo_occ_x_00021` für ein Werk. *Über Label* vergleicht den Text mit dem Titel des Zieldatensatzes, zum Beispiel den Namen einer Firma. Groß-/Kleinschreibung und Leerzeichen spielen keine Rolle. Passt ein Label auf mehrere Datensätze, wird die Zeile als mehrdeutig abgelehnt.
+- **Wenn das Ziel fehlt**: *Zeile mit Fehler melden* (Standard) überspringt die Zeile und nennt im Probelauf den fehlenden Wert. *Ziel als Entwurf anlegen* erzeugt den Zieldatensatz mit dem Text als Titel; mehrere Zeilen mit demselben Text verwenden denselben neuen Datensatz.
+
+Das Beziehungsfeld muss im Schema einen festen Relationstyp haben, sonst kann der Importer keine Verknüpfung anlegen. Beziehungsfelder innerhalb eines Containerfelds werden noch nicht aus Text aufgelöst.
+
+Bei **Vokabularfeldern** wird ein Wert jetzt auch über das Label in jeder Sprache gefunden, nicht nur über den Term-Code. „Windows 2000“ trifft damit einen vorhandenen Term mit diesem Label und legt kein Duplikat an. Der Probelauf löst Vokabulare und Beziehungen genauso auf wie der Import, legt aber nichts an: Er meldet stattdessen, wie viele neue Terme und Entwürfe entstehen würden.
+
+Die ID-Spalte steht in der Mapping-Tabelle als **→ ID-Nummer (siehe oben)**: Sie ist über die Karte *ID-Nummer* zugeordnet und wird dort geändert.
 
 #### Mehrere Spalten in ein Feld importieren
 
@@ -269,5 +286,4 @@ Spalten, die auf den leeren String gemappt sind oder nicht im Mapping erscheinen
 | Bilddateien in separatem Schritt | Die Zuordnung kann im Metadatenimport vorbereitet werden; die Dateien werden danach im Medien-Tab hochgeladen. |
 | Bestehende Datensätze | `skip`, `merge` und `replace` werden unterstützt. Bei `skip` können Medienreferenzen ergänzt werden, ohne Metadaten zu ändern. |
 | Status immer `draft` | Neue Datensätze starten standardmäßig als `draft`, können aber per `auto_publish` veröffentlicht werden. |
-| Relationsfelder | Der Importer legt keine Verknüpfungen aus Klartext (zum Beispiel einem Personennamen) an und legt dafür auch keine Datensätze an. Verknüpfungen werden nach dem Import im Formular gesetzt, oder per Batch-Bearbeitung für alle ausgewählten Datensätze mit demselben Ziel. |
-| Keine Zeichenkodierungskonvertierung | Die Datei muss in UTF-8 vorliegen. Latin-1 oder Windows-1252 kann zu Zeichenfehlern führen. |
+| Relationsfelder | Texte werden über ID-Nummer oder Label mit vorhandenen Datensätzen verknüpft, fehlende Ziele können als Entwurf angelegt werden (siehe „Beziehungsfelder und Vokabulare aus Text auflösen“). Nicht unterstützt: Beziehungsfelder in Containerfeldern und Felder ohne festen Relationstyp. |

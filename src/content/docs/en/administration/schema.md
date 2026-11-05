@@ -282,6 +282,11 @@ target type, a relation-type vocabulary, and optionally a fixed relation
 type. Without a fixed type, the cataloger can choose a suitable type from the
 vocabulary. With a fixed type, exactly that semantics is used.
 
+
+:::note[Available from version 1.49.0]
+If you edit a relation field while the same relationship already exists as a field in the opposite direction (for example "belongs to work" on the expression and "Expression" on the work), the schema editor shows a hint. Saving remains possible. Links automatically appear on the target record as an incoming relationship with the relation type's inverse label; an additional field has to be maintained separately and can drift apart.
+:::
+
 The relationships card of a saved record is not a second editing surface
 for such fields: it shows the complete relationship graph and only adds
 further, free relationships to other main types. This way, a domain-configured
@@ -406,6 +411,12 @@ Examples:
 - Dimension (value + unit)
 - Exhibition participation (exhibition + role)
 
+:::note[Available from version 1.49.0]
+You can change the order of the sub-fields with the up/down buttons in the group's detail panel. The portal shows the sub-fields in that order.
+
+The option **Show the first value of each entry in bold in the portal** sets the value of the first sub-field of each entry in bold on the portal detail page, for example a title. The setting applies per group.
+:::
+
 ---
 
 ## Cookbook: Dating type (uncertain/qualified dating)
@@ -432,6 +443,10 @@ For Object, Entity, Place, Occurrence, and Procedure, a field can be bound to a 
 - **Field without `target_subtype`**: Appears for all records of this primary type, regardless of subtype.
 - **Field with `target_subtype = "person"`**: Appears only for entities of subtype `person`.
 - **Field with `target_subtype = "acquisition"`**: Appears only for procedures of type `acquisition`.
+
+:::note[Available from version 1.49.0]
+The portal detail page also shows only fields without a subtype and fields of the record's own subtype. Fields with the same name in different subtypes no longer mix there.
+:::
 
 **Use case:**
 

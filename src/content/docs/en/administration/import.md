@@ -25,7 +25,7 @@ For controlled vocabularies, open the **Vocabularies** tab in the importer. Firs
 | Property | Details |
 |---|---|
 | File formats | CSV, TSV, Excel (.xlsx), XML |
-| Character encoding | UTF-8 (with or without BOM) |
+| Character encoding | UTF-8 (with or without BOM); Windows-1252 is detected automatically |
 | Delimiter | Automatic detection: comma (`,`), semicolon (`;`), tab (`\t`), pipe (`\|`) |
 | Header row | Required — the first row is interpreted as column names |
 | Maximum total size | 500 MB per upload request (operator configuration `importer_max_upload_size_mb`); for multiple XML files, their sum counts |
@@ -54,7 +54,7 @@ Previously the button only appeared after a finished import. Also, a field to be
 If the upload fails:
 - The file, or the combined size of the jointly selected files, exceeds 500 MB → split the upload
 - Unsupported file format → use CSV, TSV, Excel, or XML
-- Encoding error → save the file as UTF-8
+- Encoding error → save the file as UTF-8 (older Excel files in Windows-1252 are read automatically)
 
 ### Step 2: Mapping
 
@@ -113,6 +113,23 @@ Several columns can be mapped to the same **repeatable** field, for example `Gen
 For fields that are not repeatable, a target stays reserved for a single column: the dropdown shows it as "(already assigned)" for other columns, and a new assignment replaces the previous one. Container fields behave like repeatable fields: the values of several columns become several entries.
 
 For such a field the dry run counts empty values per row, not per column. It only reports the field as empty when all columns mapped to it are empty in that row.
+
+#### Resolving relation and vocabulary text
+
+:::note[Available from version 1.49.0]
+Text in columns mapped to a relation field is linked to existing records.
+:::
+
+As soon as a column is mapped to a **relation field**, the **Relation fields** card appears above the mapping table. Each field has two settings:
+
+- **Match**: *By ID number* (default) finds the target record by its ID number, for example `vgo_occ_x_00021` for a work. *By label* compares the text with the target record's title, for example a company name. Case and whitespace are ignored. If a label matches several records the row is rejected as ambiguous.
+- **If the target is missing**: *Report the row as an error* (default) skips the row and names the missing value in the dry run. *Create the target as a draft* creates the target record with the text as its title; several rows with the same text share one new record.
+
+The relation field needs a fixed relation type in the schema, otherwise the importer cannot create the link. Relation fields inside a container field are not resolved from text yet.
+
+For **vocabulary fields**, a value is now also found by its label in any language, not only by the term code. "Windows 2000" therefore matches an existing term with that label and does not create a duplicate. The dry run resolves vocabularies and relations exactly like the import but creates nothing: it reports how many new terms and drafts would be created instead.
+
+The ID column appears in the mapping table as **→ ID number (see above)**: it is assigned through the *ID number* card and changed there.
 
 #### Creating new fields during import
 
@@ -269,5 +286,4 @@ Columns mapped to an empty string, or not appearing in the mapping, are ignored.
 | Image files in a separate step | The assignment can be prepared during metadata import; the files are then uploaded in the Media tab. |
 | Existing records | `skip`, `merge`, and `replace` are supported. With `skip`, media references can be added without changing metadata. |
 | Status is always `draft` | New records start as `draft` by default, but can be published via `auto_publish`. |
-| Relation fields | The importer does not create links from plain text (for example a person's name) and does not create records for them. Set links after the import in the form, or with batch editing for all selected records that share the same target. |
-| No character encoding conversion | The file must be in UTF-8. Latin-1 or Windows-1252 can cause character errors. |
+| Relation fields | Text is linked to existing records by ID number or label, and missing targets can be created as drafts (see "Resolving relation and vocabulary text"). Not supported: relation fields inside container fields and fields without a fixed relation type. |

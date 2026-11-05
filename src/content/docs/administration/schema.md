@@ -281,6 +281,11 @@ Relationstyp-Vokabular und optional einen festen Relationstyp festlegen. Ohne
 festen Typ kann die Person, die katalogisiert, einen passenden Typ aus dem
 Vokabular wählen. Mit festem Typ wird genau diese Semantik verwendet.
 
+
+:::note[Verfügbar ab Version 1.49.0]
+Wird ein Relationsfeld bearbeitet, obwohl dieselbe Beziehung bereits in Gegenrichtung als Feld existiert (zum Beispiel „zugehöriges Werk“ an der Expression und „Expression“ am Werk), zeigt der Schema-Editor einen Hinweis. Speichern bleibt möglich. Verknüpfungen erscheinen am Zieldatensatz automatisch als eingehende Beziehung mit dem Gegenlabel des Relationstyps; ein zusätzliches Feld muss getrennt gepflegt werden und kann abweichen.
+:::
+
 Die Beziehungen-Karte eines gespeicherten Datensatzes ist keine zweite
 Bearbeitungsoberfläche für solche Felder: Sie zeigt den vollständigen
 Beziehungsgraphen und fügt nur weitere, freie Beziehungen zu anderen
@@ -406,6 +411,12 @@ Beispiele:
 - Maßangabe (Wert + Einheit)
 - Ausstellungsbeteiligung (Ausstellung + Rolle)
 
+:::note[Verfügbar ab Version 1.49.0]
+Die Reihenfolge der Sub-Felder lässt sich im Detailbereich der Gruppe mit den Pfeiltasten (nach oben/nach unten) ändern. Das Portal zeigt die Sub-Felder in dieser Reihenfolge.
+
+Mit der Option **Ersten Wert jedes Eintrags im Portal fett darstellen** wird der Wert des ersten Sub-Felds jedes Eintrags auf der Portal-Detailseite fett gesetzt, zum Beispiel ein Titel. Die Einstellung gilt pro Gruppe.
+:::
+
 ---
 
 ## Cookbook: Datierungstyp (unscharfe/qualifizierte Datierung)
@@ -432,6 +443,10 @@ Bei Object, Entity, Place, Occurrence und Vorgang kann ein Feld an einen bestimm
 - **Feld ohne `target_subtype`**: Erscheint für alle Datensätze dieses Primärtyps, unabhängig vom Subtyp.
 - **Feld mit `target_subtype = "person"`**: Erscheint nur bei Entitäten vom Subtyp `person`.
 - **Feld mit `target_subtype = "acquisition"`**: Erscheint nur bei Vorgängen vom Typ `acquisition`.
+
+:::note[Verfügbar ab Version 1.49.0]
+Auch im Portal zeigt die Detailseite nur Felder ohne Subtyp und Felder des eigenen Subtyps. Gleich benannte Felder verschiedener Subtypen vermischen sich dort nicht mehr.
+:::
 
 **Anwendungsfall:**
 
