@@ -90,6 +90,11 @@ Ein fertig konfiguriertes Mapping lässt sich als **Vorlage** in der Datenbank s
 - **Vorlage laden** listet gespeicherte Vorlagen für den aktuell gewählten Ziel-Typ.
 - Vorlagen sind an Objekte, Entitäten, Orte oder Occurrences gebunden; das Mapping wird beim Laden über die REST-API auch außerhalb der Admin-UI abrufbar (`GET /v1/importer/mappings`).
 - **Profil exportieren** lädt das aktuelle Mapping zusätzlich als JSON-Datei herunter, unabhängig von einer gespeicherten Vorlage.
+- **Mapping-Profil laden (Datei)** übernimmt ein zuvor exportiertes JSON-Profil direkt im Mapping-Schritt, auch bei XML-Importen.
+
+:::note[Verfügbar ab Version 1.50.0]
+Das Laden einer Profildatei ist im Mapping-Schritt möglich. Vorher war es nur im Upload-Schritt erreichbar und fehlte bei XML-Importen.
+:::
 
 :::note[Verfügbar ab Version 1.31.0]
 :::
@@ -148,6 +153,21 @@ Im Dialog stehen die Feldtypen Text, Zahl, Datum, Boolean, Vokabular, Relation, 
 :::note[Verfügbar ab Version 1.47.0]
 Die Typen URL, Rich Text, Freies Vokabular und Geo.
 :::
+
+#### Orte mit Hierarchie importieren
+
+:::note[Verfügbar ab Version 1.50.0]
+Orte können eine Hierarchie bilden, zum Beispiel Land → Bundesland → Kreis → Ort.
+:::
+
+Orte haben das Feld **Übergeordneter Ort**. Jede Ebene ist ein eigener Ortsdatensatz. Beim Import von Orten bildet der Importer die Hierarchie aus einem Pfad in einer Spalte, zum Beispiel `Deutschland>Mecklenburg-Vorpommern>Schwerin>Lankower See`:
+
+1. Ordne die Spalte dem Ziel **Titel** zu.
+2. Trage darunter bei **Pfad-Trenner (optional)** das Zeichen ein, das die Ebenen trennt, hier `>`.
+
+Das letzte Element ist der Ort, alles davor sind seine übergeordneten Orte. Leerzeichen um die Elemente werden entfernt. Fehlende Ebenen legt der Import als eigene Orte an; als ID-Nummer bekommen sie ihren Pfad. Eine Zeile ohne ID-Nummer erhält ebenfalls ihren Pfad als ID-Nummer. Steht für eine Ebene eine eigene Zeile in der Datei, wird sie verwendet und nicht doppelt angelegt. Ein leeres Element (`A>>B`) ist ein Fehler dieser Zeile. Ohne Pfad-Trenner bleibt der Wert ein einzelner Name; der Importer rät nie, ob ein Komma Ebenen trennt.
+
+Mit dem Trenner lassen sich später alle Objekte eines Gebiets abfragen: `/v1/objects?place_id=…` findet auch Objekte, die mit einem untergeordneten Ort verknüpft sind. Löscht man einen Ort mit untergeordneten Orten, fragt Katalon, ob diese mitgelöscht oder eine Ebene nach oben gehängt werden sollen.
 
 #### Containerfelder importieren
 

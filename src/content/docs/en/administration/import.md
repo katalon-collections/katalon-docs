@@ -90,6 +90,11 @@ A finished mapping can be saved in the database as a **template** and loaded aga
 - **Load template** lists saved templates for the currently selected target type.
 - Templates are bound to objects, entities, places, or occurrences; a saved mapping is also retrievable outside the admin UI via the REST API (`GET /v1/importer/mappings`).
 - **Export profile** additionally downloads the current mapping as a JSON file, independent of any saved template.
+- **Load mapping profile (file)** applies a previously exported JSON profile directly in the mapping step, including XML imports.
+
+:::note[Available from version 1.50.0]
+Loading a profile file works in the mapping step. Before, it was only reachable in the upload step and missing for XML imports.
+:::
 
 :::note[Available from version 1.31.0]
 :::
@@ -148,6 +153,21 @@ The dialog offers the field types Text, Number, Date, Boolean, Vocabulary, Relat
 :::note[Available from version 1.47.0]
 The types URL, Rich text, Free vocabulary and Geo.
 :::
+
+#### Importing places with a hierarchy
+
+:::note[Available from version 1.50.0]
+Places can form a hierarchy, for example country → state → district → place.
+:::
+
+Places have a **Parent place** field. Each level is a place record of its own. When importing places, the importer builds the hierarchy from a path in one column, for example `Germany>Mecklenburg-Vorpommern>Schwerin>Lankower See`:
+
+1. Map the column to the **Title** target.
+2. Below it, enter the character that separates the levels in **Path separator (optional)**, here `>`.
+
+The last element is the place; everything before it is its parent places. Whitespace around the elements is removed. Missing levels are created as places of their own, with their path as ID number. A row without an ID number also gets its path as ID number. If the file has a row of its own for a level, that row is used and not created twice. An empty element (`A>>B`) is an error for that row. Without a path separator the value stays a single name; the importer never guesses whether a comma separates levels.
+
+With the hierarchy you can later query all objects of an area: `/v1/objects?place_id=…` also finds objects linked to a sub-place. If you delete a place that has sub-places, Katalon asks whether to delete them as well or move them up one level.
 
 #### Importing container fields
 
