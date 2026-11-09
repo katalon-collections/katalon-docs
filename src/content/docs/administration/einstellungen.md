@@ -30,6 +30,8 @@ Branding und Grundkonfiguration des Public-Portals:
 - **Hervorgehobene Objekte** auf der Startseite (Liste von Datensatz-IDs).
 - **Durchsuchbare Datensatztypen** in der Portal-Navigation (Objekte, Entitäten, Orte, Occurrences, Sammlungen).
 - **IIIF-Manifest-Link** auf der Objekt-Detailseite ein-/ausblenden (Standard: eingeblendet, sofern Bildmedien vorhanden sind).
+- **Download von Mediendateien erlauben** (Standard: aus). Eingeschaltet zeigt die Objekt-Detailseite unter dem Viewer eine Liste **Downloads** mit allen öffentlichen Mediendateien in Originalqualität. Ausgeschaltet können Besucher:innen ohne Anmeldung keine Dateien herunterladen; angemeldete Mitarbeitende schon.
+- **Aufrufe und Downloads auf Detailseiten anzeigen** (Standard: aus). Zeigt in der Seitenleiste, wie oft ein Datensatz aufgerufen wurde, bei Objekten mit erlaubtem Download auch die Downloads. Wirkt nur, wenn die Nutzungsstatistik erfasst wird (siehe unten).
 - **Akzentfarbe** sowie einzelne Farbtoken (Kopfzeile Hintergrund/Schrift, Seiten- und Panelhintergrund) für ein einfaches Custom-Theming ohne CSS-Kenntnisse.
 - **Position der Detailseiten-Seitenleiste** (links/rechts).
 - **Metadaten-Darstellung** auf Detailseiten: Label über Wert (Standard) oder "Label: Wert" nebeneinander. Im Inline-Layout stehen die Label in einer festen Spalte (lange Label brechen um), die Werte beginnen bündig daneben.
@@ -51,6 +53,18 @@ Site-Titel, Untertitel und Hero-Text sind pro Sprache konfigurierbar; das Portal
 :::note[Verfügbar ab Version 1.32.0]
 Schalter für den IIIF-Manifest-Link auf der Objekt-Detailseite.
 :::
+
+### Nutzungsstatistik
+
+:::note[Verfügbar ab Version 1.50.0]
+Nutzungsstatistik, Anzeige im Portal und Download von Mediendateien.
+:::
+
+Die Karte **Nutzungsstatistik** unter **Portal & Institution** schaltet die Erfassung für das ganze System ein oder aus (Standard: ein). Gezählt wird, wie oft öffentliche Datensätze im Portal aufgerufen und ihre Dateien über die Download-Liste heruntergeladen werden. Katalon speichert dafür nur Tageszähler je Datensatz, keine IP-Adressen, Cookies oder Sitzungsdaten. Angemeldete Mitarbeitende und Suchmaschinen werden nicht mitgezählt. Das Anzeigen eines Bildes im Viewer oder das Abspielen eines Videos ist kein Download.
+
+Die Zahlen erscheinen im Datensatzformular oben in der Werkzeugleiste (Auge: Aufrufe, Pfeil: Downloads). Ein Tooltip nennt zusätzlich die Werte der letzten 30 Tage. Ist die Erfassung aus, wird nichts gezählt und nirgends etwas angezeigt; bisher gesammelte Zahlen bleiben gespeichert. Beim endgültigen Löschen eines Datensatzes werden seine Zähler mitgelöscht.
+
+Die Zahlen sind eine Orientierung, keine geprüfte Statistik. Wer das Portal mit eingeschalteter Erfassung betreibt, sollte die Datenschutzerklärung um einen entsprechenden Hinweis ergänzen.
 
 ## Startseite
 

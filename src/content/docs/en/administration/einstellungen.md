@@ -30,6 +30,8 @@ Branding and basic configuration of the public portal:
 - **Featured objects** on the homepage (list of record IDs).
 - **Searchable record types** in the portal navigation (Objects, Entities, Places, Occurrences, Collections).
 - **IIIF manifest link** on the object detail page, shown or hidden (default: shown when image media is present).
+- **Allow media file downloads** (default: off). When on, the object detail page lists all public media files in original quality under **Downloads** below the viewer. When off, visitors who are not signed in cannot download files; signed-in staff still can.
+- **Show views and downloads on detail pages** (default: off). Shows in the sidebar how often a record was viewed and, for objects with downloads allowed, how often its files were downloaded. Only takes effect while usage statistics are collected (see below).
 - **Accent color** as well as individual color tokens (header background/text, page and panel background) for simple custom theming without CSS knowledge.
 - **Position of the detail page sidebar** (left/right).
 - **Metadata display** on detail pages: label above value (default) or "label: value" inline. In the inline layout, labels sit in a fixed column (long labels wrap) and the values start aligned next to it.
@@ -51,6 +53,18 @@ Site title, subtitle, and hero text are configurable per language; the portal sh
 :::note[Available from version 1.32.0]
 Toggle for the IIIF manifest link on the object detail page.
 :::
+
+### Usage statistics
+
+:::note[Available from version 1.50.0]
+Usage statistics, portal display and media file downloads.
+:::
+
+The **Usage statistics** card under **Portal & Institution** switches counting on or off for the whole system (default: on). It counts how often public records are viewed in the portal and how often their files are downloaded from the download list. Katalon stores only daily counters per record, no IP addresses, cookies or session data. Signed-in staff and search engines are not counted. Showing an image in the viewer or playing a video is not a download.
+
+The numbers appear in the record form toolbar (eye: views, arrow: downloads); a tooltip adds the figures for the last 30 days. With counting off, nothing is counted or shown; numbers collected so far are kept. Permanently deleting a record also deletes its counters.
+
+The numbers are guidance, not audited statistics. If you run the portal with counting on, add a corresponding note to your privacy policy.
 
 ## Homepage
 
