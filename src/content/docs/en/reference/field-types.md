@@ -19,6 +19,11 @@ Katalon fields are configured in `field_definitions`. The concrete value for eac
 | `url` | Web link with optional title | [Description](/katalon-docs/en/administration/schema#url--web-link) |
 | `pid` | Persistent identifier (e.g. ARK or URN) | [Description](/katalon-docs/en/administration/schema#pid--persistent-identifier) |
 | `authority` | Authority-data value from a connected source (GND, Wikidata, GeoNames, etc.) | [Description](/katalon-docs/en/administration/schema#authority--authority-data-field) & [Authority data guide](/katalon-docs/en/administration/normdaten/) |
+| `file` | File attachment (PDF, image, audio, video) on an object, entity, place, occurrence, or procedure | [Description](/katalon-docs/en/administration/schema#file--file) |
 | `group` | Container for sub-fields | [Description](/katalon-docs/en/administration/schema#group--field-group) |
 
 Fields can be repeatable. Repeatable values are stored as a list.
+
+:::note[Available from version 1.50.0]
+`file` is the field type for file attachments. Attachments are not media: they are not shown in the media bar and are not processed with IIIF.
+:::

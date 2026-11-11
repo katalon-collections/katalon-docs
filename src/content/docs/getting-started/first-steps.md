@@ -39,6 +39,31 @@ Lege im Bereich **Objekte** einen neuen Datensatz an. Entwürfe duerfen unvollst
 
 Bei Objekten können Medien hochgeladen werden. Katalon erzeugt daraus IIIF-fähige Bilddaten und ein Manifest für den Portal-Viewer.
 
+### Dateianhänge am Feld „Datei“
+
+:::note[Verfügbar ab Version 1.50.0]
+:::
+
+Dateien, die keine Digitalisate sind, etwa ein Leihvertrag, ein Programmheft oder ein Interview-Video, hängen Sie an einem Feld vom Typ **Datei** an. Das Feld muss im Schema angelegt sein; Einzelheiten stehen im Abschnitt [Feldtyp Datei](/katalon-docs/administration/schema#file--datei).
+
+So gehen Sie vor:
+
+1. Speichern Sie einen neuen Datensatz zuerst. Vor dem ersten Speichern zeigt das Feld den Hinweis „Zum Hochladen von Dateien den Datensatz zuerst speichern.“
+2. Wählen Sie **Datei auswählen** oder ziehen Sie Dateien auf das Feld. Ist das Feld wiederholbar, können Sie weitere Dateien mit **Weitere Datei** hinzufügen.
+3. Während des Hochladens zeigt das Feld den Fortschritt. Abgelehnte Dateien erhalten eine Meldung mit dem Grund, etwa einen nicht erlaubten Dateityp oder eine zu große Datei.
+4. Speichern Sie den Datensatz. Erst dann ist die Datei dem Datensatz zugeordnet.
+
+Zum Ansehen klicken Sie auf den Dateinamen oder das Symbol für Ansehen. Das Vorschaufenster zeigt PDFs mit Scrollleiste, Bilder sowie Audio und Video mit Abspielsteuerung. Mit dem Symbol für Herunterladen speichern Sie die Datei.
+
+Das Symbol für Entfernen nimmt die Datei zunächst nur aus dem Formular. Wirksam wird das mit dem Speichern. Danach ist die Datei im Portal nicht mehr abrufbar. Sie bleibt auf dem Server, bis der Betrieb sie aufräumt. Dasselbe gilt für Dateien, die hochgeladen, aber nicht gespeichert wurden.
+
+Die Schaltflächen sind Symbole. Beim Darüberfahren zeigen sie ihre Bezeichnung, die auch Bildschirmleseprogramme vorlesen.
+
+> **Bild vorgesehen: Feld Datei im Erfassungsformular.**
+> Zeigen: Feld „Vertrag“ mit einer hochgeladenen PDF-Datei und einem Video, das gerade hochgeladen wird. Alt-Text: „Dateifeld im Erfassungsformular mit zwei angehängten Dateien.“
+
+Im Portal erscheinen die Dateien eines öffentlichen Feldes auf der Detailseite als Liste.
+
 ## 5. Veröffentlichen
 
 Setze den Status auf `public`. Danach ist der Datensatz im Portal und in öffentlichen API-Antworten sichtbar.

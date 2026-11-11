@@ -85,6 +85,10 @@ The visibility of a field in a detail or list view is not access control. For da
 
 The stored value is then not deleted and remains available in the admin UI and in authenticated API responses. However, Katalon removes it server-side from all anonymous output channels: public portal, public REST responses, search index and facets, OAI-PMH, and IIIF manifests. This also applies to individual sub-fields of a group.
 
+:::note[Available from version 1.50.0]
+For files in the **File** field type, the same rule applies through the field: files of a public field can be retrieved in the portal, files of a non-public field cannot. A single file cannot be hidden on its own. For internal files next to public ones, create a second, non-public field. Details: [File field type](#file--file).
+:::
+
 :::note[Available from version 1.26.0]
 (De)activating **"Output publicly via APIs"** changes the content of the search index and automatically triggers a rebuild in the background. For larger holdings (tens of thousands of records), it can take a few minutes until the change is fully effective in the portal. Simply toggling a **facet** on or off (in the admin settings under Facets), by contrast, needs no rebuild and takes effect immediately — see [Portal Search](../../integration/portal-suche).
 :::
@@ -397,9 +401,38 @@ The `authority` field can be used both as a standalone schema field and as a sub
 
 ---
 
+### `file` – File
+
+Stores files as attachments on a record, for example a loan agreement on a procedure, a programme booklet PDF on a work, or an interview video on a person. Attachments in this field are not media: they do not appear in the media bar, are not processed with IIIF, and have no primary media.
+
+:::note[Available from version 1.50.0]
+The File field type is new. It is available only for objects, entities, places, occurrences, and procedures, not for collections, storage locations, or vocabulary terms.
+:::
+
+Properties:
+
+- **Record types:** object, entity, place, occurrence, and procedure.
+- **Placement:** directly on the record or as a sub-field of a group. Example: a repeatable group "Fan content" with the sub-fields title, URL, file, and comment.
+- **Repeatable:** possible, like other fields.
+- **Visibility:** visibility follows the field, not the individual file. If the field is public, its files can be retrieved in the portal; for a sub-field, the group and the sub-field must both be public. Procedures never appear in the portal.
+- **No rights information:** there is no licence, rights holder, or credit line per file.
+
+Permitted file types are PDF, images (JPEG, PNG, TIFF, WebP), audio (MP3, WAV, OGG), and video (MP4, WebM). Katalon checks the content of the file, not only its extension. Word documents, SVG, HTML, GIF, and 3D models are rejected. The size limit applies per file; the default is 200 MB, and the operator can change it.
+
+Files in this field are not output in any export (OAI-PMH, LIDO, export mappings) and are not searchable.
+
+Uploaded files are linked to the record only when the form is saved. If a file is removed from the field and the record is saved, the file is no longer retrievable in the portal at once. The file stays on the server until the operator cleans it up, so that an earlier version of the record can restore it.
+
+For how to upload and view files in the record form, see [First steps](/katalon-docs/en/getting-started/first-steps#file-attachments-in-the-file-field).
+
+> **Screenshot planned: File field in the schema editor.**
+> Show: field form with type "File" and the options record type and public. Alt text: "Schema editor with a field of type File."
+
+---
+
 ### `group` – Field group
 
-Combines several sub-fields into a repeatable unit (e.g. for structured information consisting of several values). Sub-fields are created directly below the group after it is created; allowed types are `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo`, and `url`.
+Combines several sub-fields into a repeatable unit (e.g. for structured information consisting of several values). Sub-fields are created directly below the group after it is created; allowed types are `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo`, `url`, and `file`.
 
 :::note[Available from version 1.44.0]
 In addition to the previously supported field types, `richtext`, `geo`, and `url` are now also available as sub-fields in field groups. Short sub-fields are automatically arranged in a compact multi-column grid in the data-entry form, while `richtext` and `geo` span the full width.
@@ -415,6 +448,10 @@ Examples:
 You can change the order of the sub-fields with the up/down buttons in the group's detail panel. The portal shows the sub-fields in that order.
 
 The option **Show the first value of each entry in bold in the portal** sets the value of the first sub-field of each entry in bold on the portal detail page, for example a title. The setting applies per group.
+:::
+
+:::note[Available from version 1.50.0]
+The `file` type is also allowed as a sub-field. It is available only if the group belongs to one of the five record types in the [File](#file--file) section. Files in a sub-field are visible in the portal only if the group and the sub-field are both public.
 :::
 
 ---

@@ -85,6 +85,10 @@ Die Sichtbarkeit eines Feldes in einer Detail- oder Listenansicht ist keine Zugr
 
 Dann wird der gespeicherte Wert nicht gelöscht und bleibt in der Admin-UI sowie in authentifizierten API-Antworten verfügbar. Katalon entfernt ihn aber serverseitig aus allen anonymen Ausgabewegen: Public-Portal, öffentliche REST-Antworten, Suchindex und Facetten, OAI-PMH sowie IIIF-Manifeste. Das gilt auch für einzelne Sub-Felder einer Gruppe.
 
+:::note[Verfügbar ab Version 1.50.0]
+Für Dateien am Feldtyp **Datei** gilt dieselbe Regel über das Feld: Dateien eines öffentlichen Feldes sind im Portal abrufbar, Dateien eines nicht öffentlichen Feldes nicht. Eine einzelne Datei lässt sich nicht gesondert sperren. Für interne Dateien neben öffentlichen legen Sie deshalb ein zweites, nicht öffentliches Feld an. Details: [Feldtyp Datei](#file--datei).
+:::
+
 :::note[Verfügbar ab Version 1.26.0]
 Das (De-)Aktivieren von **„Öffentlich über APIs ausgeben“** ändert den Inhalt des Suchindex und löst automatisch einen Neuaufbau im Hintergrund aus. Bei größeren Beständen (mehrere zehntausend Datensätze) kann es einige Minuten dauern, bis die Änderung vollständig im Portal wirksam ist. Das reine Ein- oder Ausschalten einer **Facette** (in den Admin-Einstellungen unter Facetten) benötigt dagegen keinen Neuaufbau und wirkt sofort — siehe [Suche im Portal](../../integration/portal-suche).
 :::
@@ -397,9 +401,38 @@ Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld inner
 
 ---
 
+### `file` – Datei
+
+Speichert Dateien als Anhang an einem Datensatz, zum Beispiel einen Leihvertrag an einem Vorgang, ein Programmheft-PDF an einem Werk oder ein Interview-Video an einer Person. Anhänge an diesem Feld sind keine Medien: Sie erscheinen nicht in der Medienleiste, werden nicht mit IIIF verarbeitet und haben kein Hauptmedium.
+
+:::note[Verfügbar ab Version 1.50.0]
+Der Feldtyp Datei ist neu. Er steht nur für Objekte, Entitäten, Orte, Occurrences und Vorgänge zur Verfügung, nicht für Sammlungen, Lagerorte oder Vokabularterme.
+:::
+
+Eigenschaften:
+
+- **Datensatztypen:** Objekt, Entität, Ort, Occurrence und Vorgang.
+- **Platzierung:** direkt am Datensatz oder als Unterfeld einer Gruppe. Beispiel: eine wiederholbare Gruppe „Fan-Content“ mit den Unterfeldern Titel, URL, Datei und Kommentar.
+- **Wiederholbar:** wie bei anderen Feldern möglich.
+- **Sichtbarkeit:** Die Sichtbarkeit richtet sich nach dem Feld, nicht nach der einzelnen Datei. Ist das Feld öffentlich, sind seine Dateien im Portal abrufbar; bei einem Unterfeld müssen Gruppe und Unterfeld öffentlich sein. Vorgänge erscheinen nie im Portal.
+- **Keine Rechteangaben:** Lizenz, Rechteinhaber und Credit-Line gibt es pro Datei nicht.
+
+Zulässige Dateitypen sind PDF, Bilder (JPEG, PNG, TIFF, WebP), Audio (MP3, WAV, OGG) und Video (MP4, WebM). Katalon prüft den Inhalt der Datei, nicht nur die Endung. Word-Dokumente, SVG, HTML, GIF und 3D-Modelle werden abgelehnt. Die Größe ist pro Datei begrenzt; der Standard liegt bei 200 MB, der Betrieb kann ihn ändern.
+
+Dateien dieses Feldes werden in keinem Export ausgegeben (OAI-PMH, LIDO, Export-Mappings) und sind nicht durchsuchbar.
+
+Hochgeladene Dateien werden dem Datensatz erst mit dem Speichern des Formulars zugeordnet. Wird eine Datei aus dem Feld entfernt und gespeichert, ist sie im Portal sofort nicht mehr abrufbar. Die Datei bleibt auf dem Server, bis der Betrieb sie aufräumt, damit eine ältere Version des Datensatzes sie wiederherstellen kann.
+
+Anleitung zum Hochladen und Ansehen von Dateien im Erfassungsformular: [Erste Schritte](/katalon-docs/getting-started/first-steps#dateianhänge-am-feld-datei).
+
+> **Bild vorgesehen: Feld Datei im Schema-Editor.**
+> Zeigen: Feldformular mit Typ „Datei“ und den Optionen Datensatztyp und Öffentlich. Alt-Text: „Schema-Editor mit einem Feld vom Typ Datei.“
+
+---
+
 ### `group` – Feldgruppe
 
-Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo` und `url`.
+Fasst mehrere Sub-Felder zu einer wiederholbaren Einheit zusammen (z.B. für strukturierte Angaben, die aus mehreren Werten bestehen). Sub-Felder werden nach dem Anlegen der Gruppe direkt darunter erfasst; erlaubt sind `text`, `richtext`, `date`, `number`, `boolean`, `vocab`, `vocab_free`, `relation`, `authority`, `geo`, `url` und `file`.
 
 :::note[Verfügbar ab Version 1.44.0]
 Neben den bisherigen Feldtypen sind auch `richtext`, `geo` und `url` als Sub-Felder in Feldgruppen verfügbar. Kurze Sub-Felder werden im Erfassungsformular automatisch in einem kompakten, mehrspaltigen Raster angeordnet, während `richtext` und `geo` die volle Breite einnehmen.
@@ -415,6 +448,10 @@ Beispiele:
 Die Reihenfolge der Sub-Felder lässt sich im Detailbereich der Gruppe mit den Pfeiltasten (nach oben/nach unten) ändern. Das Portal zeigt die Sub-Felder in dieser Reihenfolge.
 
 Mit der Option **Ersten Wert jedes Eintrags im Portal fett darstellen** wird der Wert des ersten Sub-Felds jedes Eintrags auf der Portal-Detailseite fett gesetzt, zum Beispiel ein Titel. Die Einstellung gilt pro Gruppe.
+:::
+
+:::note[Verfügbar ab Version 1.50.0]
+Als Unterfeld ist auch der Feldtyp `file` erlaubt. Er ist nur verfügbar, wenn die Gruppe zu einem der fünf Datensatztypen aus dem Abschnitt [Datei](#file--datei) gehört. Die Dateien eines Unterfelds sind im Portal nur sichtbar, wenn Gruppe und Unterfeld öffentlich sind.
 :::
 
 ---
