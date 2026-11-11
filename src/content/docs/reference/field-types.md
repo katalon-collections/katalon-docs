@@ -19,7 +19,7 @@ Katalon-Felder werden in `field_definitions` konfiguriert. Der konkrete Wert lie
 | `url` | Weblink mit optionalem Titel | [Beschreibung](/katalon-docs/administration/schema#url--weblink) |
 | `pid` | Persistenter Identifier (z. B. ARK oder URN) | [Beschreibung](/katalon-docs/administration/schema#pid--persistenter-identifier) |
 | `authority` | Normdatenwert aus angebundener Quelle (GND, Wikidata, GeoNames etc.) | [Beschreibung](/katalon-docs/administration/schema#authority--normdatenfeld) & [Leitfaden Normdaten](/katalon-docs/administration/normdaten/) |
-| `file` | Datei als Anhang (PDF, Bild, Audio, Video) an Objekt, Entität, Ort, Occurrence oder Vorgang | [Beschreibung](/katalon-docs/administration/schema#file--datei) |
+| `file` | Datei als Anhang (PDF, Bild, Audio, Video) an Objekt, Entität, Ort, Occurrence, Sammlung, Lagerort oder Vorgang | [Beschreibung](/katalon-docs/administration/schema#file--datei) |
 | `group` | Container für Unterfelder | [Beschreibung](/katalon-docs/administration/schema#group--feldgruppe) |
 
 Felder können wiederholbar sein. Wiederholbare Werte werden als Liste gespeichert.

@@ -403,18 +403,18 @@ The `authority` field can be used both as a standalone schema field and as a sub
 
 ### `file` – File
 
-Stores files as attachments on a record, for example a loan agreement on a procedure, a programme booklet PDF on a work, or an interview video on a person. Attachments in this field are not media: they do not appear in the media bar, are not processed with IIIF, and have no primary media.
+Stores files as attachments on a record, for example a loan agreement on a procedure, a programme booklet PDF on a work, an interview video on a person, or a directions sketch on a storage location. Attachments in this field are not media: they do not appear in the media bar, are not processed with IIIF, and have no primary media.
 
 :::note[Available from version 1.50.0]
-The File field type is new. It is available only for objects, entities, places, occurrences, and procedures, not for collections, storage locations, or vocabulary terms.
+The File field type is new. It is available for objects, entities, places, occurrences, collections, storage locations, and procedures, not for vocabulary terms.
 :::
 
 Properties:
 
-- **Record types:** object, entity, place, occurrence, and procedure.
+- **Record types:** object, entity, place, occurrence, collection, storage location, and procedure.
 - **Placement:** directly on the record or as a sub-field of a group. Example: a repeatable group "Fan content" with the sub-fields title, URL, file, and comment.
 - **Repeatable:** possible, like other fields.
-- **Visibility:** visibility follows the field, not the individual file. If the field is public, its files can be retrieved in the portal; for a sub-field, the group and the sub-field must both be public. Procedures never appear in the portal.
+- **Visibility:** visibility follows the field, not the individual file. If the field is public, its files can be retrieved in the portal; for a sub-field, the group and the sub-field must both be public. Procedures and storage locations never appear in the portal.
 - **No rights information:** there is no licence, rights holder, or credit line per file.
 
 Permitted file types are PDF, images (JPEG, PNG, TIFF, WebP), audio (MP3, WAV, OGG), and video (MP4, WebM). Katalon checks the content of the file, not only its extension. Word documents, SVG, HTML, GIF, and 3D models are rejected. The size limit applies per file; the default is 200 MB, and the operator can change it.

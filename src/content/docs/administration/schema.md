@@ -403,18 +403,18 @@ Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld inner
 
 ### `file` – Datei
 
-Speichert Dateien als Anhang an einem Datensatz, zum Beispiel einen Leihvertrag an einem Vorgang, ein Programmheft-PDF an einem Werk oder ein Interview-Video an einer Person. Anhänge an diesem Feld sind keine Medien: Sie erscheinen nicht in der Medienleiste, werden nicht mit IIIF verarbeitet und haben kein Hauptmedium.
+Speichert Dateien als Anhang an einem Datensatz, zum Beispiel einen Leihvertrag an einem Vorgang, ein Programmheft-PDF an einem Werk ein Interview-Video an einer Person oder eine Anfahrtsskizze an einem Lagerort. Anhänge an diesem Feld sind keine Medien: Sie erscheinen nicht in der Medienleiste, werden nicht mit IIIF verarbeitet und haben kein Hauptmedium.
 
 :::note[Verfügbar ab Version 1.50.0]
-Der Feldtyp Datei ist neu. Er steht nur für Objekte, Entitäten, Orte, Occurrences und Vorgänge zur Verfügung, nicht für Sammlungen, Lagerorte oder Vokabularterme.
+Der Feldtyp Datei ist neu. Er steht für Objekte, Entitäten, Orte, Occurrences, Sammlungen, Lagerorte und Vorgänge zur Verfügung, nicht für Vokabularterme.
 :::
 
 Eigenschaften:
 
-- **Datensatztypen:** Objekt, Entität, Ort, Occurrence und Vorgang.
+- **Datensatztypen:** Objekt, Entität, Ort, Occurrence, Sammlung, Lagerort und Vorgang.
 - **Platzierung:** direkt am Datensatz oder als Unterfeld einer Gruppe. Beispiel: eine wiederholbare Gruppe „Fan-Content“ mit den Unterfeldern Titel, URL, Datei und Kommentar.
 - **Wiederholbar:** wie bei anderen Feldern möglich.
-- **Sichtbarkeit:** Die Sichtbarkeit richtet sich nach dem Feld, nicht nach der einzelnen Datei. Ist das Feld öffentlich, sind seine Dateien im Portal abrufbar; bei einem Unterfeld müssen Gruppe und Unterfeld öffentlich sein. Vorgänge erscheinen nie im Portal.
+- **Sichtbarkeit:** Die Sichtbarkeit richtet sich nach dem Feld, nicht nach der einzelnen Datei. Ist das Feld öffentlich, sind seine Dateien im Portal abrufbar; bei einem Unterfeld müssen Gruppe und Unterfeld öffentlich sein. Vorgänge und Lagerorte erscheinen nie im Portal.
 - **Keine Rechteangaben:** Lizenz, Rechteinhaber und Credit-Line gibt es pro Datei nicht.
 
 Zulässige Dateitypen sind PDF, Bilder (JPEG, PNG, TIFF, WebP), Audio (MP3, WAV, OGG) und Video (MP4, WebM). Katalon prüft den Inhalt der Datei, nicht nur die Endung. Word-Dokumente, SVG, HTML, GIF und 3D-Modelle werden abgelehnt. Die Größe ist pro Datei begrenzt; der Standard liegt bei 200 MB, der Betrieb kann ihn ändern.
