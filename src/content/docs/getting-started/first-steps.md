@@ -59,8 +59,7 @@ Das Symbol für Entfernen nimmt die Datei zunächst nur aus dem Formular. Wirksa
 
 Die Schaltflächen sind Symbole. Beim Darüberfahren zeigen sie ihre Bezeichnung, die auch Bildschirmleseprogramme vorlesen.
 
-> **Bild vorgesehen: Feld Datei im Erfassungsformular.**
-> Zeigen: Feld „Vertrag“ mit einer hochgeladenen PDF-Datei und einem Video, das gerade hochgeladen wird. Alt-Text: „Dateifeld im Erfassungsformular mit zwei angehängten Dateien.“
+![Dateifeld „Vertrag“ im Erfassungsformular mit einer hochgeladenen PDF-Datei](../../../assets/screenshots/getting-started/feld-datei-formular.png)
 
 Im Portal erscheinen die Dateien eines öffentlichen Feldes auf der Detailseite als Liste.
 

@@ -425,8 +425,7 @@ Uploaded files are linked to the record only when the form is saved. If a file i
 
 For how to upload and view files in the record form, see [First steps](/katalon-docs/en/getting-started/first-steps#file-attachments-in-the-file-field).
 
-> **Screenshot planned: File field in the schema editor.**
-> Show: field form with type "File" and the options record type and public. Alt text: "Schema editor with a field of type File."
+![Schema editor with a field of type File and the advanced options](../../../../assets/screenshots/schema/feld-datei.png)
 
 ---
 

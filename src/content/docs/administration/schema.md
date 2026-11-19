@@ -425,8 +425,7 @@ Hochgeladene Dateien werden dem Datensatz erst mit dem Speichern des Formulars z
 
 Anleitung zum Hochladen und Ansehen von Dateien im Erfassungsformular: [Erste Schritte](/katalon-docs/getting-started/first-steps#dateianhänge-am-feld-datei).
 
-> **Bild vorgesehen: Feld Datei im Schema-Editor.**
-> Zeigen: Feldformular mit Typ „Datei“ und den Optionen Datensatztyp und Öffentlich. Alt-Text: „Schema-Editor mit einem Feld vom Typ Datei.“
+![Schema-Editor mit einem Feld vom Typ Datei und den erweiterten Optionen](../../../assets/screenshots/schema/feld-datei.png)
 
 ---
 

@@ -59,8 +59,7 @@ The remove icon only removes the file from the form. It takes effect when you sa
 
 The buttons are icons. Hovering over them shows their label, which screen readers also read out.
 
-> **Screenshot planned: File field in the record form.**
-> Show: field "Contract" with an uploaded PDF and a video that is currently uploading. Alt text: "File field in the record form with two attached files."
+![File field "Contract" in the record form with an uploaded PDF](../../../../assets/screenshots/getting-started/feld-datei-formular.png)
 
 On the portal, the files of a public field appear as a list on the detail page.
 

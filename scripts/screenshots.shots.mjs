@@ -506,6 +506,43 @@ export const shots = [
     },
   },
 
+  {
+    id: 'schema-feld-datei',
+    file: 'schema/feld-datei.png',
+    path: '/#schema',
+    alt: 'Schema-Editor mit einem Feld vom Typ Datei.',
+    selector: '.schema-workspace .card',
+    before: async (page) => {
+      await page.getByRole('button', { name: /neues feld/i }).click()
+      await page.waitForTimeout(400)
+      const flds = page.locator('input.fld')
+      await flds.nth(0).fill('Vertrag')
+      await flds.nth(1).fill('Contract')
+      await flds.nth(2).fill('vertrag')
+      await page.locator('select').nth(1).selectOption('file')
+      await page.getByText('Erweiterte Optionen').click()
+      await page.waitForTimeout(400)
+    },
+  },
+
+  {
+    // Voraussetzung: ein Objekt "Leihgabe Tonkrug" und ein Datei-Feld am Objekt (Typ "file").
+    // Die Beschriftung des Feldes wird nur für das Bild auf "Vertrag" gesetzt, damit sie zum Doku-Text passt.
+    id: 'form-feld-datei',
+    file: 'getting-started/feld-datei-formular.png',
+    path: '/#objects',
+    alt: 'Dateifeld im Erfassungsformular mit einer hochgeladenen PDF-Datei.',
+    selector: 'fieldset.field:has(.file-field)',
+    before: async (page) => {
+      await page.getByText('Leihgabe Tonkrug').first().click()
+      await page.waitForTimeout(1500)
+      await page.locator('.file-field input[type=file]').first().setInputFiles(resolve(__dirname, 'Leihvertrag.pdf'))
+      await page.waitForTimeout(2500)
+      await page.locator('fieldset.field:has(.file-field) .lbl').first()
+        .evaluate(el => { el.textContent = 'Vertrag' })
+    },
+  },
+
   // --- Administration: Formularvarianten ---
   {
     id: 'administration-formularvariante-editor',
