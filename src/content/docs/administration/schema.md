@@ -406,7 +406,7 @@ Das Feld `authority` kann als eigenständiges Schemafeld sowie als Subfeld inner
 Speichert Dateien als Anhang an einem Datensatz, zum Beispiel einen Leihvertrag an einem Vorgang, ein Programmheft-PDF an einem Werk ein Interview-Video an einer Person oder eine Anfahrtsskizze an einem Lagerort. Anhänge an diesem Feld sind keine Medien: Sie erscheinen nicht in der Medienleiste, werden nicht mit IIIF verarbeitet und haben kein Hauptmedium.
 
 :::note[Verfügbar ab Version 1.50.0]
-Der Feldtyp Datei ist neu. Er steht für Objekte, Entitäten, Orte, Occurrences, Sammlungen, Lagerorte und Vorgänge zur Verfügung, nicht für Vokabularterme.
+Der Feldtyp Datei ist neu. Er steht für Objekte, Entitäten, Orte, Occurrences und Vorgänge zur Verfügung, nicht für Vokabularterme. Für Sammlungen und Lagerorte gibt es ihn ab Version 1.51.0.
 :::
 
 Eigenschaften:
@@ -451,7 +451,7 @@ Mit der Option **Ersten Wert jedes Eintrags im Portal fett darstellen** wird der
 :::
 
 :::note[Verfügbar ab Version 1.50.0]
-Als Unterfeld ist auch der Feldtyp `file` erlaubt. Er ist nur verfügbar, wenn die Gruppe zu einem der fünf Datensatztypen aus dem Abschnitt [Datei](#file--datei) gehört. Die Dateien eines Unterfelds sind im Portal nur sichtbar, wenn Gruppe und Unterfeld öffentlich sind.
+Als Unterfeld ist auch der Feldtyp `file` erlaubt. Er ist nur verfügbar, wenn die Gruppe zu einem der Datensatztypen aus dem Abschnitt [Datei](#file--datei) gehört. Die Dateien eines Unterfelds sind im Portal nur sichtbar, wenn Gruppe und Unterfeld öffentlich sind.
 :::
 
 ---

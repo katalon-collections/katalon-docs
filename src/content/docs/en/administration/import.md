@@ -18,6 +18,12 @@ The importer is available in the admin UI under **Importer**.
 
 For controlled vocabularies, open the **Vocabularies** tab in the importer. First select the target vocabulary, then upload a CSV, TSV, or JSON file. For CSV and TSV, map the columns to **ID**, **Parent ID**, **Label**, or, for relation types, **Inverse direction**. A **dry run** shows the planned changes before the import writes them. Relation types are flat and have no parent ID.
 
+Custom vocabulary fields (e.g. GND or Wikidata authority fields) appear in the mapping under **Vocabulary fields**. For authority fields the URL (e.g. `https://d-nb.info/gnd/4010427-8`) or the bare ID is enough; the URL must match the field's source. Separate several values of a repeatable field with `|` or `;`. Invalid values are reported per row by the dry run. JSON and SKOS imports do not fill these fields.
+
+:::note[Available since version 1.51.0]
+Vocabulary fields in CSV import.
+:::
+
 ---
 
 ## Supported formats

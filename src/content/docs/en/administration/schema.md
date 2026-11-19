@@ -406,7 +406,7 @@ The `authority` field can be used both as a standalone schema field and as a sub
 Stores files as attachments on a record, for example a loan agreement on a procedure, a programme booklet PDF on a work, an interview video on a person, or a directions sketch on a storage location. Attachments in this field are not media: they do not appear in the media bar, are not processed with IIIF, and have no primary media.
 
 :::note[Available from version 1.50.0]
-The File field type is new. It is available for objects, entities, places, occurrences, collections, storage locations, and procedures, not for vocabulary terms.
+The File field type is new. It is available for objects, entities, places, occurrences, and procedures, not for vocabulary terms. For collections and storage locations it is available since version 1.51.0.
 :::
 
 Properties:
@@ -451,7 +451,7 @@ The option **Show the first value of each entry in bold in the portal** sets the
 :::
 
 :::note[Available from version 1.50.0]
-The `file` type is also allowed as a sub-field. It is available only if the group belongs to one of the five record types in the [File](#file--file) section. Files in a sub-field are visible in the portal only if the group and the sub-field are both public.
+The `file` type is also allowed as a sub-field. It is available only if the group belongs to one of the record types in the [File](#file--file) section. Files in a sub-field are visible in the portal only if the group and the sub-field are both public.
 :::
 
 ---

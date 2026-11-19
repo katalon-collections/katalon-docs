@@ -18,6 +18,12 @@ Der Importer ist in der Admin-UI unter **Importer** erreichbar.
 
 Für kontrollierte Vokabulare im Importer den Reiter **Vokabulare** öffnen. Zuerst das Zielvokabular wählen, dann eine CSV-, TSV- oder JSON-Datei hochladen. Bei CSV und TSV die Spalten auf **ID**, **Parent-ID**, **Label** oder bei Relationstypen auf **Gegenrichtung** mappen. Ein **Dry-Run** zeigt die geplanten Änderungen, bevor der Import sie schreibt. Relationstypen sind flach und haben keine Parent-ID.
 
+Eigene Felder des Vokabulars (z. B. GND oder Wikidata als Normdatenfelder) erscheinen im Mapping unter **Felder des Vokabulars**. Bei Normdatenfeldern genügt die URL (z. B. `https://d-nb.info/gnd/4010427-8`) oder die nackte ID; die URL muss zur Quelle des Feldes passen. Wiederholbare Felder trennen mehrere Werte mit `|` oder `;`. Ungültige Werte meldet der Dry-Run zeilenweise. JSON- und SKOS-Import befüllen diese Felder nicht.
+
+:::note[Verfügbar ab Version 1.51.0]
+Felder des Vokabulars im CSV-Import.
+:::
+
 ---
 
 ## Unterstützte Formate
