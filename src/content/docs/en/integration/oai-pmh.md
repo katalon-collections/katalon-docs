@@ -72,6 +72,14 @@ Deletions follow the existing records in `ListRecords`/`ListIdentifiers`, throug
 
 "Transient" means: records withdrawn before this feature was introduced are not covered.
 
+### Withdrawn records in the portal
+
+:::note[Available since version 1.52.0]
+A record that was public and has since been deleted, or set to *internal* or *draft*, shows the page "Record withdrawn" in the portal with the label "HTTP 410 · Withdrawn". This also applies to ARK links. If the record is restored or published again, it is visible again.
+:::
+
+Signed-in people with read permission still see unpublished records in a preview. Deleted records stay withdrawn for them. The portal answers records that were never public like unknown addresses, with HTTP 404.
+
 ## OAI sets and selective harvesting
 
 Records can be grouped into OAI sets in the Admin UI to offer external aggregators (e.g. Deutsche Digitale Bibliothek, subject portals) specific subsets of the holdings:

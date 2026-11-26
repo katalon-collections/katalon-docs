@@ -72,6 +72,14 @@ Die Löschmeldungen folgen in `ListRecords`/`ListIdentifiers` nach den vorhanden
 
 „Transient“ heißt: Datensätze, die vor Einführung dieser Funktion zurückgenommen wurden, sind nicht erfasst.
 
+### Zurückgezogene Datensätze im Portal
+
+:::note[Verfügbar ab Version 1.52.0]
+Ein Datensatz, der öffentlich war und danach gelöscht, auf *intern* oder auf *Entwurf* gesetzt wurde, zeigt im Portal die Seite „Datensatz zurückgezogen“ mit dem Hinweis „HTTP 410 · Zurückgezogen“. Das gilt auch für ARK-Links. Wird der Datensatz wiederhergestellt oder wieder veröffentlicht, ist er wieder sichtbar.
+:::
+
+Angemeldete Personen mit Leserecht sehen unveröffentlichte Datensätze weiterhin in der Vorschau. Gelöschte Datensätze bleiben für sie zurückgezogen. Datensätze, die nie öffentlich waren, zeigt das Portal wie unbekannte Adressen mit HTTP 404 an.
+
 ## OAI-Sets und Selektives Harvesting
 
 Über die Admin-UI können Datensätze in OAI-Sets gruppiert werden, um externen Aggregatoren (z. B. Deutsche Digitale Bibliothek, Fachportale) spezifische Teilbestände anzubieten:

@@ -22,7 +22,7 @@ Display on a portal detail page is not an access control mechanism. The public-o
 
 ## Recording imprecise dating
 
-The date field stores concrete ISO values such as `1923`, `1923-05`, or `1923-05-14`. For "around 1920" or a range, don't invent a free-text date. Create a `dating` field group containing a date field and a vocabulary field `type` with values such as `exact`, `circa`, `before`, `after`, and `undated`. For a range, two date fields `from` and `to` are clearer.
+The date field understands entries such as `ca. 1920`, `1900 (uncertain)`, or `1800 to 1900` directly. For several datings with their own type, such as creation and acquisition, create a `dating` field group containing a date field and a vocabulary field `type` with values such as `exact`, `circa`, `before`, `after`, and `undated`.
 
 The full configuration, including for BCE dates, is documented in [Schema Management](/katalon-docs/en/administration/schema/#cookbook-dating-type-uncertainqualified-dating).
 

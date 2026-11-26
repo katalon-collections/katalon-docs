@@ -19,7 +19,7 @@ Only users with the `admin` or `superuser` role can create, change, or delete fi
 3. Click **New field** at the top right.
 4. Fill in the field properties in the form and save.
 
-After saving, the field is immediately visible in all data-entry forms. Existing records without the new field value remain valid, as long as the field is not marked as required.
+After saving, the field is immediately visible in all data-entry forms. Existing records stay saved. If the field is required, Katalon marks the affected records as "Schema incomplete" (see the section "Schema incomplete").
 
 ### Deleting fields and legacy data (legacy fields)
 
@@ -154,16 +154,24 @@ Examples:
 
 ### `date` – Date
 
-Accepts year, year-month, and day-level values in ISO format. Uncertain dates, date ranges, and open intervals cannot be expressed via syntax in the date value (no EDTF) — for this there are established patterns (see "Cookbook: Dating type" further below).
+Accepts year, year-month, and day-level values, as well as uncertainty, date ranges, and open intervals. Entry in the data-entry form and display in the admin UI and the portal use the same notation.
 
-Examples of valid values:
-- `1923` — year only
-- `1923-05` — year and month
-- `1923-05-14` — exact date
-- `-0043` — year BCE (44 BCE)
-- `-0043-03-15` — exact date BCE
+:::note[Available since version 1.52.0]
+Entry and display of dates in the admin UI match the portal, including "43 BCE", "ca. 1900", "before 1800", "after 1800", "1900 (uncertain)", and ranges.
+:::
 
-**Years BCE**: BCE years are entered with a leading minus sign and a four-digit, zero-padded year (`-0043` for 44 BCE). This follows ISO 8601 year numbering with year 0 (1 BCE = year `0000`, 44 BCE = year `-0043`). The built-in calendar widget does not support BCE years — enter BCE values directly into the text field.
+| Entry | Stored value | Display |
+|---|---|---|
+| `1923`, `1923-05`, `1923-05-14` | `1923`, `1923-05`, `1923-05-14` | unchanged |
+| `43 BCE` or `-43` | `-0042` | `43 BCE` |
+| `ca. 1900` | `1900~` | `ca. 1900` |
+| `1900 (uncertain)` | `1900?` | `1900 (uncertain)` |
+| `ca. 1900 (uncertain)` | `1900~?` | `ca. 1900 (uncertain)` |
+| `before 1800` | `/1800` | `before 1800` |
+| `after 1800` | `1800/` | `after 1800` |
+| `1800 to 1900` | `1800/1900` | `1800–1900` |
+
+**Years BCE**: Enter `43 BCE` or `-43`, and Katalon stores `-0042`. Stored values, the API, imports and exports use the ISO 8601 year numbering with year 0: 1 BCE = `0000`, 43 BCE = `-0042`, 44 BCE = `-0043`. The calendar button in the form is available only for plain dates without BCE, uncertainty or range.
 
 Examples of fields:
 - Date created
@@ -457,9 +465,8 @@ The `file` type is also allowed as a sub-field. It is available only if the grou
 
 ## Cookbook: Dating type (uncertain/qualified dating)
 
-The `date` field only accepts concrete dates (see above). Approximate values and date ranges are not expressed via syntax in the date value (no EDTF) — for this there are two established patterns:
+The `date` field handles uncertainty and date ranges directly (see the section "`date` – Date"). If a record needs several datings, each with its own type, for example creation and acquisition, this pattern fits:
 
-- **Date range (from/to)**: two separate `date` fields, e.g. `date_created_from` / `date_created_to`.
 - **Qualification (circa/before/after/exact)**: a combination of `group` + `date` + `vocab`:
 
 1. Create a vocabulary, e.g. `dating_type` with terms: `exact`, `circa`, `before`, `after`, `undated`.
@@ -469,6 +476,20 @@ The `date` field only accepts concrete dates (see above). Approximate values and
    - `type` (type `vocab`, `settings.vocabulary_id` → vocabulary `dating_type`)
 
 Result: multiple datings, each with its own type, can be captured per record (e.g. creation "circa 1920", acquisition "exact 1955"), and the type is facetable/searchable as a vocabulary value — independent of the date value. Qualifying a BCE date also works this way: `date = -0043`, `type = circa` ("circa 44 BCE").
+
+---
+
+## Schema incomplete
+
+:::note[Available since version 1.52.0]
+:::
+
+When a required field is added or changed, Katalon checks all records of the affected type. Records without a value for the required field receive the marker **Schema incomplete**. The marker applies regardless of status and changes only the marker itself, not the content, version, or modification time of a record. The marker stays in the admin UI.
+
+- **Record list**: A badge **Schema incomplete** marks the affected rows. The filter **Schema incomplete** shows only these records.
+- **Data-entry form**: A notice begins with "Schema incomplete: At least one required field is missing."
+
+Fill in the missing required field and save the record. The marker disappears. It also disappears when the required field is deleted. Publishing still requires all required fields to be filled.
 
 ---
 
@@ -482,6 +503,10 @@ For Object, Entity, Place, Occurrence, and Procedure, a field can be bound to a 
 
 :::note[Available from version 1.49.0]
 The portal detail page also shows only fields without a subtype and fields of the record's own subtype. Fields with the same name in different subtypes no longer mix there.
+:::
+
+:::note[Available since version 1.52.0]
+Required fields of a subtype apply only to records of that subtype. Records without a subtype need only the general fields of the primary type. A field of another subtype appears in the data-entry form only while the record holds a stored value for it, and then as an optional field.
 :::
 
 **Use case:**
@@ -681,7 +706,7 @@ When saving a record, Katalon strictly validates all metadata server-side agains
 
 - **Numbers (`number`):** Only genuine numbers (integers or floating-point numbers, or `null`) are accepted; strings are rejected.
 - **Booleans (`boolean`):** Require genuine booleans (`true`/`false` or `null`).
-- **Dates (`date`):** Checked against standard-compliant date formats.
+- **Dates (`date`):** Checked as ISO 8601 dates (year, year-month or day; negative years for BCE). Optionally with uncertainty `~` (circa), `?` (uncertain) or `~?` (both), and as a range `START/END` with open ends.
 - **Geo-coordinates (`geo`):** Validated against valid coordinate values or GeoJSON structures.
 - **Vocabularies (`vocab`, `vocab_free`):** Referenced term IDs are checked for existence in the database. Historical values from terms deleted later are tolerated when updating existing records.
 - **Groups (`group`):** All sub-fields of a group are type-checked recursively.

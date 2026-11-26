@@ -10,12 +10,20 @@ Die Massenbearbeitung erlaubt es, dieselbe Operation auf viele Datensätze gleic
 Lagerorte in der Massenbearbeitung.
 :::
 
-## Einzelnen Datensatz öffnen
+## Einzelnen Datensatz öffnen und löschen
 
 Klicken Sie auf den Labelwert eines Datensatzes, um ihn direkt zu öffnen. Für weitere Aktionen steht weiterhin das Menü mit den drei Punkten am rechten Rand der Tabellenzeile zur Verfügung.
 
 :::note[Verfügbar ab Version 1.22.0]
 :::
+
+Datensätze lassen sich in den Papierkorb verschieben, über **Löschen** im Menü der Tabellenzeile oder über die Schaltfläche **Löschen** im Erfassungsformular. Die Schaltflächen erscheinen nur mit der Berechtigung zum Löschen dieses Typs.
+
+:::note[Verfügbar ab Version 1.52.0]
+Beide Wege zeigen dieselben Bestätigungen. Sind Datensätze verknüpft, weist Katalon darauf hin, dass alle Verknüpfungen beim Löschen entfernt werden. Haben Sammlungen oder Orte untergeordnete Datensätze, bietet Katalon an, diese eine Ebene hochzustufen (empfohlen) oder mit zu löschen.
+:::
+
+Administratoren finden gelöschte Datensätze im Tab **Papierkorb** der Liste und stellen sie dort mit **Wiederherstellen** wieder her. Der Tab steht bei Vorgängen nicht zur Verfügung. Gelöschte Datensätze bleiben im Papierkorb, bis sie wiederhergestellt oder von der automatischen Bereinigung endgültig entfernt werden.
 
 ## Auswahl treffen
 

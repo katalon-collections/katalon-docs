@@ -19,7 +19,7 @@ Nur Benutzer mit der Rolle `admin` oder `superuser` können Felder anlegen, änd
 3. Rechts oben **Neues Feld** klicken.
 4. Im Formular die Feldeigenschaften ausfüllen und speichern.
 
-Nach dem Speichern ist das Feld sofort in allen Erfassungsformularen sichtbar. Bestehende Datensätze ohne den neuen Feldwert sind weiterhin gültig, sofern das Feld nicht als Pflichtfeld markiert ist.
+Nach dem Speichern ist das Feld sofort in allen Erfassungsformularen sichtbar. Bestehende Datensätze bleiben gespeichert. Ist das Feld ein Pflichtfeld, markiert Katalon die betroffenen Datensätze als „Schema unvollständig“ (siehe Abschnitt „Schema unvollständig“).
 
 ### Felder löschen und Altdaten (Legacy-Felder)
 
@@ -154,16 +154,26 @@ Beispiele:
 
 ### `date` – Datum
 
-Akzeptiert Jahres-, Jahres-Monats- und Tagesangaben im ISO-Format. Unscharfe Angaben, Zeiträume und offene Intervalle lassen sich nicht über Syntax im Datumswert ausdrücken (kein EDTF) — dafür gibt es etablierte Muster (siehe „Cookbook: Datierungstyp" weiter unten).
+Akzeptiert Jahres-, Jahres-Monats- und Tagesangaben sowie Unschärfe, Zeiträume und offene Intervalle. Eingabe im Erfassungsformular, Anzeige in der Admin-UI und im Portal verwenden dieselbe Schreibweise.
 
-Beispiele für gültige Werte:
-- `1923` — nur das Jahr
-- `1923-05` — Jahr und Monat
-- `1923-05-14` — exaktes Datum
-- `-0043` — Jahr vor Christus (44 v. Chr.)
-- `-0043-03-15` — exaktes Datum vor Christus
+:::note[Verfügbar ab Version 1.52.0]
+Eingabe und Anzeige von Datumsangaben in der Admin-UI wie im Portal, einschließlich „43 v. Chr.“, „ca. 1900“, „vor 1800“, „nach 1800“, „1900 (unsicher)“ und Zeiträumen.
+:::
 
-**Jahre vor Christus**: BCE-Jahre werden mit vorangestelltem Minuszeichen und vierstellig aufgefülltem Jahr eingegeben (`-0043` für 44 v. Chr.). Dabei gilt die ISO-8601-Jahreszählung mit Jahr 0 (1 v. Chr. = Jahr `0000`, 44 v. Chr. = Jahr `-0043`). Das eingebaute Kalender-Widget unterstützt keine Jahre v. Chr. — BCE-Werte direkt ins Textfeld eingeben.
+| Eingabe | Gespeicherter Wert | Anzeige |
+|---|---|---|
+| `1923`, `1923-05`, `1923-05-14` | `1923`, `1923-05`, `1923-05-14` | unverändert |
+| `43 v. Chr.` oder `-43` | `-0042` | `43 v. Chr.` |
+| `ca. 1900` | `1900~` | `ca. 1900` |
+| `1900 (unsicher)` | `1900?` | `1900 (unsicher)` |
+| `ca. 1900 (unsicher)` | `1900~?` | `ca. 1900 (unsicher)` |
+| `vor 1800` | `/1800` | `vor 1800` |
+| `nach 1800` | `1800/` | `nach 1800` |
+| `1800 bis 1900` | `1800/1900` | `1800–1900` |
+
+**Jahre vor Christus**: Geben Sie `43 v. Chr.` oder `-43` ein, Katalon speichert `-0042`. Gespeichert werden Jahre nach der ISO-8601-Zählung mit Jahr 0: 1 v. Chr. = `0000`, 43 v. Chr. = `-0042`, 44 v. Chr. = `-0043`. API, Import und Export verwenden diese Werte. Der Kalender-Button im Formular steht nur für einfache Datumsangaben ohne v. Chr., Unschärfe oder Zeitraum zur Verfügung.
+
+Beispiele für Felder:
 
 Beispiele für Felder:
 - Entstehungsdatum
@@ -457,9 +467,8 @@ Als Unterfeld ist auch der Feldtyp `file` erlaubt. Er ist nur verfügbar, wenn d
 
 ## Cookbook: Datierungstyp (unscharfe/qualifizierte Datierung)
 
-Das `date`-Feld akzeptiert nur konkrete Datumsangaben (siehe oben). Ungefähre Angaben und Zeiträume werden nicht über Syntax im Datumswert ausgedrückt (kein EDTF) — dafür gibt es zwei etablierte Muster:
+Das `date`-Feld kennt Unschärfe und Zeiträume direkt (siehe Abschnitt „`date` – Datum“). Braucht ein Datensatz mehrere Datierungen mit je eigener Art, etwa Entstehung und Erwerb, bietet sich dieses Muster an:
 
-- **Zeitraum (von/bis)**: zwei separate `date`-Felder, z.B. `herstellungsdatum_von` / `herstellungsdatum_bis`.
 - **Qualifizierung (circa/vor/nach/exakt)**: eine Kombination aus `group` + `date` + `vocab`:
 
 1. Vokabular anlegen, z.B. `datierungstyp` mit Termen: `exakt`, `circa`, `vor`, `nach`, `undatiert`.
@@ -469,6 +478,20 @@ Das `date`-Feld akzeptiert nur konkrete Datumsangaben (siehe oben). Ungefähre A
    - `typ` (Typ `vocab`, `settings.vocabulary_id` → Vokabular `datierungstyp`)
 
 Ergebnis: pro Datensatz lassen sich mehrere Datierungen mit je eigenem Typ erfassen (z.B. Entstehung „circa 1920", Erwerb „exakt 1955"), und der Typ ist als Vokabularwert facettierbar/durchsuchbar — unabhängig vom Datumswert. Auch die Qualifizierung eines BCE-Datums funktioniert so: `datum = -0043`, `typ = circa` („circa 44 v. Chr.").
+
+---
+
+## Schema unvollständig
+
+:::note[Verfügbar ab Version 1.52.0]
+:::
+
+Wird ein Pflichtfeld angelegt oder geändert, prüft Katalon alle Datensätze des betroffenen Typs. Datensätze ohne Wert für das Pflichtfeld erhalten die Markierung **Schema unvollständig**. Die Markierung gilt unabhängig vom Status und ändert nur das Markierungsfeld, nicht Inhalt, Version oder Änderungszeitpunkt des Datensatzes. Die Markierung bleibt auf die Admin-UI beschränkt.
+
+- **Datensatzliste**: Ein Badge **Schema unvollständig** kennzeichnet die betroffenen Zeilen. Der Filter **Schema unvollständig** zeigt nur diese Datensätze.
+- **Erfassungsformular**: Ein Hinweis beginnt mit „Schema unvollständig: Mindestens ein Pflichtfeld fehlt.“
+
+Ergänzen Sie das fehlende Pflichtfeld und speichern Sie den Datensatz. Die Markierung entfällt. Wird das Pflichtfeld gelöscht, entfällt sie ebenfalls. Zum Veröffentlichen müssen weiterhin alle Pflichtfelder gefüllt sein.
 
 ---
 
@@ -482,6 +505,10 @@ Bei Object, Entity, Place, Occurrence und Vorgang kann ein Feld an einen bestimm
 
 :::note[Verfügbar ab Version 1.49.0]
 Auch im Portal zeigt die Detailseite nur Felder ohne Subtyp und Felder des eigenen Subtyps. Gleich benannte Felder verschiedener Subtypen vermischen sich dort nicht mehr.
+:::
+
+:::note[Verfügbar ab Version 1.52.0]
+Pflichtfelder eines Subtyps gelten nur für Datensätze dieses Subtyps. Datensätze ohne Subtyp brauchen nur die allgemeinen Felder des Primärtyps. Ein Feld eines anderen Subtyps erscheint im Erfassungsformular nur, solange der Datensatz dafür einen gespeicherten Wert hat, und dann als optionales Feld.
 :::
 
 **Anwendungsfall:**
@@ -681,7 +708,7 @@ Katalon validiert beim Speichern eines Datensatzes alle Metadaten serverseitig s
 
 - **Zahlen (`number`):** Nur echte Zahlen (Ganz- oder Fließkommazahlen bzw. `null`) werden akzeptiert; Zeichenketten werden abgewiesen.
 - **Wahrheitswerte (`boolean`):** Erfordern echte Booleans (`true`/`false` oder `null`).
-- **Datumsangaben (`date`):** Werden auf standardkonforme Datumsformate geprüft.
+- **Datumsangaben (`date`):** Werden als ISO-8601-Datum geprüft (Jahr, Jahr-Monat oder Tag; negative Jahre für v. Chr.). Optional mit Unschärfe `~` (ca.), `?` (unsicher) oder `~?` (beides) sowie als Zeitraum `START/END` mit offenen Enden.
 - **Geokoordinaten (`geo`):** Werden auf gültige Koordinatenangaben bzw. GeoJSON-Strukturen validiert.
 - **Vokabulare (`vocab`, `vocab_free`):** Referenzierte Term-IDs werden auf Existenz in der Datenbank geprüft. Historische Werte von nachträglich gelöschten Begriffen werden bei der Aktualisierung bestehender Datensätze toleriert.
 - **Gruppen (`group`):** Alle Unterfelder einer Gruppe werden rekursiv typgeprüft.

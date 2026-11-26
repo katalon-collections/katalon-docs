@@ -35,7 +35,7 @@ Existing records are not assigned a subtype retroactively. API imports retain th
 
 ## What subtypes are used for
 
-- **Restricting fields**: In schema management (**Configuration → Schemas**), a field can be restricted to a `target_subtype`. Without this restriction, a field applies to all subtypes of the primary type. See [Schema Management](/katalon-docs/en/administration/schema#subtype-fields) for details.
+- **Restricting fields**: In schema management (**Configuration → Schemas**), a field can be restricted to a `target_subtype`. Without this restriction, a field applies to all subtypes of the primary type. Required fields of a subtype apply only to its records. See [Schema Management](/katalon-docs/en/administration/schema#subtype-fields) for details.
 - **Restricting form variants**: Form variants can also be configured per subtype, see [Form Variants](/katalon-docs/en/administration/formularvarianten).
 - **Restricting relation search**: A relation field can specify a fixed target subtype. The search for target records and quick entry are then restricted to this subtype.
 - **List filters**: A subtype filter appears in the record list as soon as subtypes are configured for the respective primary type. Selecting a subtype additionally reveals its subtype-specific list columns.

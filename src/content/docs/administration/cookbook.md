@@ -22,7 +22,7 @@ Die Darstellung auf einer Portal-Detailseite ist keine Zugriffskontrolle. Die Op
 
 ## Unscharfe Datierung erfassen
 
-Das Datumsfeld speichert konkrete ISO-Angaben wie `1923`, `1923-05` oder `1923-05-14`. Für „um 1920“ oder einen Zeitraum kein Freitextdatum erfinden. Lege eine Feldgruppe `datierung` an, darin ein Datumsfeld und ein Vokabularfeld `typ` mit Werten wie `exakt`, `circa`, `vor`, `nach` und `undatiert`. Für einen Zeitraum sind zwei Datumsfelder `von` und `bis` klarer.
+Das Datumsfeld versteht Angaben wie `ca. 1920`, `1900 (unsicher)` oder `1800 bis 1900` direkt. Für mehrere Datierungen mit eigener Art, etwa Entstehung und Erwerb, lege eine Feldgruppe `datierung` an, darin ein Datumsfeld und ein Vokabularfeld `typ` mit Werten wie `exakt`, `circa`, `vor`, `nach` und `undatiert`.
 
 Die komplette Konfiguration, auch für BCE-Daten, steht in der [Schema-Verwaltung](/katalon-docs/administration/schema#cookbook-datierungstyp-unscharfequalifizierte-datierung).
 

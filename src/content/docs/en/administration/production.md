@@ -59,6 +59,21 @@ katalon-manage reset-admin --email admin@katalon.dev --password 1qayxsw2
 
 The password must be at least eight characters and contain both letters and digits.
 
+### Rebuild the search index
+
+:::note[Available since version 1.52.0]
+`katalon-manage reindex` rebuilds the search index from the database without an admin login, for example after a database restore.
+:::
+
+```bash
+docker compose exec api katalon-manage reindex                 # queue a full reindex
+docker compose exec api katalon-manage reindex --type object   # one record type only
+docker compose exec api katalon-manage reindex --sync          # run directly instead of via the worker
+docker compose exec api katalon-manage reindex --status        # show progress
+```
+
+Without `--sync`, the command hands the run to the worker. `--type` accepts `object`, `entity`, `place`, `occurrence`, `procedure`, `collection`, and `storage_location`. `--sync` and `--status` cannot be combined.
+
 ## Prerequisites
 
 - Linux server (Debian/Ubuntu recommended), 8 GB RAM as a guideline. Size disk space for the media, database, search index, and backups.
@@ -133,6 +148,10 @@ ARK_SUFFIX_LENGTH=10
 ```
 
 Katalon answers `https://katalog.example.org/ark:/12345/<suffix>` with a redirect to the current public portal detail page. `ARK_ENABLED` only turns off new minting; resolution of already-minted ARKs remains active. The test NAAN `99999` is not suitable for production data and is not resolved.
+
+:::note[Available since version 1.52.0]
+ARK links to withdrawn records lead to the "Withdrawn" page instead of an error page.
+:::
 
 ### SMTP for transactional emails
 
@@ -324,6 +343,8 @@ After the first start, build the index and mappings:
 # Index all existing records:
 curl -X POST https://your-domain.com/v1/search/reindex
 ```
+
+The API endpoints require the `admin` role. Without a login, `docker compose exec api katalon-manage reindex` triggers the same run (see [Rebuild the search index](#rebuild-the-search-index)).
 
 After the procedures update (`0.2.x`), the object index must be rebuilt at minimum for existing data, because `collection_status` was added to the public search filters:
 
@@ -565,8 +586,12 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml build
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 docker compose exec api alembic upgrade head
 # If schema changes occurred: trigger a reindex
-curl -X POST https://your-domain.com/v1/search/reindex
+docker compose exec api katalon-manage reindex
 ```
+
+:::note[Available since version 1.52.0]
+The reindex step after an update runs through `katalon-manage reindex` and needs no admin login. The API call `POST /v1/search/reindex` with the `admin` role remains available as an alternative.
+:::
 
 For updates that only change object search fields, this is enough:
 
@@ -650,14 +675,25 @@ Result: the dump can be imported cleanly (PostGIS extension included), the media
 
 ### Elasticsearch
 
-Elasticsearch data can be reindexed from the database at any time (`POST /v1/search/reindex`). A dedicated ES backup is not strictly necessary for normal operation.
+Elasticsearch data can be reindexed from the database at any time (`katalon-manage reindex`, or alternatively `POST /v1/search/reindex` with the `admin` role). A dedicated ES backup is not strictly necessary for normal operation.
 
 ## Monitoring
 
 ### Health check
 
+Anonymous calls return only the status. This suffices for uptime monitors that check the HTTP status code:
+
 ```bash
 curl https://your-domain.com/health
+# → {"status": "ok"}
+```
+
+:::note[Available since version 1.52.0]
+Anonymous calls receive only `status`, with HTTP `200` or `503`. The service checks (`checks`), `queue_backlog`, and `backup_age_hours` are returned only to authenticated calls, for example with an API key in the `X-API-Key` header.
+:::
+
+```bash
+curl -H "X-API-Key: <your-api-key>" https://your-domain.com/health
 # → {
 #     "status": "ok",
 #     "checks": {
@@ -672,7 +708,7 @@ curl https://your-domain.com/health
 #   }
 ```
 
-The endpoint actively checks the database, Elasticsearch, Redis, Cantaloupe (IIIF image server), and the Celery Beat/worker heartbeat; if Oxigraph is enabled (`OXIGRAPH_ENABLED=true`), an additional `oxigraph` entry appears. If any of these dependencies is unreachable, it returns HTTP `503` with `{"status": "degraded", ...}` — so a load balancer can detect a failed backend state. `queue_backlog` (length of the default task queue) and `backup_age_hours` (age of the last successful backup) are informational only and never affect the HTTP status — useful as a basis for your own monitoring thresholds.
+The endpoint actively checks the database, Elasticsearch, Redis, Cantaloupe (IIIF image server), and the Celery Beat/worker heartbeat; if Oxigraph is enabled (`OXIGRAPH_ENABLED=true`), an additional `oxigraph` entry appears. If any of these dependencies is unreachable, it returns HTTP `503` with `"status": "degraded"`, also without authentication. A load balancer can therefore detect a failed backend state. `queue_backlog` (length of the default task queue) and `backup_age_hours` (age of the last successful backup) are informational only and never affect the HTTP status. Monitoring that alerts on these values therefore needs an API key.
 
 :::note[Available from version 1.34.4]
 Redis, Cantaloupe, Oxigraph, and Celery heartbeat checks, plus `queue_backlog` and `backup_age_hours`, in the health check.

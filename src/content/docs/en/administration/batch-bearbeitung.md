@@ -10,12 +10,20 @@ Batch editing lets you apply the same operation to many records at once, without
 Storage Locations in batch editing.
 :::
 
-## Opening a single record
+## Opening and deleting a single record
 
 Click the label value of a record to open it directly. For further actions, the three-dot menu on the right edge of the table row remains available.
 
 :::note[Available from version 1.22.0]
 :::
+
+A record can be moved to the trash with **Delete** in the menu of the table row, or with the **Delete** button in the data-entry form. These buttons appear only with the permission to delete this record type.
+
+:::note[Available since version 1.52.0]
+Both paths show the same confirmations. If records are linked, Katalon warns that all links are removed on deletion. If collections or places have child records, Katalon offers to promote the children one level (recommended) or to delete them as well.
+:::
+
+Administrators find deleted records in the **Trash** tab of the list and restore them with **Restore**. The tab is not available for procedures. Deleted records stay in the trash until they are restored or permanently removed by automatic cleanup.
 
 ## Making a selection
 

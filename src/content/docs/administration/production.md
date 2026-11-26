@@ -60,24 +60,20 @@ katalon-manage reset-admin --email admin@katalon.dev --password 1qayxsw2
 
 Das Passwort muss mindestens acht Zeichen sowie Buchstaben und Ziffern enthalten.
 
-[~/Coding/Katalon Collections/katalon-docs/src/content/docs/en/administration/production.md#D648]
+### Suchindex neu aufbauen
 
-## The `katalon-manage` administration tool
-
-:::note[Available from version 1.35.0]
+:::note[Verfügbar ab Version 1.52.0]
+`katalon-manage reindex` baut den Suchindex ohne Admin-Anmeldung aus der Datenbank neu auf, etwa nach einer Datenbankwiederherstellung.
 :::
 
-`katalon-manage` is available inside the API container for maintenance tasks. Show its
-full help with:
-
 ```bash
-docker compose exec api katalon-manage --help
+docker compose exec api katalon-manage reindex                 # Komplett-Reindex einreihen
+docker compose exec api katalon-manage reindex --type object   # nur einen Datensatztyp
+docker compose exec api katalon-manage reindex --sync          # direkt ausführen statt über den Worker
+docker compose exec api katalon-manage reindex --status        # Fortschritt anzeigen
 ```
 
-`katalon-manage db-reset` deletes collection data and creates a PostgreSQL backup by
-default. Without `--all`, it retains configuration, user accounts, schemas,
-vocabularies, and role and feature permissions. `--all` also deletes that configuration
-and is only suitable when intentionally resetting an entire instance.
+Ohne `--sync` übergibt der Befehl den Lauf dem Worker. `--type` akzeptiert `object`, `entity`, `place`, `occurrence`, `procedure`, `collection` und `storage_location`. `--sync` und `--status` lassen sich nicht kombinieren.
 
 ## Voraussetzungen
 
@@ -154,10 +150,14 @@ ARK_SUFFIX_LENGTH=10
 ```
 
 Katalon beantwortet `https://katalog.example.org/ark:/12345/<Suffix>` mit
-einem Redirect auf die aktuelle öffentliche Portal-Detailseite. `ARK_ENABLED`
+einem Redirect auf die aktuelle öffentliche Portal-Detailseite. War der Datensatz öffentlich und ist er inzwischen zurückgezogen, endet der Redirect auf der Seite „Zurückgezogen“ (siehe [OAI-PMH: Gelöschte und zurückgezogene Datensätze](/katalon-docs/integration/oai-pmh/#gelöschte-und-zurückgezogene-datensätze)). `ARK_ENABLED`
 schaltet nur neue Vergaben ab; die Auflösung bereits vergebener ARKs bleibt
 aktiv. Der Test-NAAN `99999` ist nicht für Produktionsdaten geeignet und wird
 nicht aufgelöst.
+
+:::note[Verfügbar ab Version 1.52.0]
+ARK-Links zu zurückgezogenen Datensätzen führen auf die Seite „Zurückgezogen“ statt auf eine Fehlerseite.
+:::
 
 ### SMTP für transaktionale E-Mails
 
@@ -362,6 +362,8 @@ Nach dem ersten Start den Index und die Mappings aufbauen:
 # Alle bestehenden Datensätze indexieren:
 curl -X POST https://deine-domain.de/v1/search/reindex
 ```
+
+Die API-Endpunkte verlangen die Rolle `admin`. Ohne Anmeldung löst `docker compose exec api katalon-manage reindex` denselben Lauf aus (siehe [Suchindex neu aufbauen](#suchindex-neu-aufbauen)).
 
 Nach dem Vorgänge-Update (`0.2.x`) muss für bestehende Daten mindestens der Objektindex neu aufgebaut werden, weil `collection_status` in die öffentlichen Suchfilter aufgenommen wurde:
 
@@ -631,8 +633,12 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml build
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 docker compose exec api alembic upgrade head
 # Falls Schema-Änderungen: Reindex anstoßen
-curl -X POST https://deine-domain.de/v1/search/reindex
+docker compose exec api katalon-manage reindex
 ```
+
+:::note[Verfügbar ab Version 1.52.0]
+Der Reindex im Update-Ablauf läuft über `katalon-manage reindex` und braucht keine Admin-Anmeldung. Alternativ bleibt der API-Aufruf `POST /v1/search/reindex` mit Rolle `admin` möglich.
+:::
 
 Für Updates, die nur Objekt-Suchfelder ändern, reicht:
 
@@ -724,14 +730,29 @@ entpackt vollständig. Drill mindestens halbjährlich wiederholen.
 
 ### Elasticsearch
 
-Elasticsearch-Daten können jederzeit aus der Datenbank neu indexiert werden (`POST /v1/search/reindex`). Ein eigenes ES-Backup ist für den normalen Betrieb nicht zwingend nötig.
+:::note[Verfügbar ab Version 1.52.0]
+Der Suchindex lässt sich mit `katalon-manage reindex` ohne Admin-Anmeldung neu aufbauen.
+:::
+
+Elasticsearch-Daten können jederzeit aus der Datenbank neu indexiert werden (`katalon-manage reindex`, alternativ `POST /v1/search/reindex` mit Rolle `admin`). Ein eigenes ES-Backup ist für den normalen Betrieb nicht zwingend nötig.
 
 ## Monitoring
 
 ### Health-Check
 
+Ohne Anmeldung antwortet der Endpoint nur mit dem Status. Das reicht für Uptime-Monitore, die auf den HTTP-Statuscode achten:
+
 ```bash
 curl https://deine-domain.de/health
+# → {"status": "ok"}
+```
+
+:::note[Verfügbar ab Version 1.52.0]
+Anonyme Aufrufe erhalten nur `status` mit HTTP `200` oder `503`. Die Einzelprüfungen (`checks`), `queue_backlog` und `backup_age_hours` liefert der Endpoint nur bei authentifizierten Aufrufen, etwa mit einem API-Schlüssel im Header `X-API-Key`.
+:::
+
+```bash
+curl -H "X-API-Key: <dein-api-key>" https://deine-domain.de/health
 # → {
 #     "status": "ok",
 #     "checks": {
@@ -746,8 +767,7 @@ curl https://deine-domain.de/health
 #   }
 ```
 
-Der Endpoint prüft aktiv Datenbank, Elasticsearch, Redis, Cantaloupe (IIIF-Bildserver) und den Celery-Beat/Worker-Herzschlag; ist Oxigraph aktiviert (`OXIGRAPH_ENABLED=true`), erscheint zusätzlich ein `oxigraph`-Eintrag. Ist eine dieser Abhängigkeiten nicht erreichbar, liefert er HTTP `503` mit `{"status": "degraded", ...}` —
-so kann ein Load Balancer einen ausgefallenen Backend-Zustand erkennen. `queue_backlog` (Länge der Standard-Task-Queue) und `backup_age_hours` (Alter des letzten erfolgreichen Backups) sind rein informativ und wirken sich nicht auf den HTTP-Status aus — als Grundlage für eigene Monitoring-Schwellenwerte geeignet.
+Der Endpoint prüft aktiv Datenbank, Elasticsearch, Redis, Cantaloupe (IIIF-Bildserver) und den Celery-Beat/Worker-Herzschlag; ist Oxigraph aktiviert (`OXIGRAPH_ENABLED=true`), erscheint zusätzlich ein `oxigraph`-Eintrag. Ist eine dieser Abhängigkeiten nicht erreichbar, liefert er HTTP `503` mit `"status": "degraded"`, auch ohne Anmeldung. So kann ein Load Balancer einen ausgefallenen Backend-Zustand erkennen. `queue_backlog` (Länge der Standard-Task-Queue) und `backup_age_hours` (Alter des letzten erfolgreichen Backups) sind rein informativ und wirken sich nicht auf den HTTP-Status aus. Für Schwellenwertalarme auf diese Werte braucht das Monitoring also einen API-Schlüssel.
 
 :::note[Verfügbar ab Version 1.34.4]
 Redis-, Cantaloupe-, Oxigraph- und Celery-Heartbeat-Prüfung sowie `queue_backlog` und `backup_age_hours` im Health-Check.
