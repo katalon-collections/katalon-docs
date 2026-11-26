@@ -23,6 +23,7 @@ In den **Institutionsangaben** des Mapping-Sets gibt es den Abschnitt **Prüfreg
 
 - **Lizenz je Digitalisat verlangen:** Hat ein öffentliches Bild keine Lizenz (auch nicht über den Fallback), wird der Datensatz nicht ausgeliefert („Rechteangabe zum Digitalisat fehlt“) und per OAI-PMH als gelöscht gemeldet. Sobald das Bild eine Lizenz hat, wird er wieder geliefert.
 - **Erlaubte Lizenz-URIs:** eine URI pro Zeile. Lizenzen von Bildern und der Metadaten (`recordRights`) außerhalb dieser Liste führen ebenfalls zum Ausschluss. Gespeicherte URIs werden in der Schreibweise der Liste ausgegeben (http/https, Schrägstrich am Ende), weil Empfänger meist buchstabengenau vergleichen. Ohne Liste bleibt die gespeicherte Schreibweise.
+- **Trennzeichen für lidoRecID:** trennt ISIL und Inventarnummer in `lidoRecID` (Standard `--`, leer = Standard; ab Version 1.52.0, Details unter [Trennzeichen für `lidoRecID`](/katalon-docs/integration/export-mappings/#trennzeichen-für-lidorecid)).
 - **Digitalisate einzeln ausgeben:** je öffentlichem Bild ein `resourceSet` mit Bild-Link (IIIF, volle Größe und Vorschau), Typ `image`, Lizenz, Rechteinhaber und Freigabehinweis. Das Hauptbild steht zuerst.
 - **Institution als Rechteinhaberin der Metadaten / am Objekt:** gibt ISIL und Namen in `recordRights` bzw. `rightsWorkSet` aus.
 - **Lizenz, wenn ein Bild keine hat:** keine, aus einem Objektfeld (z. B. *Rechtemodell*, dessen Vokabular-URI verwendet wird) oder eine feste Lizenz-URI.
@@ -69,7 +70,7 @@ Die folgenden Einstellungen erscheinen im Regel-Editor direkt unter der Quelle d
 | Beschreibung | Typ | z. B. `Beschreibung`. |
 | Maß (strukturiert) | Maßart, Einheit | „9,2 cm“ wird zu Wert 9.2 und Einheit cm; dazu „9,2 × 13,9 cm“ als Anzeige. |
 | Ereignis: Akteur | Rolle, Rollen-URI | Normdaten (GND, Wikidata …) kommen aus den Normdatenfeldern der Person bzw. Körperschaft (siehe oben). |
-| Ereignis: Ort | Weiter über Beziehung | Ort über eine zweite Beziehung, z. B. Verlag → „ansässig in“ → Ort. |
+| Ereignis: Ort | Weiter über Beziehung, Ortspfad ausgeben, Pfad-Trennzeichen | Ort über eine zweite Beziehung (z. B. Verlag → „ansässig in“ → Ort); optional öffentlicher Ortspfad in `namePlaceSet` (ab Version 1.52.0, Details unter [Ereignisort mit Ortspfad](/katalon-docs/integration/export-mappings/#ereignisort-mit-ortspfad)). |
 | Ereignis: Datum | Feld für Datumsart | Datumsart als Beschriftung; „1905/“ wird zu „nach 1905“ und frühestem Datum 1905. |
 | Ereignis: Material / Technik (Begriff) | Art | Material oder Technik; Vokabular-URIs werden mit ausgegeben. |
 | Ereignis: Beschreibung | – | z. B. Frankierung, Stempel. |

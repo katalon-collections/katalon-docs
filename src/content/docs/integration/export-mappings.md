@@ -84,6 +84,46 @@ LIDO (Lightweight Information Describing Objects) ist der primäre Standard für
 - **Was nicht geprüft wird:** Weitere portalspezifische Regeln (z. B. Schematron-Regeln der Europeana zu Mindestauflösung von Digitalisaten oder kontrollierten Vokabularen).
 - **Empfohlene externe Validierung:** Über das [DDB-Validierungstool](https://validator.deutsche-digitale-bibliothek.de/) oder den [Europeana Schematron Validator](https://metis.europeana.eu/schematron-validator/).
 
+#### Trennzeichen für `lidoRecID`
+
+:::note[Verfügbar ab Version 1.52.0]
+Unter **Institutionsangaben → Prüfregeln und Lieferangaben** lässt sich das Trennzeichen zwischen ISIL und Inventarnummer in `lidoRecID` festlegen.
+:::
+
+Ist im Mapping-Set eine ISIL eingetragen, bildet Katalon die Datensatz-ID `lido:lidoRecID` aus ISIL, Trennzeichen und Inventarnummer (bzw. Datensatz-ID, wenn keine Inventarnummer vergeben ist). Im Feld **Trennzeichen für lidoRecID** lässt sich das gewünschte Zeichen eintragen (z. B. `/` oder `_`). Bleibt das Feld leer, verwendet Katalon den Standard `--` (z. B. `DE-MUS-081512--INV-1`). Dasselbe Trennzeichen gilt auch im Prüfbericht (`katalon-manage lido-report`) und wird beim YAML-Export und -Import des Mappings übernommen (`lido_rec_id_separator`).
+
+:::caution[Trennzeichen vor der ersten Auslieferung festlegen]
+Ein Wechsel des Trennzeichens ändert die exportierte `lidoRecID` aller Datensätze. Bei bereits veröffentlichten oder geharvesteten Beständen kann eine nachträgliche Änderung bestehende Datensatz-IDs und Permalinks in empfangenden Portalen verändern. Legen Sie das Trennzeichen daher vor der ersten Auslieferung fest und behalten Sie es bei.
+:::
+
+#### URL-Felder mit Beschriftung
+
+:::note[Verfügbar ab Version 1.52.0]
+URL-Felder geben im LIDO-Export die Webadresse als `lido:conceptID` und die zugehörige Beschriftung als `lido:term` aus.
+:::
+
+Ist ein Feld vom Typ **URL** (mit `http://` oder `https://`) auf ein LIDO-Konzeptziel gemappt — etwa für Rechteangaben (`rightsType`) oder Schlagwörter (`subjectConcept`) —, schreibt Katalon die URL in `lido:conceptID` und die gespeicherte Beschriftung in `lido:term`. Fehlt eine Beschriftung, steht die URL in beiden Elementen. URL-Felder mit Beschriftung lassen sich außerdem als Objektfeld-Fallback für die Bildlizenz verwenden. Wie URL-Beschriftungen beim Datenimport direkt aus einer zweiten Spalte oder einem XML-Selektor übernommen werden, beschreibt [URL-Felder mit Beschriftung importieren](/katalon-docs/administration/import/#url-felder-mit-beschriftung-importieren).
+
+#### Ereignisort mit Ortspfad
+
+:::note[Verfügbar ab Version 1.52.0]
+Bei Regeln für **Ereignisort** kann optional der hierarchische Ortspfad über alle öffentlichen übergeordneten Orte ausgegeben werden.
+:::
+
+Im Regel-Editor eines Ereignisses (Ziel **Ereignisort**) stehen zwei Einstellungen zur Verfügung:
+
+- **Ortspfad ausgeben** (standardmäßig aus): Ist die Option aktiv, gibt Katalon in `lido:namePlaceSet/lido:appellationValue` den vollständigen Pfad von der obersten öffentlichen Ebene bis zum verknüpften Ort als zusammengesetzten Ortsnamen aus (z. B. `Frankreich > Dordogne > La Madeleine`). `lido:displayPlace` zeigt weiterhin den eigentlichen Ortsnamen. Die Option funktioniert sowohl bei direkten Ortsbeziehungen als auch bei zweistufigen Beziehungen (**Weiter über Beziehung**).
+- **Pfad-Trennzeichen** (erscheint bei aktiver Option): Legt das Trennzeichen zwischen den Ebenen fest. Der Standard ist ` > ` (Leerzeichen, `>`, Leerzeichen); bleibt das Feld leer, verwendet Katalon diesen Standard.
+
+Für den Pfad berücksichtigt Katalon ausschließlich **öffentliche** übergeordnete Orte. Ist ein übergeordneter Ort als Entwurf oder intern markiert, endet der Pfad am ersten nicht öffentlichen Vorfahren und beginnt erst unterhalb davon. Ein oberster Ort ohne öffentliche Vorfahren gibt seinen eigenen Namen aus.
+
+**Aktualisierung nach Änderungen in der Ortshierarchie:** Katalon speichert den vorbereiteten Ortspfad im Suchindex am jeweiligen Datensatz. Wird ein übergeordneter Ort umbenannt, verschoben oder zurückgezogen, aktualisiert Katalon direkt mit diesem Ort verknüpfte Datensätze automatisch. Datensätze, die mit tiefer liegenden Orten verknüpft sind, behalten den bisherigen Pfad, bis ihr Suchindex-Eintrag neu aufgebaut wird.
+
+So stoßen Sie den Neuaufbau des Suchindex an:
+
+- **In der Admin-Oberfläche:** Öffnen Sie **[Einstellungen → Suche & Indexierung](/katalon-docs/administration/einstellungen/#suche--indexierung)** und wählen Sie **Objekte reindizieren** (oder **Alles reindizieren** für alle Datensatztypen). Der Vorgang läuft asynchron im Hintergrund.
+- **Über die Kommandozeile:** Alternativ lässt sich der Neuaufbau auf dem Server mit `katalon-manage reindex --type object` (oder `katalon-manage reindex`) starten, siehe [Suchindex neu aufbauen](/katalon-docs/administration/production/#suchindex-neu-aufbauen).
+
 ### METS/MODS (`mets_mods`) – Bibliothekarische Digitalisate
 
 Das Metadata Object Description Schema (MODS 3.8) in Kombination mit dem Metadata Encoding and Transmission Standard (METS 1.12) ist der Standard der Library of Congress für bibliothekarische Objekte, Druckschriften und digitalisierte Handschriften ([loc.gov/standards/mods/](https://www.loc.gov/standards/mods/)).

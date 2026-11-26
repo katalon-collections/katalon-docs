@@ -23,6 +23,7 @@ The mapping set's **institution details** contain the section **Checks and deliv
 
 - **Require a license per image:** If a public image has no license (not even through the fallback), the record is not delivered ("Rechteangabe zum Digitalisat fehlt") and is reported as deleted via OAI-PMH. Once the image has a license, the record is delivered again.
 - **Allowed license URIs:** one URI per line. Licenses of images and of the metadata (`recordRights`) outside this list also lead to exclusion. Stored URIs are written in the list's spelling (http/https, trailing slash), because recipients usually compare literally. Without a list the stored spelling is kept.
+- **Separator for lidoRecID:** separates ISIL and inventory number in `lidoRecID` (default `--`, empty = default; since version 1.52.0, see [Separator for `lidoRecID`](/katalon-docs/en/integration/export-mappings/#separator-for-lidorecid)).
 - **Output images individually:** one `resourceSet` per public image with image links (IIIF, full size and preview), type `image`, license, rights holder and credit line. The primary image comes first.
 - **Institution as rights holder of the metadata / of the object:** outputs ISIL and name in `recordRights` and `rightsWorkSet`.
 - **License if an image has none:** none, from an object field (e.g. *rights model*, whose vocabulary URI is used) or a fixed license URI.
@@ -69,7 +70,7 @@ These settings appear in the rule editor directly below the source of each targe
 | Description | Type | e.g. `Beschreibung`. |
 | Measurement (structured) | Measurement type, unit | "9,2 cm" becomes value 9.2 and unit cm, plus "9,2 × 13,9 cm" for display. |
 | Event: actor | Role, role URI | Authority IDs (GND, Wikidata …) come from the authority fields of the person or organisation (see above). |
-| Event: place | Continue via relation | Place through a second relation, e.g. publisher → "based in" → place. |
+| Event: place | Continue via relation, Output place path, Path separator | Place through a second relation (e.g. publisher → "based in" → place); optionally outputs the public place path in `namePlaceSet` (since version 1.52.0, see [Event place with place path](/katalon-docs/en/integration/export-mappings/#event-place-with-place-path)). |
 | Event: date | Date type field | Date type as label; "1905/" becomes "nach 1905" and earliest date 1905. |
 | Event: material / technique (term) | Kind | Material or technique; vocabulary URIs are included. |
 | Event: description | – | e.g. postage, postmark. |

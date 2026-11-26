@@ -61,6 +61,46 @@ LIDO (Lightweight Information Describing Objects) is usable as a target format f
 
 Katalon checks two things before a LIDO record leaves the system: the mapping *configuration* must include a title and an object-type target (`validate_mapping`), and each individual *record* must actually resolve a non-empty value for both. A record whose mapped title field happens to be empty is not exported with an empty `<lido:appellationValue/>` — single-record export rejects it with an error, a batch export skips it (noting the skip at the end of the file), and OAI-PMH returns `cannotDisseminateFormat` or drops it from the result list.
 
+#### Separator for `lidoRecID`
+
+:::note[Available since version 1.52.0]
+Under **Institution Details → Checks and delivery details**, you can configure the separator between ISIL and inventory number in `lidoRecID`.
+:::
+
+When an ISIL is set in the mapping set, Katalon forms the record identifier `lido:lidoRecID` from the ISIL, the separator, and the inventory number (or record ID if no inventory number is set). Enter the desired character sequence in **Separator for lidoRecID** (for example `/` or `_`). Leaving the field empty uses the default `--` (for example `DE-MUS-081512--INV-1`). The same separator is used in the check report (`katalon-manage lido-report`) and preserved when exporting or importing the mapping as YAML (`lido_rec_id_separator`).
+
+:::caution[Choose the separator before first delivery]
+Changing the separator alters the exported `lidoRecID` of all records. For holdings that have already been published or harvested, changing it afterwards can alter existing record IDs and permalinks in receiving portals. Set the separator before your first delivery and keep it stable.
+:::
+
+#### URL fields with labels
+
+:::note[Available since version 1.52.0]
+In LIDO exports, URL fields output the web address as `lido:conceptID` and the stored label as `lido:term`.
+:::
+
+When a **URL** field (containing an `http://` or `https://` address) is mapped to a LIDO concept target — such as rights statements (`rightsType`) or subject concepts (`subjectConcept`) — Katalon writes the URL to `lido:conceptID` and the label to `lido:term`. When no label is stored, the URL appears in both elements. Labeled URL fields can also provide the license URI when using an object field as the media license fallback. To import URL labels directly from a second column or XML selector, see [Importing URL fields with labels](/katalon-docs/en/administration/import/#importing-url-fields-with-labels).
+
+#### Event place with place path
+
+:::note[Available since version 1.52.0]
+Rules targeting **Event Place** can optionally output the hierarchical place path across all public ancestor places.
+:::
+
+In the rule editor for an event's **Event Place** target, two settings are available:
+
+- **Output place path** (off by default): When enabled, Katalon writes the full path from the top-level public ancestor down to the linked place as a combined place name into `lido:namePlaceSet/lido:appellationValue` (for example `Frankreich > Dordogne > La Madeleine`). `lido:displayPlace` continues to show the place's own name. This works for both direct place relations and two-step relations (**Continue via relation**).
+- **Path separator** (shown when **Output place path** is active): Sets the separator between hierarchy levels. The default is ` > ` (space, `>`, space); leaving the field empty uses this default.
+
+Katalon includes only **public** ancestor places in the path. If an ancestor place is marked as draft or internal, the path stops at the first non-public ancestor and begins below it. A root place without public ancestors outputs its own name.
+
+**Updating paths after changes in the place hierarchy:** Katalon stores the prepared place path in the search index alongside each exported record. When a parent place is renamed, moved, or withdrawn, Katalon automatically updates records directly linked to that parent place. Records linked to deeper subordinate places keep the previous path until their search index entry is rebuilt.
+
+To trigger a search index rebuild:
+
+- **In the Admin UI:** Open **[Settings → Search & Indexing](/katalon-docs/en/administration/einstellungen/#search--indexing)** and select **Reindex Objects** (or **Reindex everything** for all record types). Reindexing runs asynchronously in the background.
+- **Via the command line:** On the server, you can also run `katalon-manage reindex --type object` (or `katalon-manage reindex`); see [Rebuild the search index](/katalon-docs/en/administration/production/#rebuild-the-search-index).
+
 ### METS/MODS (`mets_mods`) – digitized library materials
 
 :::note[Available from version 1.44.0]

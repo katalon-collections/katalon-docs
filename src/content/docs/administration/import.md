@@ -175,6 +175,27 @@ Das letzte Element ist der Ort, alles davor sind seine übergeordneten Orte. Lee
 
 Mit dem Trenner lassen sich später alle Objekte eines Gebiets abfragen: `/v1/objects?place_id=…` findet auch Objekte, die mit einem untergeordneten Ort verknüpft sind. Löscht man einen Ort mit untergeordneten Orten, fragt Katalon, ob diese mitgelöscht oder eine Ebene nach oben gehängt werden sollen.
 
+#### URL-Felder mit Beschriftung importieren
+
+:::note[Verfügbar ab Version 1.52.0]
+Beim Zuordnen einer Spalte oder eines XML-Elements auf ein URL-Zielfeld lässt sich eine zweite Quelle für den Anzeigetext wählen.
+:::
+
+Sobald eine Spalte oder ein XML-Selektor auf ein Feld vom Typ **URL** gemappt wird (sowohl auf oberster Ebene als auch als Unterfeld in einem Containerfeld), erscheint direkt darunter eine zusätzliche Auswahlliste:
+
+- bei CSV-, TSV- und Excel-Dateien: **Beschriftung aus Spalte (optional)**
+- bei XML-Dateien: **Beschriftung aus Selektor (optional)**
+
+Standardmäßig steht die Auswahl auf **– keine Beschriftung –**; das URL-Feld erhält dann nur die Webadresse. Wählen Sie eine zweite Spalte bzw. einen zweiten Selektor, übernimmt Katalon die Werte als Beschriftung (`label`) zur URL:
+
+- **Gleiche Anzahl Werte:** Wiederholte URLs und Beschriftungen werden paarweise nach ihrer Position zugeordnet.
+- **Einzelne URL:** Eine einzelne URL erhält die erste Beschriftung aus der gewählten Quelle.
+- **Mehrere URLs mit abweichender Anzahl Beschriftungen:** Die Beschriftungen bleiben leer, damit jede URL nur eindeutig zugeordnete Texte erhält.
+
+Die gewählte Beschriftungsquelle zählt als aktiv genutzt und wird zusammen mit dem Mapping in **Importvorlagen** (**Vorlage speichern**) sowie in exportierten Profil-Dateien (**Profil exportieren**) gespeichert. Fehlt die gespeicherte Beschriftungsquelle in einer späteren Importdatei, meldet Katalon sie beim Laden der Vorlage als fehlenden Selektor und übernimmt die URLs ohne Beschriftung.
+
+Im LIDO-Export liefert ein URL-Feld die Webadresse als `lido:conceptID` und die Beschriftung als `lido:term` (ohne Beschriftung steht die URL in beiden Elementen); siehe [URL-Felder mit Beschriftung](/katalon-docs/integration/export-mappings/#url-felder-mit-beschriftung).
+
 #### Containerfelder importieren
 
 Containerfelder bestehen aus wiederholbaren Einträgen mit Subfeldern. Im Mapping-Dropdown stehen sie als `Container → Subfeld`, zum Beispiel `Person → Vorname` und `Person → Nachname`.

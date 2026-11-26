@@ -175,6 +175,27 @@ The last element is the place; everything before it is its parent places. Whites
 
 With the hierarchy you can later query all objects of an area: `/v1/objects?place_id=…` also finds objects linked to a sub-place. If you delete a place that has sub-places, Katalon asks whether to delete them as well or move them up one level.
 
+#### Importing URL fields with labels
+
+:::note[Available since version 1.52.0]
+When mapping a column or XML element to a URL target field, you can pick a second source for its display label.
+:::
+
+As soon as a column or XML selector is mapped to a **URL** field (both at top level and as a subfield inside a container field), an additional dropdown appears directly below it:
+
+- for CSV, TSV, and Excel files: **Label from column (optional)**
+- for XML files: **Label from selector (optional)**
+
+By default this is set to **– no label –**, storing only the URL. When you select a second column or selector, Katalon stores its values as the display label (`label`) alongside the URL:
+
+- **Matching count:** Repeated URLs and labels are paired by position.
+- **Single URL:** A single URL receives the first label from the selected source.
+- **Multiple URLs with a different number of labels:** The labels stay empty so each URL receives only reliably matched text.
+
+The chosen label source counts as actively used and is saved in **mapping templates** (**Save template**) as well as exported profile files (**Export profile**). If a loaded template references a label source that is absent in a later file, Katalon reports it as a missing selector and imports the URLs without labels.
+
+In LIDO exports, a URL field outputs the URL as `lido:conceptID` and the label as `lido:term` (without a label, the URL appears in both elements); see [URL fields with labels](/katalon-docs/en/integration/export-mappings/#url-fields-with-labels).
+
 #### Importing container fields
 
 Container fields consist of repeatable entries with subfields. In the mapping dropdown, they appear as `Container → Subfield`, for example `Person → First name` and `Person → Last name`.
