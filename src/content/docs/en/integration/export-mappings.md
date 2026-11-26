@@ -94,12 +94,9 @@ In the rule editor for an event's **Event Place** target, two settings are avail
 
 Katalon includes only **public** ancestor places in the path. If an ancestor place is marked as draft or internal, the path stops at the first non-public ancestor and begins below it. A root place without public ancestors outputs its own name.
 
-**Updating paths after changes in the place hierarchy:** Katalon stores the prepared place path in the search index alongside each exported record. When a parent place is renamed, moved, or withdrawn, Katalon automatically updates records directly linked to that parent place. Records linked to deeper subordinate places keep the previous path until their search index entry is rebuilt.
+**Updating paths after changes in the place hierarchy:** When a place is renamed, moved, changes its status, or is moved up because its parent is deleted, Katalon updates the records linked to that place or any of its subplaces in the background.
 
-To trigger a search index rebuild:
-
-- **In the Admin UI:** Open **[Settings → Search & Indexing](/katalon-docs/en/administration/einstellungen/#search--indexing)** and select **Reindex Objects** (or **Reindex everything** for all record types). Reindexing runs asynchronously in the background.
-- **Via the command line:** On the server, you can also run `katalon-manage reindex --type object` (or `katalon-manage reindex`); see [Rebuild the search index](/katalon-docs/en/administration/production/#rebuild-the-search-index).
+For two-step relations (**Continue via relation**), the path is updated once the search index of the exported record is rebuilt: in the Admin UI under **[Settings → Search & Indexing](/katalon-docs/en/administration/einstellungen/#search--indexing)** with **Reindex Objects**, or on the server with `katalon-manage reindex --type object`; see [Rebuild the search index](/katalon-docs/en/administration/production/#rebuild-the-search-index).
 
 ### METS/MODS (`mets_mods`) – digitized library materials
 

@@ -117,12 +117,9 @@ Im Regel-Editor eines Ereignisses (Ziel **Ereignisort**) stehen zwei Einstellung
 
 Für den Pfad berücksichtigt Katalon ausschließlich **öffentliche** übergeordnete Orte. Ist ein übergeordneter Ort als Entwurf oder intern markiert, endet der Pfad am ersten nicht öffentlichen Vorfahren und beginnt erst unterhalb davon. Ein oberster Ort ohne öffentliche Vorfahren gibt seinen eigenen Namen aus.
 
-**Aktualisierung nach Änderungen in der Ortshierarchie:** Katalon speichert den vorbereiteten Ortspfad im Suchindex am jeweiligen Datensatz. Wird ein übergeordneter Ort umbenannt, verschoben oder zurückgezogen, aktualisiert Katalon direkt mit diesem Ort verknüpfte Datensätze automatisch. Datensätze, die mit tiefer liegenden Orten verknüpft sind, behalten den bisherigen Pfad, bis ihr Suchindex-Eintrag neu aufgebaut wird.
+**Aktualisierung nach Änderungen in der Ortshierarchie:** Wird ein Ort umbenannt, verschoben, in seinem Status geändert oder beim Löschen eines Elternorts umgehängt, aktualisiert Katalon im Hintergrund die Datensätze, die mit diesem Ort oder einem seiner Unterorte verknüpft sind.
 
-So stoßen Sie den Neuaufbau des Suchindex an:
-
-- **In der Admin-Oberfläche:** Öffnen Sie **[Einstellungen → Suche & Indexierung](/katalon-docs/administration/einstellungen/#suche--indexierung)** und wählen Sie **Objekte reindizieren** (oder **Alles reindizieren** für alle Datensatztypen). Der Vorgang läuft asynchron im Hintergrund.
-- **Über die Kommandozeile:** Alternativ lässt sich der Neuaufbau auf dem Server mit `katalon-manage reindex --type object` (oder `katalon-manage reindex`) starten, siehe [Suchindex neu aufbauen](/katalon-docs/administration/production/#suchindex-neu-aufbauen).
+Bei zweistufigen Beziehungen (**Weiter über Beziehung**) wird der Pfad aktualisiert, sobald der Suchindex des exportierten Datensatzes neu aufgebaut wird: in der Admin-Oberfläche unter **[Einstellungen → Suche & Indexierung](/katalon-docs/administration/einstellungen/#suche--indexierung)** mit **Objekte reindizieren** oder auf dem Server mit `katalon-manage reindex --type object`, siehe [Suchindex neu aufbauen](/katalon-docs/administration/production/#suchindex-neu-aufbauen).
 
 ### METS/MODS (`mets_mods`) – Bibliothekarische Digitalisate
 
