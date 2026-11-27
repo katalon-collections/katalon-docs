@@ -509,6 +509,10 @@ The portal detail page also shows only fields without a subtype and fields of th
 Required fields of a subtype apply only to records of that subtype. Records without a subtype need only the general fields of the primary type. A field of another subtype appears in the data-entry form only while the record holds a stored value for it, and then as an optional field.
 :::
 
+:::note[Available from version 1.52.0]
+A subtype field that already holds data can be widened to all subtypes. Existing values are kept. Requirement: the internal name occurs only once for this record type.
+:::
+
 **Use case:**
 
 An entity can be a person or an organization. Persons need a date of birth and place of death, organizations need a founding year and legal form. Subtype fields let you control the form accordingly.

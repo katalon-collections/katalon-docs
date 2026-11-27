@@ -59,6 +59,7 @@ In the edit form, Katalon renders an interactive autocomplete search mask for `a
 - The selection can conveniently be confirmed via keyboard (arrow keys + Enter).
 - For **GeoNames**, the exact latitude and longitude are also stored alongside name and ID. This lets Katalon display an OpenStreetMap map preview in the admin form and in the portal without a further external API call.
 - Selected authority entries are rendered in the form as direct links to the original source (e.g. a link to the lobid.org or Wikidata entry).
+- On public detail pages every entry of an authority field is linked separately, including repeatable fields and AAT. Fields marked as facet link to the portal search. (from version 1.52.0)
 
 ### Stored data structure
 

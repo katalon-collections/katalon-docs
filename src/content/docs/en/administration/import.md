@@ -94,6 +94,7 @@ A finished mapping can be saved in the database as a **template** and loaded aga
 
 - **Save template** opens a dialog with a name field; existing templates can be updated under the same name or saved as a new template.
 - **Load template** lists saved templates for the currently selected target type.
+- Dry run and import use exactly the visible mapping. Template columns that are missing in the uploaded file are left out. A new upload starts without a loaded template, so **Save template** creates a new one. (from version 1.52.0)
 - Templates are bound to objects, entities, places, or occurrences; a saved mapping is also retrievable outside the admin UI via the REST API (`GET /v1/importer/mappings`).
 - **Export profile** additionally downloads the current mapping as a JSON file, independent of any saved template.
 - **Load mapping profile (file)** applies a previously exported JSON profile directly in the mapping step, including XML imports.

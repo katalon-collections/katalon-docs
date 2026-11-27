@@ -511,6 +511,10 @@ Auch im Portal zeigt die Detailseite nur Felder ohne Subtyp und Felder des eigen
 Pflichtfelder eines Subtyps gelten nur für Datensätze dieses Subtyps. Datensätze ohne Subtyp brauchen nur die allgemeinen Felder des Primärtyps. Ein Feld eines anderen Subtyps erscheint im Erfassungsformular nur, solange der Datensatz dafür einen gespeicherten Wert hat, und dann als optionales Feld.
 :::
 
+:::note[Verfügbar ab Version 1.52.0]
+Ein befülltes Subtyp-Feld lässt sich auf alle Subtypen erweitern. Die vorhandenen Werte bleiben erhalten. Voraussetzung: Der interne Name kommt bei diesem Datensatztyp nur einmal vor.
+:::
+
 **Anwendungsfall:**
 
 Eine Entität kann eine Person oder eine Organisation sein. Für Personen braucht man Geburtsdatum und Sterbeort, für Organisationen Gründungsjahr und Rechtsform. Durch Subtyp-Felder lässt sich das Formular entsprechend steuern.

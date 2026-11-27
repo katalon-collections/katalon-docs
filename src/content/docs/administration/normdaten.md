@@ -59,6 +59,7 @@ Im Bearbeitungsformular rendert Katalon für `authority`-Felder eine interaktive
 - Die Auswahl kann bequem per Tastatur (Pfeiltasten + Enter) bestätigt werden.
 - Bei **GeoNames** werden neben Name und ID auch die exakten Breiten- und Längengrade mitgespeichert. Katalon kann dadurch im Admin-Formular und im Portal ohne weitere externe API-Abfrage eine OpenStreetMap-Kartenvorschau anzeigen.
 - Ausgewählte Normdateneinträge werden im Formular als direkte Links zur Originalquelle gerendert (z. B. Link zum lobid.org- oder Wikidata-Eintrag).
+- Auf öffentlichen Detailseiten ist jeder Eintrag eines Normdatenfelds einzeln verlinkt, auch bei wiederholbaren Feldern und AAT. Als Facette markierte Felder verlinken auf die Portalsuche. (ab Version 1.52.0)
 
 ### Gespeicherte Datenstruktur
 

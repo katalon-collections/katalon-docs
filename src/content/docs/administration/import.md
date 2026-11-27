@@ -94,6 +94,7 @@ Ein fertig konfiguriertes Mapping lässt sich als **Vorlage** in der Datenbank s
 
 - **Vorlage speichern** öffnet einen Dialog mit Namensfeld; bestehende Vorlagen können unter demselben Namen aktualisiert oder als neue Vorlage angelegt werden.
 - **Vorlage laden** listet gespeicherte Vorlagen für den aktuell gewählten Ziel-Typ.
+- Beim Prüfen und Importieren gilt genau das sichtbare Mapping. Spalten einer Vorlage, die in der hochgeladenen Datei fehlen, bleiben außen vor. Ein neuer Upload beginnt ohne geladene Vorlage, sodass **Vorlage speichern** eine neue Vorlage anlegt. (ab Version 1.52.0)
 - Vorlagen sind an Objekte, Entitäten, Orte oder Occurrences gebunden; das Mapping wird beim Laden über die REST-API auch außerhalb der Admin-UI abrufbar (`GET /v1/importer/mappings`).
 - **Profil exportieren** lädt das aktuelle Mapping zusätzlich als JSON-Datei herunter, unabhängig von einer gespeicherten Vorlage.
 - **Mapping-Profil laden (Datei)** übernimmt ein zuvor exportiertes JSON-Profil direkt im Mapping-Schritt, auch bei XML-Importen.
